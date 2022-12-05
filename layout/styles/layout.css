@@ -1,0 +1,762 @@
+@charset "utf-8";
+
+@import url("font-awesome.min.css");
+@import url("framework.css");
+
+/* Background Image-----------------------------------------------------------------------------------------------------------------------------------------*/
+.bgded, .bgded2{
+	background-position:center center; 
+	background-repeat:no-repeat;
+	background-size:cover;
+	
+}
+.hoc{
+	display: block;
+	margin:0 auto;
+}
+.fixed-top{
+	position: fixed;
+	width: 100%;
+	z-index: 999;
+	background-color: #FFFFFF;
+}
+
+/*contact and Menu  ----------------------------------------------------------------------------------------------------------- */
+.wrapper{
+	display:block; 
+	width: 100%;
+	margin:0; 
+	padding:0; 
+	text-align:left; 
+	word-wrap:break-word;}
+
+/* Top Bar --------------------------------------------------------------------------------------------------------------- */
+#topbar{padding:1px 0; font-size:.9rem; text-transform:uppercase;}
+
+#topbar ul li{display:inline-block; margin-right:15px;}
+#topbar ul li:last-child{margin-right:0; padding-right:0; border-right:none;}
+#topbar i{line-height:normal;}
+#topbar > div:first-of-type ul li i{margin-right:5px;}
+#topbar ul li:first-child a{color:#04DEE0;}
+
+.clear, .group{display:block; font-family: 'Poppins', sans-serif;}
+.clear::before, .clear::after, .group::before, .group::after{display:table; content:"";}
+.clear, .clear::after, .group, .group::after{clear:both;}
+
+.fl_left, .imgl{float:left;}
+
+.nospace{margin:0; padding:0; list-style:none;}
+.nospace a{color: rgb(0, 0, 0); }
+.nospace a:hover{color:#04DEE0 }
+
+/* Rows
+--------------------------------------------------------------------------------------------------------------- */
+/* Menu Background */
+.row1{ 
+	position:absolute;
+	top: 1;
+	color:#FFFFFF;
+	background-color:rgba(0,0,0,.6); 
+
+}
+.row1:hover {
+	background-color:rgba(0,0,0,.9);
+}
+
+/* Header Menu
+--------------------------------------------------------------------------------------------------------------- */
+#header #logo{margin: 0;}
+#header #logo h1{margin:0; padding:0; font-size:15px;}
+#header #logo a{height:20px; text-align:center;}
+
+
+/* Navigation
+--------------------------------------------------------------------------------------------------------------- */
+nav ul, nav ol{margin:0; padding:0; list-style:none;}
+#mainav form *{transition:none !important;}
+#mainav, #breadcrumb, .sidebar nav{line-height:100%;}
+#mainav .drop::after, #mainav li li .drop::after, #breadcrumb li a::after, .sidebar nav a::after{position:absolute; font-family:"FontAwesome"; font-size:18px; line-height:50%;}
+
+/* Top Navigation */
+#mainav{text-align: center; margin-top: 5.5px;}
+#mainav ul{text-transform:uppercase; font-size: 15px;}
+#mainav ul ul{z-index:9999; position:absolute; width:180px; text-transform:none;}
+#mainav ul ul ul{left:180px; top:0;}
+#mainav li{display:inline-block; position:relative; margin:0 0 0 0; padding:0 10px;}
+#mainav li:last-child{margin-right:0;}
+#mainav li li{width:100%; margin:0;}
+#mainav li a{display:block; padding:20px 0;}
+#mainav li li a{border:solid; border-width:0 0 1px 0;}
+#mainav .drop{padding-left:15px;}
+#mainav li li a, #mainav li li .drop{display:block; margin:0; padding:15px 15px; text-align: left;}
+#mainav .drop::after, #mainav li li .drop::after{content:"\f0d7";}
+#mainav .drop::after{top:25px; left:5px;}
+#mainav li li .drop::after{top:15px; left:5px;}
+#mainav ul ul{visibility:hidden; opacity:0;}
+#mainav ul li:hover > ul{visibility:visible; opacity:1;}
+
+#mainav form{display:none; margin:0; padding:0;}
+#mainav form select, #mainav form select option{display:block; cursor:pointer; outline:none;}
+#mainav form select{width:100%; padding:5px; border:1px solid;}
+#mainav form select option{margin:5px; padding:0; border:none;}
+
+
+
+
+
+
+
+
+
+
+
+.row2{
+	background-color:#ffffff;
+}
+.row2 a{
+	font-weight: 700;
+}
+.row2 h2{
+	color: #000000;
+}
+
+
+.row3{
+	color:#ffffff;
+	background-color:black;
+}
+.row4{
+	color:#3d3d3d; 
+	font-weight: 500;
+	
+}
+
+
+.row3 a{
+	font-size: 18px;
+	font-weight: 900;
+}
+
+.projects{
+	padding-top: 120px;
+	padding-bottom: 50px;
+	color: #ffffff;
+	
+}
+.projects h2,h3,p{
+	text-align:left;
+}
+.projects article{text-align:center;}
+
+
+h1 {
+    font-size: 30px; 
+    margin:10px 0; 
+    line-height:normal; 
+    font-weight:normal; 
+    text-transform:capitalize; 
+}
+
+.bgded2 h2{
+    color: #fff ;
+    margin:10px 0; 
+    line-height:normal; 
+    font-weight:normal; 
+	text-transform:capitalize; 
+	font-family: 'Poppins', sans-serif;
+	font-weight:bold; 
+}
+.bgded2 h3{
+    color: #fff ;
+    font-size: 20px; 
+    margin:10px 0; 
+    line-height:normal; 
+    font-weight:normal; 
+    text-transform:capitalize; 
+}
+h2{
+	font-size: 28px; 
+	margin:10px 0px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:bold; 
+}
+h3{
+	font-size: 20px; 
+	margin:10px 0px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:normal; 
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+#about {
+	margin-top: 100px;
+	font-size: 20px; 
+}#about h2{
+    color: #000 ;
+    font-size: 28px; 
+    margin:10px 0; 
+    line-height:normal; 
+    font-weight:bold; 
+	text-transform:capitalize; 
+	font-family: 'Poppins', sans-serif;
+	
+}
+#about p{
+	font-size: 16px;
+	line-height: 2;
+	font-weight:normal; 
+	font-family: 'Poppins', sans-serif;
+}
+.profileImg{
+	width: 300px;
+	margin: 20px;
+	border-radius: 50%;  
+	border-style: solid; 
+	border-width: 1px; 
+	border-color: cornflowerblue;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+}
+
+.contact .profileImg{
+	width: 300px;
+	margin: 20px;
+	border-radius: 50%;  
+	border-style: solid; 
+	border-width: 1px; 
+	border-color: cornflowerblue;
+	box-shadow: 0 4px 8px 0 rgba(0, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.3);
+}
+
+.imgover{
+	display:inline-block; 
+	position:relative; 
+	max-width:100%; 
+	
+}
+.imgover::before, .imgover::after{
+	display:block; 
+	position:absolute; 
+	content:""; 
+	text-align:center; 
+	opacity:0;
+}
+.imgover::before{
+	top:0; 
+	right:0; 
+	bottom:0; 
+	left:0; 
+}
+.imgover::after{
+	top:50%; 
+	left:50%; 
+	width:50px; 
+	height:50px; 
+	line-height:50px; 
+	margin:-25px 0 0 -25px; 
+	font-family:"FontAwesome"; 
+	font-size:28px;
+}
+.imgover:hover::before, .imgover:hover::after{opacity:1;border-width: 0px;}
+.imgover img {
+	border-radius: 3px;
+	width: 400px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+	
+}
+.imgover:hover::before{
+	background:rgba(100, 232, 255, 0.4); 
+	border-radius: 3px;
+	border-width: 0px;
+}
+.imgover, .imgover:hover::after{
+	
+}
+img{
+	width:auto; 
+	max-width:100%; 
+	height:auto; 
+	margin:0; 
+	padding:0; 
+	border:none; 
+	line-height:normal; 
+	vertical-align:middle;
+}
+
+
+/* Page Intro
+--------------------------------------------------------------------------------------------------------------- */
+#pageintro{color:#FFFFFF;padding:200px 0 100px 0; }
+
+#pageintro article{display:block; max-width:100%;}
+#pageintro .heading{margin-bottom:5px; font-size:3rem ;}
+#pageintro p{color:#222222;font-size:20px; line-height:2;font-weight: 100;}
+#pageintro footer{margin-top:50px;}
+
+/* Content Area
+--------------------------------------------------------------------------------------------------------------- */
+.container{padding:100;}
+.container p{font-size:16px; line-height:2;}
+/* Content */
+.container .content{}
+
+.sectiontitle{display:block; max-width:55%; margin:50px auto ; text-align:center;}
+.sectiontitle *{margin:0;}
+
+.excerpt{ margin:0 0 50px 0;}
+.excerpt article{max-width:320px;}
+.excerpt > article:last-child{margin-bottom:0;}/* Used when elements stack in smaller viewports */
+.excerpt .meta li{display:inline-block; font-size:.8rem;}
+.excerpt .meta li::after{margin-left:5px; content:"|";}
+.excerpt .meta li:last-child::after{margin:0; content:"";}
+
+.overview{margin-bottom:80px;}
+.overview > li{margin-bottom:50px;}
+.overview > li:nth-last-child(-n+3){margin-bottom:0;}/* Removes bottom margin from the last three items - margin is restored in the media queries when items stack */
+.overview > li:nth-child(3n+1){margin-left:0; clear:left;}/* Removes the need to add class="first" */
+.overview article{display:block; position:relative; padding:0 0 0 70px;}
+.overview article *{margin:0; padding:0;}
+.overview article i{display:inline-block; position:absolute; top:0; left:0; width:50px; overflow:hidden; line-height:1; font-size:36px;}
+.overview article .heading, .overview article p{margin-bottom:10px;}
+
+.testimonials li:last-child{margin-bottom:0;}/* Used when elements stack in smaller viewports */
+.testimonials blockquote{margin-bottom:30px; padding:20px;}
+.testimonials blockquote::before{top:10px; left:10px; font-size:32px; line-height:32px;}
+.testimonials blockquote::after{display:block; position:absolute; bottom:-15px; left:50%; margin-left:-15px; width:0; height:0; content:""; border:15px solid transparent; border-bottom:none;}
+.testimonials figure{text-align:center;}
+.testimonials figure *{margin:0; line-height:1;}
+.testimonials figure img{margin:0 0 15px 0;}
+.testimonials figcaption .heading{font-size:1.2rem; font-weight:700;}
+.testimonials figcaption em{font-size:.8rem;}
+
+/* Comments */
+#comments ul{margin:0 0 40px 0; padding:0; list-style:none;}
+#comments li{margin:0 0 10px 0; padding:15px;}
+#comments .avatar{float:right; margin:0 0 10px 10px; padding:3px; border:1px solid;}
+#comments address{font-weight:bold;}
+#comments time{font-size:smaller;}
+#comments .comcont{display:block; margin:0; padding:0;}
+#comments .comcont p{margin:10px 5px 10px 0; padding:0;}
+
+#comments form{display:block; width:100%;}
+#comments input, #comments textarea{width:100%; padding:10px; border:1px solid;}
+#comments textarea{overflow:auto;}
+#comments div{margin-bottom:15px;}
+#comments input[type="submit"], #comments input[type="reset"]{display:inline-block; width:auto; min-width:150px; margin:0; padding:8px 5px; cursor:pointer;}
+
+/* Sidebar */
+.container .sidebar{}
+
+.sidebar .sdb_holder{margin-bottom:50px;}
+.sidebar .sdb_holder:last-child{margin-bottom:0;}
+
+
+/* Click to Action
+--------------------------------------------------------------------------------------------------------------- */
+.cta {
+	padding:0 0; 
+	text-align:center;
+}
+
+
+.cta .sectiontitle{margin-bottom:50px;}
+.cta form{max-width:80%; margin:0 auto; padding:0;}
+.cta input{width:100%; padding:8px; border:1px solid;}
+.cta button{display:inline-block; padding:8px 18px 10px; border:none; text-transform:uppercase; font-weight:700; cursor:pointer;}
+
+
+/* Footer
+--------------------------------------------------------------------------------------------------------------- */
+#footer{padding:80px 0;}
+
+#footer .heading{margin-bottom:50px; font-size:1.2rem;}
+
+#footer .linklist li{display:block; margin-bottom:15px; padding:0 0 15px 0; border-bottom:1px solid;}
+#footer .linklist li:last-child{margin:0; padding:0; border:none;}
+#footer .linklist li::before, #footer .linklist li::after{display:table; content:"";}
+#footer .linklist li, #footer .linklist li::after{clear:both;}
+
+#footer .contact{}
+#footer .contact.linklist li, #footer .contact.linklist li:last-child{position:relative; padding-left:40px;}
+#footer .contact li *{margin:0; padding:0; line-height:1.6;}
+#footer .contact li i{display:block; position:absolute; top:0; left:0; width:30px; font-size:16px; text-align:center;}
+
+
+/* Copyright
+--------------------------------------------------------------------------------------------------------------- */
+#copyright{padding:20px 0;}
+#copyright *{margin:0; padding:0;}
+
+
+/* Transition Fade
+This gives a smooth transition to "ALL" elements used in the layout - other than the navigation form used in mobile devices
+If you don't want it to fade all elements, you have to list the ones you want to be faded individually
+Delete it completely to stop fading
+--------------------------------------------------------------------------------------------------------------- */
+/* *, *::before, *::after{transition:all 0.6s ease-in-out;} */
+
+
+
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+
+
+
+
+/* Breadcrumb */
+#breadcrumb{padding:120px 0 30px;}
+#breadcrumb ul{margin:0; padding:0; list-style:none; text-transform:uppercase;}
+#breadcrumb li{display:inline-block; margin:0 6px 0 0; padding:0;}
+#breadcrumb li a{display:block; position:relative; margin:0; padding:0 12px 0 0; font-size:20px;}
+#breadcrumb li a::after{top:3px; right:0; content:"\f101";}
+#breadcrumb li:last-child a{margin:0; padding:0;}
+#breadcrumb li:last-child a::after{display:none;}
+#breadcrumb .heading{margin:0; font-size:1.6rem;}
+
+
+/* Back to Top */
+#backtotop{z-index:999; display:inline-block; position:fixed; visibility:hidden; bottom:20px; right:20px; width:36px; height:36px; line-height:36px; font-size:16px; text-align:center; opacity:.2;}
+#backtotop i{display:block; width:100%; height:100%; line-height:inherit;}
+#backtotop.visible{visibility:visible; opacity:.5;}
+#backtotop:hover{opacity:1;}
+
+
+/* Tables
+--------------------------------------------------------------------------------------------------------------- */
+table, th, td{border:1px solid; border-collapse:collapse; vertical-align:top;}
+table, th{table-layout:auto;}
+table{width:100%; margin-bottom:15px;}
+th, td{padding:5px 8px;}
+td{border-width:0 1px;}
+
+
+/* Gallery
+--------------------------------------------------------------------------------------------------------------- */
+#gallery{display:block; width:100%; margin-bottom:50px;}
+#gallery figure figcaption{display:block; width:100%; clear:both;}
+#gallery li{margin-bottom:30px;}
+
+
+/* Font Awesome Social Icons
+--------------------------------------------------------------------------------------------------------------- */
+.faico{margin:0; padding:0; list-style:none;}
+.faico li{display:inline-block; margin:8px 5px 0 0; padding:0; line-height:normal;}
+.faico li:last-child{margin-right:0;}
+.faico a{display:inline-block; width:36px; height:36px; line-height:36px; font-size:18px; text-align:center;}
+
+.faico a{color:#FFFFFF; background-color:#000000;}
+.faico a:hover{}
+
+.faicon-dribble:hover{background-color:#EA4C89;}
+.faicon-facebook:hover{background-color:#3B5998;}
+.faicon-google-plus:hover{background-color:#DB4A39;}
+.faicon-linkedin:hover{background-color:#0E76A8;}
+.faicon-twitter:hover{background-color:#00ACEE;}
+.faicon-vk:hover{background-color:#4E658E;}
+
+
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+
+
+/* Colours
+--------------------------------------------------------------------------------------------------------------- */
+
+a:active, a:focus{background:transparent;}/* IE10 + 11 Bugfix - prevents grey background */
+hr, .borderedbox{border-color:#D7D7D7;}
+label span{color:#FF0000; background-color:inherit;}
+input:focus, textarea:focus, *:required:focus{border-color:#04DEE0;}
+
+.overlay{color:#FFFFFF; background-color:inherit;}
+.overlay::after{color:inherit; background-color:rgba(0,0,0,.8);}
+.overlay.light::after{background-color:rgba(0,0,0,.55);}
+
+.btn, .btn.inverse:hover{color:#FFFFFF; background-color:#00e485; border-color: #00e485; border-radius: 10px;}
+.btn:hover, .btn.inverse{color:#000; background-color: transparent; border-color:inherit;}
+
+
+
+
+
+
+
+/* Content Area */
+.overview a{color:inherit;}
+.overview article:hover a{color:#04DEE0;}
+
+.testimonials blockquote{color:#474747; background-color:#FFFFFF;}
+.testimonials blockquote::before{color:rgba(244,244,244,.8);/* #F4F4F4 */}
+.testimonials blockquote::after{border-top-color:#FFFFFF;}
+
+
+/* Click to Action */
+.cta input{background-color:transparent; border-color:rgba(255,255,255,.2);}
+.cta:hover input{color:#FFFFFF; border-color:rgba(255,255,255,1);}
+.cta input:focus{border-color:#04DEE0;}
+.cta button{color:#FFFFFF; background-color:#04DEE0;}
+/* The following was requested from one of our users, it's the so-called "must have" cross-browser placeholder text colouring:
+if your not worried about it, simply delete it, as the placeholder will take on the default preset colour, but it will be rendered differently in each browser */
+.cta input[type="text"][placeholder]{color:#FFFFFF;}/* W3C */
+.cta ::-webkit-input-placeholder{color:#FFFFFF;}/* Chrome */
+.cta :-ms-input-placeholder{color:#FFFFFF;}/* IE 10+ */
+.cta ::-moz-placeholder{color:#FFFFFF; opacity:1;}/* FF 19+ */
+.cta :-moz-placeholder{color:#FFFFFF; opacity:1;}/* FF -19 */
+
+
+/* Footer */
+#footer hr, #footer .borderedbox, #footer .linklist li{border-color:rgba(0,0,0,.1);}
+
+
+/* Navigation */
+#mainav li a{color:inherit; font-weight: 600;}
+#mainav .active a, #mainav a:hover, #mainav li:hover > a{color:#04DEE0; background-color:inherit; text-decoration:none;}
+#mainav li li a, #mainav .active li a{color:#FFFFFF; background-color:rgba(0,0,0,.9); border-color:rgba(0,0,0,.3);}
+#mainav li li:hover > a, #mainav .active .active > a{color:#000; font-weight: 600; background-color:#04DEE0;}
+#mainav form select{color:#FFFFFF; background-color:#000000; border-color:rgba(255,255,255,.3);}
+
+#breadcrumb a{color:inherit; background-color:inherit;}
+#breadcrumb li:last-child a{color:#04DEE0;}
+
+.container .sidebar nav a{color:inherit; border-color:#D7D7D7;}
+.container .sidebar nav a:hover{color:#04DEE0;}
+
+.pagination a, .pagination strong{border-color:#D7D7D7;}
+.pagination .current *{color:#FFFFFF; background-color:#04DEE0;}
+
+#backtotop{color:#FFFFFF; background-color:#04DEE0;}
+
+
+/* Tables + Comments */
+table, th, td, #comments .avatar, #comments input, #comments textarea{border-color:#D7D7D7;}
+#comments input:focus, #comments textarea:focus, #comments *:required:focus{border-color:#04DEE0;}
+th{color:#FFFFFF; background-color:#373737;}
+tr, #comments li, #comments input[type="submit"], #comments input[type="reset"]{color:inherit; background-color:#FBFBFB;}
+tr:nth-child(even), #comments li:nth-child(even){color:inherit; background-color:#F7F7F7;}
+table a, #comments a{background-color:inherit;}
+
+
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------------------ */
+
+
+/* Media Queries
+--------------------------------------------------------------------------------------------------------------- */
+@-ms-viewport{width:device-width;}
+
+
+/* Max Wrapper Width - Laptop, Desktop etc.
+--------------------------------------------------------------------------------------------------------------- */
+@media screen and (min-width:978px){
+	.hoc{max-width:978px;}
+	.bgded{max-width:1950px;
+	min-height: 750px ;}
+	.bgded2{max-width:1950px;
+		min-height:auto ;}
+}
+
+
+/* Mobile Devices
+--------------------------------------------------------------------------------------------------------------- */
+@media screen and (max-width:900px){
+	.hoc{max-width:100%;}
+
+	/*#mainav ul{display:none;}*/
+	#mainav form{display:block;}
+
+	#breadcrumb{}
+
+	.container{}
+	#comments input[type="reset"]{margin-top:10px;}
+	.pagination li{display:inline-block; margin:0 5px 5px 0;}
+
+
+
+	#copyright{}
+	#copyright p:first-of-type{margin-bottom:10px;}
+}
+
+
+@media screen and (max-width:750px){
+	#carouselExampleCaptions {
+		padding-top: 104px;
+	}
+	.imgl, .imgr{display:inline-block; float:none; margin:0 0 10px 0;}
+	.fl_left, .fl_right{display:block; float:none;}
+	.group .group > *:last-child, .clear .clear > *:last-child, .clear .group > *:last-child, .group .clear > *:last-child{margin-bottom:0;}/* Experimental - Needs more testing in different situations, stops double margin when stacking */
+	.one_half, .one_third, .two_third, .one_quarter, .two_quarter, .three_quarter{display:block; float:none; width:auto; margin:0 0 30px 0; padding:0;}
+
+	#topbar{text-align:center;}
+	#topbar > div:first-of-type ul{}
+
+	#header{text-align:center;}
+	#header #logo{margin:0;text-align:center;}
+
+	/*#pageintro article{max-width:none; text-align:left;}*/
+	#pageintro .heading{font-size:25px;}
+	#pageintro .group {
+		display: flex;
+		flex-direction: column;
+	}
+
+	#pageintro .group > div:first-child {
+		order: 2;
+	}
+
+	#pageintro .group > div:nth-child(2) {
+		order: 1;
+	}
+
+	#pageintro .group > p:last-child {
+		order: 3;
+	}
+
+	.sectiontitle{max-width:none;}
+
+	.overview > li:nth-last-child(-n+3){margin-bottom:50px;}
+
+	#footer{padding-bottom:50px;}/* Not required, just looks better */
+}
+
+
+@media screen and (max-width:450px){
+	#topbar > div:first-of-type ul li{display:block; margin:0 0 2px 0;}
+}
+
+
+/* Other
+--------------------------------------------------------------------------------------------------------------- */
+@media screen and (max-width:650px){
+	.scrollable{display:block; width:100%; margin:0 0 30px 0; padding:0 0 15px 0; overflow:auto; overflow-x:scroll;}
+	.scrollable table{margin:0; padding:0; white-space:nowrap;}
+
+	.inline li{display:block; margin-bottom:10px;}
+	.pushright li{margin-right:0;}
+
+	.font-x2{font-size:1.4rem;}
+	.font-x3{font-size:1.6rem;}
+}
+
+
+
+
+.carousel-caption{
+	background-color:rgba(0,0,0,.75);
+	bottom: 0px;
+	width: 100%;
+	height: 100px;
+	left: 0mm;
+}
+.carousel-caption h5{
+	font-size: 20px;
+}
+.carousel-caption p{
+	font-size: 14px;
+}
+.carousel-item{
+	max-height:760px;
+}
+.carousel-indicators{
+	margin-bottom: 0px;
+}
+
+
+
+.nav-link.active{
+	background-color: rgba(255,255,255,.2);
+
+}
+.nav-item {
+	padding-left: 3px;
+
+}
+.nav-item p {
+	padding: 10px 10px 0px ;
+	width: 250px;
+	font-family: 'Poppins', sans-serif;
+	font-size: 20px;
+	color: rgb(87, 87, 87);
+}
+.nav-item img {
+	/*width:100%;*/
+	width: 250px;
+	height: 250px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.singleinfostabs .nav-item {
+	padding-left: 3px;
+}
+
+.scrolling-tab > ul{
+	overflow-x:auto;
+    overflow-y:hidden;
+	flex-wrap:nowrap;
+
+}
+
+
+.singleinfostabs {
+   
+	width: 100%;
+
+}
+.singleinfostabs > ul {
+    overflow-x: auto;
+    overflow-y:hidden;
+    flex-wrap: nowrap;
+    margin-bottom: 14px;
+}
+.singleinfostabs > ul > li {
+
+	margin:0 3px;
+	padding: 10px;
+}
+.singleinfostabs .nav-pills > li > a {
+	font-size: 16px;
+	font-weight: 600;
+    border-radius: 4px;
+    padding: 4px 10px;
+	color: rgb(48, 48, 48) ;
+
+
+}
+.singleinfostabs .nav-item .nav-link{
+	border-width:1px;
+	border-radius: 10px;
+	border-style: solid ;
+	border-color: #869dafb4;
+	padding:0;
+
+
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+	
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9);
+	border-width:1px;
+	background-color: #00c3ff;
+	
+}
+.nav-link.active p{
+	color: rgb(53, 53, 53);
+}
+.nav-tabs .nav-link{
+	background-color: #dbdbdba2;
+	color: rgb(109, 109, 109);
+}
+
+.designer{
+	padding-top: 120px;
+
+}
