@@ -5,12 +5,7 @@
     <title>Ana Geek | Portfolio</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-
-    <!-- Bootstrap-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link href="layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
@@ -20,6 +15,7 @@
     <!-- Top Background Image Wrapper -->
     <div class="bgded2 hoc ">
         <div class="fixed-top ">
+            <!-- Top Contact line -->
             <div class="wrapper ">
                 <div id="topbar" class="hoc clear">
                     <div class="fl_left">
@@ -30,21 +26,32 @@
                     <div class="fl_right">
                         <ul class="nospace">
                             <li></li>
-                            <li><a href="https://www.instagram.com/ana.geek/" title="Instagram"><i
-                                        class="fa fa-lg fa-instagram"></i></a></li>
-                            <li><a href="https://twitter.com/anageekdev " title="Twitter"><i
-                                        class="fa fa-lg fa-twitter"></i></a></li>
-                            <li><a href="https://www.youtube.com/anageek" title="Youtube"><i
-                                        class="fa fa-lg fa-youtube-play"></i></a>
+                            <li>
+                                <a href="https://www.instagram.com/ana.geek/" title="Instagram">
+                                    <i class="fa fa-lg fa-instagram"></i>
+                                </a>
                             </li>
-                            <li><a href="https://www.linkedin.com/in/anageek/" title="Youtube"><i
-                                        class="fa fa-lg fa-linkedin"></i></a>
+                            <li>
+                                <a href="https://twitter.com/anageekdev " title="Twitter">
+                                    <i class="fa fa-lg fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/anageek" title="Youtube">
+                                    <i class="fa fa-lg fa-youtube-play"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/in/anageek/" title="Youtube">
+                                    <i class="fa fa-lg fa-linkedin"></i>
+                                </a>
                             </li>
                         </ul>
 
                     </div>
                 </div>
             </div>
+            <!-- Menu -->
             <div class="wrapper row1 ">
                 <header id="header" class="hoc clear">
                     <div id="logo" class="fl_left">
@@ -52,21 +59,14 @@
                     </div>
                     <nav id="mainav" class="fl_right">
                         <ul class="clear">
-                            <li class="active"><a href="index.html">Home</a></li>
-                            <li><a class="drop" href="">Portfolio</a>
-                                <ul>
-                                    <li><a href="games.html">Games</a></li>
-                                    <li><a href="designer.html">Designer</a></li>
-
-                                </ul>
-                            </li>
+                            <li><a href="index.html">Home</a></li>
+                            <li class="active"><a href="games.html">Projects</a></li>
                             <li><a href="about.html">About</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>
                 </header>
             </div>
-
         </div>
 
         <!-- Images Slide-->
@@ -75,27 +75,35 @@
                 <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
                 <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="images/backgrounds/placetable.gif" class="d-block w-100" alt="...">
+                    <img src="images/projects/Naufrago/placetable.gif" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Naufrago</h5>
-                        <p class="center justify">Machanic of placing an item</p>
+                        <p class="center justify">Place Object feature</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/backgrounds/craftString.gif" class="d-block w-100" alt="...">
+                    <img src="images/projects/Naufrago/craftString.gif" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block ">
                         <h5>Naufrago</h5>
-                        <p class="center justify">Crafting items in inventory</p>
+                        <p class="center justify">Crafting inventory</p>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="images/backgrounds/worktableUI.gif" class="d-block w-100" alt="...">
+                    <img src="images/projects/ColdTrail/Tracks.gif" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>Naufrago</h5>
-                        <p class="center justify">Worktable UI</p>
+                        <h5>Cold Trail</h5>
+                        <p class="center justify">Guidance Tracks</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/projects/ElementalWorlds/ChangeTerrain.gif" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Elemental Worlds</h5>
+                        <p class="center justify">Terrain Modification feature</p>
                     </div>
                 </div>
             </div>
@@ -123,47 +131,71 @@
 
 
 
-
+    <!-- Content-->
     <div class="hoc pt-3">
         <h2> Projects</h2>
-
         <div class="row container-fluid ">
             <div class="singleinfostabs">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item ">
+                        <a class="nav-link" id="floodgates" data-toggle="pill" href="#floodgates_tab" role="tab"
+                           aria-controls="floodgates_tab" aria-selected="true">
+                            <p>Floodgates</p>
+                            <img class="project" src="images/projects/Floodgates/cover.jpeg"></img>
+
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="kalyskah" data-toggle="pill" href="#kalyskah_tab" role="tab"
+                           aria-controls="kalyskah_tab" aria-selected="true">
+                            <p>Kalyskah</p>
+                            <img class="project" src="images/projects/Kalyskah/cover.jpeg"></img>
+
+                        </a>
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link" id="naufrago" data-toggle="pill" href="#naufrago_tab" role="tab"
-                            aria-controls="naufrago_tab" aria-selected="true">
+                           aria-controls="naufrago_tab" aria-selected="true">
                             <p>Naufrago </p>
                             <img class="project" src="images/projects/Naufrago/twitch-boxart.png"></img>
 
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" id="escapecoronga" data-toggle="pill" href="#escapecoronga_tab" role="tab"
-                            aria-controls="pills-profile" aria-selected="false">
-                            <p> Escape from Coronga </p>
-                            <img class="project" src="images/projects/Escape from Coronga/cover.png"></img>
+                        <a class="nav-link" id="piratesattack" data-toggle="pill" href="#piratesattack_tab" role="tab"
+                           aria-controls="pills-profile" aria-selected="false">
+                            <p> Pirate's Attack </p>
+                            <img class="project" src="images/projects/PiratesAttack/cover.jpeg"></img>
                         </a>
                     </li>
-
-                    <!--  <li class="nav-item">
-                        <a class="nav-link" id="test" data-toggle="pill" href="#test_tab" role="tab"
-                            aria-controls="test_tab" aria-selected="false">
-                            <p> Other project 1</p>
-                            <img src="images/avatar.png"></img>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="joeschristmas" data-toggle="pill" href="#joeschristmas_tab" role="tab"
+                           aria-controls="pills-profile" aria-selected="false">
+                            <p> Joe's Christmas </p>
+                            <img class="project" src="images/projects/JoesChristmas/cover.jpeg"></img>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="test2" data-toggle="pill" href="#test2_tab" role="tab"
-                            aria-controls="test2_tab" aria-selected="false">
-                            <p> Other project 2</p>
-                            <img src="images/avatar.png"></img>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="elementalworlds" data-toggle="pill" href="#elementalworlds_tab" role="tab"
+                           aria-controls="pills-profile" aria-selected="false">
+                            <p> Elemental Worlds </p>
+                            <img class="project" src="images/projects/ElementalWorlds/cover.jpeg"></img>
                         </a>
-                    </li> -->
-
-
-
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="polesapart" data-toggle="pill" href="#polesapart_tab" role="tab"
+                           aria-controls="pills-profile" aria-selected="false">
+                            <p> Poles Apart </p>
+                            <img class="project" src="images/projects/PolesApart/cover.jpeg"></img>
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="coldtrail" data-toggle="pill" href="#coldtrail_tab" role="tab"
+                           aria-controls="pills-profile" aria-selected="false">
+                            <p> Cold Trail </p>
+                            <img class="project" src="images/projects/ColdTrail/cover.png"></img>
+                        </a>
+                    </li>
 
                 </ul>
 
@@ -177,36 +209,35 @@
 
     <!--Page content -->
     <div class="container  hoc pb-3">
-
+        
         <div class="container tab-content pb-3" id="pills-tabContent">
 
             <!-- Naufrago content -->
             <div class="tab-pane fade" id="naufrago_tab" role="tabpanel" aria-labelledby="pills-home-tab">
                 <h2>Naufrago</h2>
                 <h3>Game project <i class="fa fa-windows"></i></h3>
-                <!-- Abas nav -->
+                <!-- Tab Button -->
                 <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab"
-                            aria-controls="home" aria-selected="true">Overview</a>
+                           aria-controls="home" aria-selected="true">Overview</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="threed-tab" data-toggle="tab" href="#threed" role="tab"
-                            aria-controls="threed" aria-selected="false">3D</a>
+                           aria-controls="threed" aria-selected="false">3D</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="uiux-tab" data-toggle="tab" href="#uiux" role="tab"
-                            aria-controls="messages" aria-selected="false">UX/UI</a>
+                           aria-controls="messages" aria-selected="false">UX/UI</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="machanic-tab" data-toggle="tab" href="#mechanic" role="tab"
-                            aria-controls="settings" aria-selected="false">Mechanics</a>
+                           aria-controls="settings" aria-selected="false">Mechanics</a>
                     </li>
                 </ul>
 
-                <!-- tabs content -->
+                <!-- Tab content -->
                 <div class="tab-content">
-
                     <div class="tab-pane pt-3 active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                         <p>
                             <b>Naufrago</b> is Third person and First person perspective game. Where the player wakes up
@@ -219,12 +250,7 @@
                         </p>
 
                         <a class="btn" href="https://anageek.github.io/naufrago/" target="_blank">Chek it out</a>
-
-
-
-
                     </div>
-
 
                     <div class="tab-pane" id="threed" role="tabpanel" aria-labelledby="threed-tab">
                         <P>
@@ -248,52 +274,92 @@
 
                     </div>
                 </div>
-                <!-- End Naufrago content-->
-
-
-
             </div>
-            <div class="tab-pane fade" id="escapecoronga_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <h2>Escape From Coronga</h2>
+            <!-- Cold Trail -->
+            <div class="tab-pane fade" id="coldtrail_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Cold trail</h2>
                 <h3>Game project <i class="fa fa-windows"></i></h3>
-                <p>Figure out how to escape without getting sick</p>
-
-
-                <a class="btn" href=" https://anageek.itch.io/escape-from-coronga" target="_blank">Chek it out</a>
-
-
-
-
+                <p>
+                    You play as a baby Arctic fox that is separated from its mother in a blizzard in the Børgefjell national park in Norway.
+                    The fox must find its way home and survive the harsh elements, searching for food,  water and shelter along the way.
+                    A simple wildlife adventure fraught with danger around every possible corner.
+                </p>
+                <a class="btn" href="https://astutejoe.itch.io/cold-trail" target="_blank">Check it out</a>
             </div>
-            <div class="tab-pane fade" id="test_tab" role="tabpanel" aria-labelledby="test_tab">
-                <h2>Other Project 1</h2>
+
+            <!-- Poles Apart -->
+            <div class="tab-pane fade" id="polesapart_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Poles Apart</h2>
                 <h3>Game project <i class="fa fa-windows"></i></h3>
-            </div>
-            <div class="tab-pane fade" id="test2_tab" role="tabpanel" aria-labelledby="test2_tab">
-                <h2>Other Project 2</h2>
-                <h3>Game project <i class="fa fa-windows"></i></h3>
+                <p>
+                    A side scroller platformer that you play as your mirrored version in a distorted world to solve puzzles
+                </p>
+                <a class="btn" href="https://anageek.itch.io/poles-apart" target="_blank">Check it out</a>
             </div>
 
+            <!-- Elemental Worlds -->
+            <div class="tab-pane fade" id="elementalworlds_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Elemental Worlds</h2>
+                <h3>Game project <i class="fa fa-windows"></i></h3>
+                <p>
+                    Elemental Worlds is a 3D puzzle game, where the player can use elemental skills to solve puzzles .
+                    The player can explore 3 worlds  to restore the crystal and the connection between them
+                </p>
+                <a class="btn" href="https://anageek.itch.io/elemental-worlds" target="_blank">Check it out</a>
+            </div>
+            <!-- Joe's Christmas -->
+            <div class="tab-pane fade" id="joeschristmas_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Joe's Christmas</h2>
+                <h3>Game project <i class="fa fa-windows"></i></h3>
+                <p>
+                    Joe is curious boy, In christmas eve he was hidden and prepared to see the moment when Santa visits him.
+                    However something he didn't expect happenned.
+                </p>
+                <a class="btn" href="https://anageek.itch.io/joes-christmas" target="_blank">Check it out</a>
+            </div>
+            <!-- Pirates's Attack -->
+            <div class="tab-pane fade" id="piratesattack_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Pirate's Attack</h2>
+                <h3>Game project <i class="fa fa-windows"></i></h3>
+                <p>
+                    It's a tower defense game, where you have to protect the king from the pirates. You have cannons, explosive barrels and barriers, and you can also upgrade your items. Try to survive and have fun!
+
+                    Click on the tower (middle of island) to start upgrading your items by consuming your points. You get points by every boat you sink.
+                </p>
+                <a class="btn" href="https://anageek.itch.io/pirates-attack" target="_blank">Check it out</a>
+            </div>
+            <!-- Kalyskah -->
+            <div class="tab-pane fade" id="kalyskah_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Kalyskah</h2>
+                <h3>Game project <i class="fa fa-windows"></i></h3>
+                <p>
+                    Fight as a vampire while exploring a dark fantasy open-world in this 3rd person RPG.
+                    Make choices that affect the betterment of humanity, or yourself, strengthen your vampiric skills to fight trolls and undead,
+                    and entertain yourself in fully animated erotic scenes.
+                </p>
+                <a class="btn" href="https://nobrelobo.itch.io/kalyskah" target="_blank">Check it out</a>
+            </div>
+            <!-- Floodgates -->
+            <div class="tab-pane fade" id="floodgates_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <h2>Floodgates</h2>
+                <h3>Game project <i class="fa fa-windows"></i></h3>
+                <p>
+                    Herd 'em up, Mow 'em Down! Mindless Carnage, fast-paced action. Apocalypse: Floodgates is a Third-Person Zombie Horde Shooter
+                    featuring post-apocalyptic weapons and deadly traps. Play online with up to four friends or play alone and see how many zombie
+                    waves you can take down.
+                </p>
+                <a class="btn" href="https://store.steampowered.com/app/1838900/Apocalypse_Floodgates/" target="_blank">Check it out</a>
+            </div>
         </div>
 
-
-
-
-
-
     </div>
-
-
-
-    </main>
-    </div>
+    <!-- Bottom Contact-->
     <div class="wrapper row3 " style="background-color: black;">
         <section class="hoc cta clear">
             <div class="sectiontitle">
                 <h6 class="heading">Contact Me</h6>
                 <p class="center justify"><i class="fa fa-envelope"></i> alcneiva@gmail.com</p>
                 <ul class="faico clear">
-
 
                     <li><a href="https://www.instagram.com/ana.geek/" title="Instagram"><i
                                 class="fa fa-lg fa-instagram"></i></a>
@@ -323,17 +389,9 @@
 
     <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
 
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="layout/scripts/jquery.backtotop.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <script>
         if (window.location.hash === '') {
@@ -342,29 +400,36 @@
             document.getElementById('naufrago_tab').className += ' active'
         }
 
-        if (window.location.hash === '#escapecoronga') {
-            document.getElementById('escapecoronga').className += ' active'
-            document.getElementById('escapecoronga_tab').className += ' show'
-            document.getElementById('escapecoronga_tab').className += ' active'
+        if (window.location.hash === '#coldtrail') {
+            document.getElementById('coldtrail').className += ' active'
+            document.getElementById('coldtrail_tab').className += ' show'
+            document.getElementById('coldtrail_tab').className += ' active'
         }
 
-        if (window.location.hash === '#test2') {
-            document.getElementById('test2').className += ' active'
-            document.getElementById('test2_tab').className += ' show'
-            document.getElementById('test2_tab').className += ' active'
+        if (window.location.hash === '#polesapart') {
+            document.getElementById('polesapart').className += ' active'
+            document.getElementById('polesapart_tab').className += ' show'
+            document.getElementById('polesapart_tab').className += ' active'
         }
 
-        if (window.location.hash === '#test3') {
-            document.getElementById('test3').className += ' active'
-            document.getElementById('test3_tab').className += ' show'
-            document.getElementById('test3_tab').className += ' active'
+        if (window.location.hash === '#elementalworlds') {
+            document.getElementById('elementalworlds').className += ' active'
+            document.getElementById('elementalworlds_tab').className += ' show'
+            document.getElementById('elementalworlds_tab').className += ' active'
         }
 
-        if (window.location.hash === '#naufrago') {
-            document.getElementById('naufrago').className += ' active'
-            document.getElementById('naufrago_tab').className += ' show'
-            document.getElementById('naufrago_tab').className += ' active'
+        if (window.location.hash === '#joeschristmas') {
+            document.getElementById('joeschristmas').className += ' active'
+            document.getElementById('joeschristmas_tab').className += ' show'
+            document.getElementById('joeschristmas_tab').className += ' active'
         }
+
+        if (window.location.hash === '#piratesattack') {
+            document.getElementById('piratesattack').className += ' active'
+            document.getElementById('jpiratesattack_tab').className += ' show'
+            document.getElementById('piratesattack_tab').className += ' active'
+        }
+ 
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.7.0/js/lightgallery-all.min.js"></script>
