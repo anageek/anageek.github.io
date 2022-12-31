@@ -391,7 +391,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <script>
-        if (window.location.hash === '') {
+        if (window.location.hash === '#naufrago') {
             document.getElementById('naufrago').className += ' active'
             document.getElementById('naufrago_tab').className += ' show'
             document.getElementById('naufrago_tab').className += ' active'
@@ -426,7 +426,16 @@
             document.getElementById('jpiratesattack_tab').className += ' show'
             document.getElementById('piratesattack_tab').className += ' active'
         }
- 
+        if (window.location.hash === '#kalyskah') {
+            document.getElementById('kalyskah').className += ' active'
+            document.getElementById('kalyskah_tab').className += ' show'
+            document.getElementById('kalyskah_tab').className += ' active'
+        }
+        if (window.location.hash === '#floodgates') {
+            document.getElementById('floodgates').className += ' active'
+            document.getElementById('floodgates_tab').className += ' show'
+            document.getElementById('floodgates_tab').className += ' active'
+        }
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.7.0/js/lightgallery-all.min.js"></script>
