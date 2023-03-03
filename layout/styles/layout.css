@@ -871,6 +871,25 @@ body {
 		flex-direction: column;
 		align-items: center;
 	}
+	
+	.background-contain {
+		background-size: cover;
+		background-position: -50px;
+	}
+
+	.background-contain h4 {
+		text-shadow: 1px 1px 2px #000;
+	}
+
+	.unreal-wrapper {
+		display: inline-block;
+		margin-top: 15px;
+		background-color: rgba(255,255,255,.6);
+		border-radius: 20px;
+		padding: 0 10px;
+		font-size: 14px;
+		font-weight: bold;
+	}
 }
 
 .nav-item img {
