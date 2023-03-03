@@ -12,12 +12,12 @@
 
 <body>
     <!-- Top Background Image -->
-    <div class="bgded hoc" style="background-image:url('images/backgrounds/bg01.png');">
+    <div class="background-contain bgded hoc" style="background-image:url('images/backgrounds/bg01.png');">
         <div class="fixed-top ">
 
             <!-- Social Media -->
             <div class="wrapper">
-                <div id="topbar" class="hoc clear">
+                <div id="topbar" class="side-paddings hoc clear">
                     <div class="fl_left">
                         <ul class="nospace">
                             <li><i class="fa fa-envelope"></i> alcneiva@gmail.com</li>
@@ -37,7 +37,7 @@
             </div>
 
             <!-- Menu -->
-            <div class="wrapper row1">
+            <div class="side-paddings wrapper row1">
                 <header id="header" class="hoc clear">
                     <div id="logo" class="fl_left">
                         <a href="index.html"><img src="images/logo-small-white.png" alt=""></a>
@@ -66,14 +66,14 @@
         <div id="pageintro" class="hoc clear">
             <article class="center justify">
                 <h4 class="heading ">Ana Geek</h4>
-                <p class="center justify"> Unreal Developer</p>
+                <p class="center justify m-2"> Unreal Developer</p>
                 <!-- <p>For more details</p> -->
-                <footer><a class=" btn" href="CV.pdf" target="_blank">Download CV</a></footer>
+                <a class="btn" href="CV.pdf" target="_blank">Download CV</a>
             </article>
         </div>
     </div>
 
-    <div class=" row2 hoc">
+    <div class="side-paddings row2 hoc">
         <section class="hoc container clear">
             <div class="Content">
                 <h2 class="heading">About Me</h2>
@@ -87,60 +87,56 @@
 
     <!-- Latest Projects -->
     <div class="bgded2 hoc" style=" background-image:url('images/backgrounds/bg02.png'); ">
-        <main class="projects hoc clear ">
-            <h2 class="heading"> Latest Projects</h2>
-            <article class="one_third first ">
-                <a class="imgover btmspace-20" href="games.html#floodgates">
-                    <img src="images/projects/Floodgates/cover.jpeg" alt="">
-                </a>
-                <h2 class="heading">Floodgates</h2>
-                <h3>Game project <i class="fa fa-windows"></i></h3>
-                <p>Zombie Horde Shooter featuring post-apocalyptic weapons and deadly traps</p>
-            </article>
+        <main class="side-paddings projects hoc clear ">
+            <h2 class="heading heading--large"> Latest Projects</h2>
+            <section class="flex-row-center">
+                <article class="one_third first ">
+                    <a class="imgover btmspace-20" href="games.html#floodgates">
+                        <img src="images/projects/Floodgates/cover.jpeg" alt="">
+                    </a>
+                    <h2 class="heading">Floodgates</h2>
+                    <h3>Game project <i class="fa fa-windows"></i></h3>
+                    <p>Zombie Horde Shooter featuring post-apocalyptic weapons and deadly traps</p>
+                </article>
 
-            <article class="one_third">
-                <a class="imgover btmspace-20" href="games.html#kalyskah">
-                    <img src="images/projects/Kalyskah/cover.jpeg" alt="">
-                </a>
-                <h2>Kalyskah</h2>
-                <h3>Game project <i class="fa fa-windows"></i></h3>
-                <p>
-                    Fight as a vampire in open-world RPG.
-                </p>
-            </article>
-            <article class="one_third  ">
-                <a class="imgover" href="games.html#naufrago">
-                    <img src="images/projects/Naufrago/thumb.png" alt="">
-                </a>
-                <h2>Naufrago</h2>
-                <h3>Game project <i class="fa fa-windows"></i></h3>
-                <p>
-                    Survive on a desert island by crafting tools with nature materials
-                </p>
-            </article>
-
+                <article class="one_third">
+                    <a class="imgover btmspace-20" href="games.html#kalyskah">
+                        <img src="images/projects/Kalyskah/cover.jpeg" alt="">
+                    </a>
+                    <h2>Kalyskah</h2>
+                    <h3>Game project <i class="fa fa-windows"></i></h3>
+                    <p>
+                        Fight as a vampire in open-world RPG.
+                    </p>
+                </article>
+                <article class="one_third  ">
+                    <a class="imgover" href="games.html#naufrago">
+                        <img src="images/projects/Naufrago/thumb.png" alt="">
+                    </a>
+                    <h2>Naufrago</h2>
+                    <h3>Game project <i class="fa fa-windows"></i></h3>
+                    <p>
+                        Survive on a desert island by crafting tools with nature materials
+                    </p>
+                </article>
+            </section>
         </main>
     </div>
 
     <!-- Skills -->
-    <div class="">
+    <div class="side-paddings skills-section">
         <figure class="hoc container clear">
             <figcaption class="sectiontitle">
-                <h2 class="">Skills</h2>
+                <h2 class="heading--large">Skills</h2>
             </figcaption>
-            <ul class="nospace group center overview" style="margin-bottom: 0px;">
-                <li class="one_third"><img src="images/ue4-logo.png" alt=""> </li>
-                <li class="one_third"><img src="images/blender-logo.png" alt=""></li>
-                <li class="one_third"><img src="images/photoshop-logo.png" alt=""></li>
-            </ul>
-            <ul style="display: flex; justify-content: space-around;">
-                <li><h3> Github</h3></li>
-                <li><h3> Perforce</h3></li>
-                <li><h3> Figma</h3></li>
-                <li><h3> Jira</h3></li>
-                <li><h3> Confluence</h3></li>
-                <li><h3> Azure</h3></li>
-            </ul>
+            <div class="nospace group center overview flex-center" style="margin-bottom: 0px;">
+                <section class="flex-equal flex-row-center">
+                    <div><img src="images/ue4-logo.png" alt=""></div>
+                    <div><img src="images/blender-logo.png" alt=""></div>
+                    <div><img src="images/photoshop-logo.png" alt=""></div>
+                </section>
+            </div>
+            <h3 style="display: flex; justify-content: center;"> &#183; Github &#183; Perforce &#183; Figma &#183; Jira &#183; Confluence &#183; Azure</h3>
         </figure>
     </div>
 
