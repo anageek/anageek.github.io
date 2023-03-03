@@ -837,6 +837,10 @@ body {
 		padding-left: 15px !important;
 		padding-right: 15px !important;
 	}
+	
+	h4.heading {
+		margin-top: -40px;
+	}
 }
 @media screen and (max-width:752px){
 	#topbar {
@@ -847,6 +851,10 @@ body {
 	}
 	#header {
 		padding-top: 5px;
+	}
+
+	h4.heading {
+		margin-top: -10px;
 	}
 
 	#mainav {
