@@ -480,12 +480,24 @@ input:focus, textarea:focus, *:required:focus{border-color:#04DEE0;}
 .overlay.light::after{background-color:rgba(0,0,0,.55);}
 
 .btn, .btn.inverse:hover{color:#FFFFFF; background-color:#00c573; border-color: #00c573; border-radius: 10px;}
-.btn:hover, .btn.inverse{color:#000; background-color: transparent; border-color:inherit;}
+	.btn:hover, .btn.inverse {
+		color: #000;
+		background-color: #61ffbd;
+		border-color: inherit;
+	}
 .btn {
 	transition: all .2s;
 }
 
-
+.btn2, .btn2.inverse:hover {color: #FFFFFF;	background-color: #ff7b1c;	border-color: #00c573;border-radius: 10px; padding: 10px;}
+	.btn2:hover, .btn2.inverse {
+		color: #000;
+		background-color: #fa9e5c;
+		border-color: inherit;
+	}
+.btn2 {
+	transition: all .2s;
+}
 
 
 
@@ -824,6 +836,7 @@ body {
 
 .flex-equal div {
 	max-width: 300px;
+	padding: 10px;
 }
 @media screen and (min-width:1600px){
 	.background-contain {
