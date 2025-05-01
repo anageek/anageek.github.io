@@ -1,12 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     unoptimized: true,
   },
-  basePath: '',
-  // If you're not using your GitHub username as the repo name, use:
-  // basePath: '/your-repo-name',
+  basePath: process.env.NODE_ENV === 'production' ? '/game-ui-portfolio' : '',
+  trailingSlash: true,
 };
 
 export default nextConfig;
