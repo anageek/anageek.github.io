@@ -59,7 +59,36 @@ export default function ContactSection() {
               <Mail className="h-6 w-6 text-[#0099ff]" />
             </div>
             <h3 className="text-xl font-semibold">alcneiva@gmail.com</h3>
-          </div>    
+          </div>  
+            <div className="flex space-x-6">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+              >
+                <Instagram className="h-5 w-5" />
+                <span className="sr-only">Instagram</span>
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+              >
+                <Youtube className="h-5 w-5" />
+                <span className="sr-only">YouTube</span>
+              </a>
+              <a
+                href="https://twitch.tv"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+              >
+                <Twitch className="h-5 w-5" />
+                <span className="sr-only">Twitch</span>
+              </a>
+            </div>
         </div>
       </div>
       <p className="text-center mt-12">Thank you for viewing my portfolio! I'll get back to you soon.</p>
