@@ -12,8 +12,8 @@ const projects = {
       id: 1,
       title: "Naufrago",
       platform: "Solo Dev",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
+      image: "/images/projects/games/twitch-boxart.png?height=400&width=600",
+      animatedImage: "/images/projects/games/placetable.gif?height=400&width=600",
     },
     {
       id: 2,
