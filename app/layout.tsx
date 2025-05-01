@@ -3,6 +3,9 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Ana Neiva | Tech UI Designer',
+  icons:{
+    icon:"/images/logo/logo-small-white.png"
+  },
   description: 'Created with v0',
   generator: 'v0.dev',
 }
