@@ -10,21 +10,21 @@ const projects = {
   games: [
     {
       id: 1,
-      title: "Fantasy RPG UI",
-      platform: "PC, Console",
+      title: "Naufrago",
+      platform: "Solo Dev",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
       id: 2,
-      title: "Mobile Strategy Game",
-      platform: "iOS, Android",
+      title: "Pixel Escape",
+      platform: "Solo Dev",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
       id: 3,
-      title: "Space Shooter HUD",
+      title: "Pirates's Attack",
       platform: "PC",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
