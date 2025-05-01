@@ -59,81 +59,10 @@ export default function ContactSection() {
               <Mail className="h-6 w-6 text-[#0099ff]" />
             </div>
             <h3 className="text-xl font-semibold">alcneiva@gmail.com</h3>
-          </div>
-
-         /* <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block mb-2 text-sm font-medium">
-                  Your Name
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="bg-transparent border-zinc-700 focus:border-[#0099ff] focus:ring-[#0099ff]"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                  Your Email
-                </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="bg-transparent border-zinc-700 focus:border-[#0099ff] focus:ring-[#0099ff]"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="subject" className="block mb-2 text-sm font-medium">
-                Subject
-              </label>
-              <Input
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-                className="bg-transparent border-zinc-700 focus:border-[#0099ff] focus:ring-[#0099ff]"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block mb-2 text-sm font-medium">
-                Message
-              </label>
-              <Textarea
-                id="message"
-                name="message"
-                rows={6}
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className="bg-transparent border-zinc-700 focus:border-[#0099ff] focus:ring-[#0099ff]"
-              />
-            </div>
-
-            <Button type="submit" className="w-full bg-[#0099ff] hover:bg-[#007acc] border-0" disabled={isSubmitting}>
-              {isSubmitting ? "Sending..." : "Send Message"}
-            </Button>
-          </form>
-          */
-
-          {submitted && (
-            <div className="mt-6 p-4 border border-[#0099ff] text-[#0099ff]">
-              
-            </div>
-          )}
+          </div>    
         </div>
-      </div><p className="text-center">Thank you for viewing my portfolio! I'll get back to you soon.</p>
+      </div>
+      <p className="text-center">Thank you for viewing my portfolio! I'll get back to you soon.</p>
     </section>
   )
 }
