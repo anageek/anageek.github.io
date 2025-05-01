@@ -58,10 +58,10 @@ export default function ContactSection() {
             <div className="p-3 border border-[#0099ff] mr-4">
               <Mail className="h-6 w-6 text-[#0099ff]" />
             </div>
-            <h3 className="text-xl font-semibold">Send me a message</h3>
+            <h3 className="text-xl font-semibold">alcneiva@gmail.com</h3>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+         /* <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block mb-2 text-sm font-medium">
@@ -125,14 +125,15 @@ export default function ContactSection() {
               {isSubmitting ? "Sending..." : "Send Message"}
             </Button>
           </form>
+          */
 
           {submitted && (
             <div className="mt-6 p-4 border border-[#0099ff] text-[#0099ff]">
-              <p className="text-center">Thank you for viewing my portfolio! I'll get back to you soon.</p>
+              
             </div>
           )}
         </div>
-      </div>
+      </div><p className="text-center">Thank you for viewing my portfolio! I'll get back to you soon.</p>
     </section>
   )
 }
