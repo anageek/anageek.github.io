@@ -62,7 +62,7 @@ export default function ContactSection() {
           </div>    
         </div>
       </div>
-      <p className="text-center">Thank you for viewing my portfolio! I'll get back to you soon.</p>
+      <p className="text-center mt-12">Thank you for viewing my portfolio! I'll get back to you soon.</p>
     </section>
   )
 }
