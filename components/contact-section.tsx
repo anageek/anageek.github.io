@@ -62,7 +62,7 @@ export default function ContactSection() {
           </div>  
             <div className="flex justify-center space-x-6">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/ana.geek"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-[#0099ff] transition-colors"
@@ -71,7 +71,7 @@ export default function ContactSection() {
                 <span className="sr-only">Instagram</span>
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/AnaGeek"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-[#0099ff] transition-colors"
@@ -80,7 +80,7 @@ export default function ContactSection() {
                 <span className="sr-only">YouTube</span>
               </a>
               <a
-                href="https://twitch.tv"
+                href="https://www.twitch.tv/ana_geek"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-[#0099ff] transition-colors"
@@ -91,7 +91,7 @@ export default function ContactSection() {
             </div>
         </div>
       </div>
-      <p className="text-center mt-12">Thank you for viewing my portfolio! I'll get back to you soon.</p>
+      <p className="text-center mt-12">Thank you for viewing my portfolio!</p>
     </section>
   )
 }
