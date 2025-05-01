@@ -10,32 +10,60 @@ const projects = {
   games: [
     {
       id: 1,
-      title: "Fantasy RPG UI",
-      platform: "PC, Console",
+      title: "Pixel Escape - O Enigma de Lucas",
+      platform: "PC",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
       id: 2,
-      title: "Mobile Strategy Game",
-      platform: "iOS, Android",
+      title: "Pirate's Attack",
+      platform: "PC",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
       id: 3,
-      title: "Space Shooter HUD",
+      title: "Naufrago - The Crab Island",
       platform: "PC",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
       id: 4,
-      title: "Racing Game Interface",
-      platform: "Console",
+      title: "Poles Apart",
+      platform: "PC",
       image: "/placeholder.svg?height=400&width=600",
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
+    {
+      id: 5,
+      title: "Joe's Christmas",
+      platform: "PC",
+      image: "/placeholder.svg?height=400&width=600",
+      animatedImage: "/placeholder.svg?height=400&width=600",
+    },
+    {
+      id: 6,
+      title: "Elemental Worlds",
+      platform: "PC",
+      image: "/placeholder.svg?height=400&width=600",
+      animatedImage: "/placeholder.svg?height=400&width=600",
+    },
+    {
+      id: 7,
+      title: "Cold Trail",
+      platform: "PC",
+      image: "/placeholder.svg?height=400&width=600",
+      animatedImage: "/placeholder.svg?height=400&width=600",
+    },
+    {
+      id: 8,
+      title: "Escape from Coronga",
+      platform: "PC",
+      image: "/placeholder.svg?height=400&width=600",
+      animatedImage: "/placeholder.svg?height=400&width=600",
+    }
   ],
   uiux: [
     {
