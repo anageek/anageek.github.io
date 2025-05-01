@@ -60,7 +60,7 @@ export default function ContactSection() {
             </div>
             <h3 className="text-xl font-semibold">alcneiva@gmail.com</h3>
           </div>  
-            <div className="flex space-x-6">
+            <div className="flex justify-center space-x-6">
               <a
                 href="https://instagram.com"
                 target="_blank"
