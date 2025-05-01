@@ -40,7 +40,7 @@ export default function HomePage() {
       <ContactSection />
 
       <footer className="bg-zinc-900 py-6 text-center text-zinc-400">
-        <p>© {new Date().getFullYear()} Game UI Portfolio. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
       </footer>
     </main>
   )
