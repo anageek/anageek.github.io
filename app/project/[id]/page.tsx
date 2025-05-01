@@ -4,28 +4,32 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 // This would typically come from a database or API
-const getProjectData = (id: string) => {
-  // Sample project data
-  const projects = [
-    {
-      id: "1",
-      title: "Fantasy RPG UI",
-      category: "Games",
-      platform: "PC, Console",
-      description:
-        "A complete UI system for a fantasy role-playing game, including inventory management, character stats, quest tracking, and dialogue systems.",
-      tools: "Unity, Adobe Photoshop, Illustrator",
-      images: [
-        "/placeholder.svg?height=600&width=800",
-        "/placeholder.svg?height=600&width=800",
-        "/placeholder.svg?height=600&width=800",
-      ],
-      videoUrl: "/placeholder-video.mp4",
-    },
-    // More projects would be defined here
-  ]
+// Sample project data
+const projects = [
+  {
+    id: "1",
+    title: "Fantasy RPG UI",
+    category: "Games",
+    platform: "PC, Console",
+    description:
+      "A complete UI system for a fantasy role-playing game, including inventory management, character stats, quest tracking, and dialogue systems.",
+    tools: "Unity, Adobe Photoshop, Illustrator",
+    images: [
+      "/placeholder.svg?height=600&width=800",
+      "/placeholder.svg?height=600&width=800",
+      "/placeholder.svg?height=600&width=800",
+    ],
+    videoUrl: "/placeholder-video.mp4",
+  },
+  // More projects would be defined here
+]
 
+const getProjectData = (id: string) => {
   return projects.find((p) => p.id === id) || projects[0]
+}
+
+export async function generateStaticParams(params: any) {
+  return projects
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
