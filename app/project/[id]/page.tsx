@@ -28,8 +28,9 @@ const getProjectData = (id: string) => {
   return projects.find((p) => p.id === id) || projects[0]
 }
 
-export default function ProjectPage({ params }: { params: { id: string } }) {
-  const project = getProjectData(params.id)
+export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const project = getProjectData(id)
 
   return (
     <main className="min-h-screen bg-black text-white pt-20">
