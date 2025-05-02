@@ -22,7 +22,7 @@ export default function AboutSection() {
               design, allowing me to bring a holistic approach to game development.
             </p>
 
-            <Button className="mb-8 bg-transparent border border-[#0099ff] text-[#0099ff] hover:bg-[#0099ff] hover:bg-opacity-10 hover:text-white transition-colors rounded-md" download variant="outline" >
+            <Button className="mb-8 bg-transparent border border-[#0099ff] text-[#0099ff] hover:bg-[#0099ff] hover:bg-opacity-10 hover:text-white transition-colors rounded-md" variant="outline" >
             <Download className="mr-2 h-4 w-4" /><a href="/CV.pdf" target="_blank">Download Resume</a>
               
             </Button>

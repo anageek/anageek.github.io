@@ -18,8 +18,9 @@ export default function ProjectCard({ title, subtitle, image, animatedImage, col
   return (
     <div
       className={cn(
-        "group relative overflow-hidden transition-all duration-300 h-[300px]",
+        "group relative overflow-hidden transition-all duration-300 h-[300px] transform",
         columns === 3 ? "col-span-1" : "col-span-1 md:col-span-1",
+        "hover:-translate-y-2" // Add this line for the floating effect
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
