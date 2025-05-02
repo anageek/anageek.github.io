@@ -50,7 +50,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
-            <iframe  className="w-full h-auto aspect-video"  src={project.videoUrl}  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
+            //<iframe  className="w-full h-auto aspect-video"  src={project.videoUrl}  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
+            <iframe  className="w-full h-auto aspect-video"  src="https://www.youtube.com/watch?v=EwmypPEZRCk"  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
 
             {project.videoUrl && (
               <div className="mb-8 overflow-hidden">
