@@ -16,9 +16,11 @@ const projects = [
     tools: "Unreal Engine 4, Adobe Photoshop, Blender",
     images: [
       "/images/projects/games/bamboo.png?height=600&width=800",
-      "/images/projects/games/bananatree.png?height=600&width=800",
+      "/images/projects/games/bananaTree.png?height=600&width=800",
+      "/images/projects/games/craftString.gif?height=600&width=800",
       "/images/projects/games/modifyItem.png?height=600&width=800",
       "/images/projects/games/worktable.png?height=600&width=800",
+      "/images/projects/games/fire.png?height=600&width=800",
       "/images/projects/games/worktableUI.gif?height=600&width=800",
     ],
     videoUrl: "https://www.youtube.com/watch?v=EwmypPEZRCk",
@@ -48,10 +50,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
+            <iframe  className="w-full h-auto aspect-video"  src={project.videoUrl}  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
+
             {project.videoUrl && (
               <div className="mb-8 overflow-hidden">
              
-                <iframe  className="w-full h-auto aspect-video"  src={project.videoUrl}  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
               </div>
             )}
 
