@@ -28,7 +28,7 @@ export default function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "bg-black/80 backdrop-blur-md py-2" : "bg-transparent py-4",
+        scrolled ? "bg-black/80 backdrop-blur-md py-2" : "bg-black/40 py-4",
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -36,7 +36,7 @@ export default function Header() {
           <div className="relative h-10 w-10 mr-3">
             <Image src="/images/logo/logo-small-white.png?height=40&width=40" alt="Logo" fill className="object-contain" />
           </div>
-          <div>
+          <div >
             <span className="font-bold text-xl">Ana Neiva</span>
             <p className="text-xs text-zinc-400 font-light">Tech UI Designer</p>
           </div>

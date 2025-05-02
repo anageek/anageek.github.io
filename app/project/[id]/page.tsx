@@ -23,7 +23,8 @@ const projects = [
       "/images/projects/games/fire.png?height=600&width=800",
       "/images/projects/games/worktableUI.gif?height=600&width=800",
     ],
-    videoUrl: "https://www.youtube.com/watch?v=EwmypPEZRCk",
+    videoUrl: "https://www.youtube.com/embed/EwmypPEZRCk?si=klUukMkoSZrB8KKo",
+    designurl: "https://anageek.github.io"
   },
   // More projects would be defined here
 ]
@@ -41,8 +42,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   const project = getProjectData(id)
 
   return (
-    <main className="min-h-screen bg-black text-white pt-20">
-      <div className="container mx-auto px-4 py-12">
+    <main className="min-h-screen bg-black text-white pt-4">
+           
+      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">{project.category}</h2>
+      <div className="container mx-auto px-4 ">
         <Link href="/#projects" className="inline-flex items-center text-[#0099ff] hover:text-[#007acc] mb-8">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Projects
@@ -50,9 +53,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
-            //<iframe  className="w-full h-auto aspect-video"  src={project.videoUrl}  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
-            <iframe  className="w-full h-auto aspect-video"  src="https://www.youtube.com/watch?v=EwmypPEZRCk"  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
-
+            <iframe width="900" height="315" src={project.videoUrl} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
             {project.videoUrl && (
               <div className="mb-8 overflow-hidden">
              
@@ -78,9 +79,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             <div className="sticky top-24">
               <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
               <div className="mb-6">
-                <span className="inline-block border border-[#0099ff] text-[#0099ff] text-sm px-3 py-1 mr-2">
-                  {project.category}
-                </span>
+                
                 <span className="inline-block border border-zinc-700 text-white text-sm px-3 py-1">
                   {project.platform}
                 </span>
@@ -96,7 +95,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
                 <p className="text-zinc-300">{project.tools}</p>
               </div>
 
-              <Button className="w-full bg-[#0099ff] hover:bg-[#007acc] border-0">View Live Demo</Button>
+              <Button className="w-full bg-[#0099ff] hover:bg-[#007acc] border-0"><a href={project.designurl}>Design Process</a></Button>
             </div>
           </div>
         </div>
