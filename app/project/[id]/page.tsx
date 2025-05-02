@@ -8,18 +8,20 @@ import { Button } from "@/components/ui/button"
 const projects = [
   {
     id: "1",
-    title: "Fantasy RPG UI",
+    title: "Naufrago",
     category: "Games",
-    platform: "PC, Console",
+    platform: "Solo Dev",
     description:
-      "A complete UI system for a fantasy role-playing game, including inventory management, character stats, quest tracking, and dialogue systems.",
-    tools: "Unity, Adobe Photoshop, Illustrator",
+      "Naufrago is a survival exploration game set on a remote, mysterious island. This early alpha represents the first playable environment—Crab Island—where players must gather resources, craft tools, and adapt to the challenges of an isolated landscape.Development began in September 2019, with a focus on creating a grounded, immersive survival experience. This prototype showcases the game's core mechanics, atmosphere, and design direction.",
+    tools: "Unreal Engine 4, Adobe Photoshop, Blender",
     images: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
+      "/images/projects/games/bamboo.png?height=600&width=800",
+      "/images/projects/games/bananatree.png?height=600&width=800",
+      "/images/projects/games/modifyItem.png?height=600&width=800",
+      "/images/projects/games/worktable.png?height=600&width=800",
+      "/images/projects/games/worktableUI.gif?height=600&width=800",
     ],
-    videoUrl: "/placeholder-video.mp4",
+    videoUrl: "https://www.youtube.com/watch?v=EwmypPEZRCk",
   },
   // More projects would be defined here
 ]
@@ -48,10 +50,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           <div className="lg:col-span-2">
             {project.videoUrl && (
               <div className="mb-8 overflow-hidden">
-                <video controls className="w-full h-auto">
-                  <source src={project.videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+             
+                <iframe  className="w-full h-auto aspect-video"  src={project.videoUrl}  title="YouTube video player"  frameBorder="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"  allowFullScreen></iframe>
               </div>
             )}
 
