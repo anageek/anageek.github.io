@@ -10,31 +10,59 @@ const projects = {
   games: [
     {
       id: 1,
-      title: "Naufrago",
-      platform: "Solo Dev",
-      image: "/images/projects/games/twitch-boxart.png?height=400&width=600",
-      animatedImage: "/images/projects/games/placetable.gif?height=400&width=600",
+      title: "Ghosts of Tabor",
+      role: "UX UI Artist",
+      plataform: "VR",
+      image: "/images/projects/games/GhostsOfTabor/Cover.png",
+      animatedImage: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
     },
     {
       id: 2,
-      title: "Pixel Escape",
-      platform: "Solo Dev",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
+      title: "Polker",
+      role: "Unreal Developer",
+      plataform: "PC,Mobile",
+      image: "/images/projects/games/Polker/Cover.png",
+      animatedImage: "/images/projects/games/Polker/AnimatedCover.png",
     },
     {
       id: 3,
-      title: "Pirates's Attack",
-      platform: "PC",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
+      title: "Kalyskah",
+      role: "Unreal Developer",
+      plataform: "PC",
+      image: "/images/projects/games/kalyskah/Cover.png",
+      animatedImage: "/images/projects/games/kalyskah/AnimatedCover.jpeg",
     },
     {
       id: 4,
-      title: "Racing Game Interface",
-      platform: "Console",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
+      title: "Naufrago",
+      role: "Unreal Developer, Personal Project",
+      plataform: "PC",
+      image: "/images/projects/games/Naufrago/Cover.png",
+      animatedImage: "/images/projects/games/Naufrago/AnimatedCover.gif",
+    },
+    {
+      id: 5,
+      title: "Pixel Escape",
+      role: "Unreal Developer, Personal Project",
+      plataform: "PC",
+      image: "/images/projects/games/PixelEscape/Cover.png",
+      animatedImage: "/images/projects/games/PixelEscape/AnimatedCover.gif",
+    },
+    {
+      id: 6,
+      title: "Pirate's Attack",
+      role: "Unreal Developer, Personal Project",
+      plataform: "PC",
+      image: "/images/projects/games/PiratesAttack/Cover.jpeg",
+      animatedImage: "/images/projects/games/PiratesAttack/AnimatedCover.png",
+    },
+    {
+      id: 7,
+      title: "Joe's Christmas",
+      role: "Unreal Developer, Personal Project",
+      plataform: "PC",
+      image: "/images/projects/games/JoesChristmas/Cover.jpeg",
+      animatedImage: "/images/projects/games/JoesChristmas/AnimatedCover.jpg",
     },
   ],
   uiux: [
@@ -184,7 +212,8 @@ export default function ProjectsSection() {
               <Link href={`/project/${project.id}`} key={project.id}>
                 <ProjectCard
                   title={project.title}
-                  subtitle={project.platform}
+                  role={project.role}
+                  platform={project.platform}
                   image={project.image}
                   animatedImage={project.animatedImage}
                   columns={2}

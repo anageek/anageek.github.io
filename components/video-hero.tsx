@@ -2,7 +2,7 @@ export default function VideoHero() {
   return (
     <iframe 
     className="w-screen h-screen"  
-    src="https://www.youtube.com/embed/EwmypPEZRCk?autoplay=1&mute=1" 
+    src="https://www.youtube.com/embed/7vhGAQvUl2g?si=mQyfS-3dz4UxxnXW&autoplay=1&mute=1&loop=1&playlist=7vhGAQvUl2g"
     title="YouTube video player" 
     frameBorder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
