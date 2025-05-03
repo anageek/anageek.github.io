@@ -8,12 +8,13 @@ interface ProjectCardProps {
   title: string
   role: string
   platform: string
+  tools: string
   image: string
   animatedImage: string
   columns: number
 }
 
-export default function ProjectCard({ title, role, platform, image, animatedImage, columns }: ProjectCardProps) {
+export default function ProjectCard({ title, role, platform, tools, image, animatedImage, columns }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
