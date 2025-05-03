@@ -74,7 +74,7 @@ const projects = {
   ],
   uiux: [
     {
-      id: 5,
+      id: 8,
       title: "Game Launcher Redesign",
       role: "",
       platform: "",
@@ -83,7 +83,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 6,
+      id: 9,
       title: "Mobile Game Store",
       role: "",
       platform: "",
@@ -92,7 +92,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 7,
+      id: 10,
       title: "In-game Store UI",
       role: "",
       platform: "",
@@ -101,7 +101,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 8,
+      id: 11,
       title: "Game Settings Panel",
       role: "",
       platform: "",
@@ -112,7 +112,7 @@ const projects = {
   ],
   modeling: [
     {
-      id: 9,
+      id: 12,
       title: "Character Assets",
       role: "",
       platform: "",
@@ -121,7 +121,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 10,
+      id: 13,
       title: "Environment Props",
       role: "",
       platform: "",
@@ -130,7 +130,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 11,
+      id: 14,
       title: "Weapon Models",
       role: "",
       platform: "",
@@ -139,7 +139,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 12,
+      id: 15,
       title: "Vehicle Designs",
       role: "",
       platform: "",
@@ -148,7 +148,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 13,
+      id: 16,
       title: "Architectural Elements",
       role: "",
       platform: "",
@@ -159,7 +159,7 @@ const projects = {
   ],
   design: [
     {
-      id: 14,
+      id: 17,
       title: "Game Logo Collection",
       role: "",
       platform: "",
@@ -168,7 +168,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 15,
+      id: 18,
       title: "Marketing Materials",
       role: "",
       platform: "",
@@ -177,7 +177,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 16,
+      id: 19,
       title: "Character Concept Art",
       role: "",
       platform: "",
@@ -186,7 +186,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 17,
+      id: 20,
       title: "UI Icon Set",
       role: "",
       platform: "",
@@ -195,7 +195,7 @@ const projects = {
       animatedImage: "/placeholder.svg?height=400&width=600",
     },
     {
-      id: 18,
+      id: 21,
       title: "Game Cover Art",
       role: "",
       platform: "",
