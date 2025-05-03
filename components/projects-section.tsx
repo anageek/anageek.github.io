@@ -226,7 +226,8 @@ export default function ProjectsSection() {
               <Link href={`/project/${project.id}`} key={project.id}>
                 <ProjectCard
                   title={project.title}
-                  subtitle={project.tools}
+                  role={project.role}
+                  tools={project.tools}
                   image={project.image}
                   animatedImage={project.animatedImage}
                   columns={2}
@@ -239,7 +240,8 @@ export default function ProjectsSection() {
               <Link href={`/project/${project.id}`} key={project.id}>
                 <ProjectCard
                   title={project.title}
-                  subtitle={project.tools}
+                  role={project.role}
+                  tools={project.tools}
                   image={project.image}
                   animatedImage={project.animatedImage}
                   columns={3}
@@ -252,7 +254,8 @@ export default function ProjectsSection() {
               <Link href={`/project/${project.id}`} key={project.id}>
                 <ProjectCard
                   title={project.title}
-                  subtitle={project.tools}
+                  role={project.role}
+                  tools={project.tools}
                   image={project.image}
                   animatedImage={project.animatedImage}
                   columns={3}
