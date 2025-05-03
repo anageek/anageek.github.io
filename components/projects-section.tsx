@@ -214,6 +214,7 @@ export default function ProjectsSection() {
                   title={project.title}
                   role={project.role}
                   platform={project.platform}
+                  tools={project.tools}
                   image={project.image}
                   animatedImage={project.animatedImage}
                   columns={2}
