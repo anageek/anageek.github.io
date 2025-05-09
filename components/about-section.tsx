@@ -21,18 +21,39 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full h-screen py-20 bg-white bg-cover bg-center transition-all duration-200 ease-in-out"
-      style={{ backgroundImage }}
+      className="relative w-full h-screen py-20 bg-cover bg-center transition-all duration-200 ease-in-out"
+      style={{ backgroundImage,backgroundColor: "#00254a" }}
 
 
       
     >
       <div className="container mx-auto px-4">
         {/* Vertical Box */}
-        <div className="w-full md:w-2/3 flex flex-col items-center space-y-8">
+        <div className="w-full md:w-1/2 flex flex-col items-center space-y-8">
           {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-black">About Me</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">About Me</h2>
 
+          {/* Navigation Buttons */}
+          <nav className="flex space-x-8 border-b border-cyan-200 w-full justify-center">
+            {[
+              { id: "about", label: "About" },
+              { id: "skillset", label: "Skillset" },
+              { id: "hobbies", label: "Hobbies" },
+            ].map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id as Category)}
+                className={cn(
+                  "px-4 py-2 transition-colors relative text-sm uppercase tracking-wider text-left",
+                  activeCategory === category.id
+                    ? "text-[#4db8ff] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#ffffff]"
+                    : "text-white hover:text-blue-500",
+                )}
+              >
+                {category.label}
+              </button>
+            ))}
+          </nav>
 
 
           {/* Content */}
@@ -68,27 +89,6 @@ export default function AboutSection() {
               </div>
             )}
           </div>
-          {/* Navigation Buttons */}
-          <nav className="flex space-x-8 border-b border-cyan-200 w-full justify-center">
-            {[
-              { id: "about", label: "•" },
-              { id: "skillset", label: "•" },
-              { id: "hobbies", label: "•" },
-            ].map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id as Category)}
-                className={cn(
-                  "px-4 py-2 transition-colors relative text-sm uppercase tracking-wider text-left",
-                  activeCategory === category.id
-                    ? "text-[#092233] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#ffffff]"
-                    : "text-white hover:text-blue-500",
-                )}
-              >
-                {category.label}
-              </button>
-            ))}
-          </nav>
 
 
         </div>

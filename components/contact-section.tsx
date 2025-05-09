@@ -49,23 +49,27 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className=" bg-white bg-cover bg-center" >
+    <section id="contact" className="relative bg-cover bg-center  w-full pt-40"  style={{ background: "url('/images/profile/bg06.png')", backgroundRepeat: "no-repeat",backgroundSize: "cover", backgroundColor: "#00254a" }}>
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-black">Contact Me</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-White">Contact Me</h2>
 
         <div className="max-w-2xl mx-auto ">
-          <div className="flex items-center justify-center mb-8">
-            <div className="p-3 border border-[#0099ff] mr-4">
-              <Mail className="h-6 w-6 text-[#0099ff]" />
+          <div className="flex justify-center">
+            <div className="inline-flex items-center mb-8 bg-sky-300/50 rounded-full">
+              <div className="p-3 border rounded-full border-[#ffffff] mr-4">
+                <Mail className="h-6 w-6 text-[#ffffff]" />
+              </div>
+              <h3 className="text-xl mr-4 font-sans font-semibold text-gray-700">alcneiva@gmail.com</h3>
             </div>
-            <h3 className="text-xl font-semibold text-gray-500">alcneiva@gmail.com</h3>
-          </div>  
-            <div className="flex justify-center space-x-6">
+          </div>
+
+
+            <div className="flex justify-center space-x-6 ">
               <a
                 href="https://www.linkedin.com/in/anageek/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+                className="text-white hover:text-[#132244] transition-colors "
               >
                 <Linkedin className="h-5 w-5"/>
                 <span className="sr-only">Linkedin</span>
@@ -74,7 +78,7 @@ export default function ContactSection() {
                 href="https://www.instagram.com/ana.geek"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+                className="text-white hover:text-[#132244] transition-colors"
               >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
@@ -83,7 +87,7 @@ export default function ContactSection() {
                 href="https://www.youtube.com/AnaGeek"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+                className="text-white hover:text-[#132244] transition-colors"
               >
                 <Youtube className="h-5 w-5" />
                 <span className="sr-only">YouTube</span>
@@ -92,7 +96,7 @@ export default function ContactSection() {
                 href="https://www.twitch.tv/ana_geek"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-400 hover:text-[#0099ff] transition-colors"
+                className="text-white hover:text-[#132244] transition-colors"
               >
                 <Twitch className="h-5 w-5" />
                 <span className="sr-only">Twitch</span>

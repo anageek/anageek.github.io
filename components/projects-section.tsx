@@ -212,7 +212,7 @@ export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<Category>("games")
 
   return (
-    <section id="projects" className="" style={{background: "url('/images/profile/bg06.png')"}} >
+    <section id="projects" className="gradient-bg-top bg-slate-900 "  >
       <div className="container py-20">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Projects</h2>
 

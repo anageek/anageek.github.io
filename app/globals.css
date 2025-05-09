@@ -15,8 +15,7 @@ body {
   position: absolute; bottom: 0;
 }
 .gradient-bg-top {
-  height: 300px;
-  background: linear-gradient(to bottom, #000000, #00000000);
+  background: linear-gradient(to bottom, #000000, #00254a);
   margin-top: 0;
 }
 
