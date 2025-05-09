@@ -9,7 +9,7 @@ import Header from "@/components/header"
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-white text-white">
       <Header />
 
       <section id="hero" className="h-screen relative">
@@ -62,9 +62,7 @@ export default function HomePage() {
       <AboutSection />
       <ContactSection />
 
-      <footer className="bg-zinc-900 py-6 text-center text-zinc-400">
-        <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
-      </footer>
+
     </main>
   )
 }

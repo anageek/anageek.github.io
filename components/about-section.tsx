@@ -1,85 +1,98 @@
 import Image from "next/image"
 import { Download, Instagram, Youtube, Twitch } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
+
+type Category = "about" | "skillset" | "hobbies" 
 
 export default function AboutSection() {
+  const [activeCategory, setActiveCategory] = useState<Category>("about");
+  const backgroundImage =
+  activeCategory === "about"
+    ? "url('/images/profile/bg05.png')"
+    : activeCategory === "skillset"
+    ? "url('/images/profile/bg05.png')"
+    : "url('/images/profile/bg05.png')"; // Optional default background
+
+
+
   return (
-    <section id="about" className="py-20 bg-black">
+    <section
+      id="about"
+      className="relative w-full h-screen py-20 bg-white bg-cover bg-center transition-all duration-200 ease-in-out"
+      style={{ backgroundImage }}
+
+
+      
+    >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
+        {/* Vertical Box */}
+        <div className="w-full md:w-2/3 flex flex-col items-center space-y-8">
+          {/* Title */}
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-black">About Me</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="flex justify-center md:justify-end">
-            <div className="relative w-64 h-64 overflow-hidden rounded-full border-2 border-[#0099ff]">
-              <Image src="/images/profile/ProfileRound_PNG.png?height=256&width=256" alt="Ana Neiva" fill className="object-cover" />
-            </div>
-          </div>
 
-          <div>
-            <p className="text-lg mb-6">
-              I'm a passionate game UI designer and developer with over 5 years of experience creating immersive
-              interfaces for games across multiple platforms. My expertise spans UI/UX design, 3D modeling, and graphic
-              design, allowing me to bring a holistic approach to game development.
-            </p>
 
-            <Button className="mb-8 bg-transparent border border-[#0099ff] text-[#0099ff] hover:bg-[#0099ff] hover:bg-opacity-10 hover:text-white transition-colors rounded-md" variant="outline" >
-            <Download className="mr-2 h-4 w-4" /><a href="/CV.pdf" target="_blank">Download Resume</a>
-              
-            </Button>
+          {/* Content */}
+          <div className="text-left">
+            {activeCategory === "about" && (
+              <p className="text-lg text-white">
+                I'm a passionate game UI designer and developer with over 5 years of experience creating immersive
+                interfaces for games across multiple platforms. My expertise spans UI/UX design, 3D modeling, and graphic
+                design, allowing me to bring a holistic approach to game development.
+              </p>
+            )}
 
-          
-          </div>
-        </div>
-
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-[#0099ff]">Skills</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h4 className="font-semibold mb-2">Design</h4>
-                <ul className="space-y-2 text-zinc-300">
-                  <li>UI/UX Design</li>
-                  <li>Graphic Design</li>
-                  <li>Motion Graphics</li>
-                  <li>Illustration</li>
-                  <li>Typography</li>
+            {activeCategory === "skillset" && (
+              <div className="text-lg text-white">
+                
+                <ul className="space-y-2">
+                  <li>Unreal Engine 4 and 5</li>
+                  <li>Adobe Photoshop</li>
+                  <li>Figma</li>
+                  <li>Blender</li>
+                  <li>Maya</li>
                 </ul>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2">Technical</h4>
-                <ul className="space-y-2 text-zinc-300">
-                  <li>3D Modeling</li>
-                  <li>Texturing</li>
-                  <li>Animation</li>
-                  <li>Unity/Unreal</li>
-                  <li>HTML/CSS/JS</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            )}
 
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-[#0099ff]">Experience</h3>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-semibold">Senior UI Designer</h4>
-                <p className="text-[#0099ff]">Game Studio X • 2020 - Present</p>
-                <p className="text-zinc-300">Lead UI/UX design for multiple AAA game titles</p>
+            {activeCategory === "hobbies" && (
+              <div className="text-lg text-white">
+                
+                <p>
+                  In my free time, I enjoy exploring new game mechanics, creating 3D models, and experimenting with graphic
+                  design. I also love playing video games and staying updated with the latest trends in the gaming industry.
+                </p>
               </div>
-              <div>
-                <h4 className="font-semibold">UI/UX Designer</h4>
-                <p className="text-[#0099ff]">Mobile Games Inc • 2018 - 2020</p>
-                <p className="text-zinc-300">Designed interfaces for top-grossing mobile games</p>
-              </div>
-              <div>
-                <h4 className="font-semibold">Graphic Designer</h4>
-                <p className="text-[#0099ff]">Creative Agency Y • 2016 - 2018</p>
-                <p className="text-zinc-300">Created marketing materials for game launches</p>
-              </div>
-            </div>
+            )}
           </div>
+          {/* Navigation Buttons */}
+          <nav className="flex space-x-8 border-b border-cyan-200 w-full justify-center">
+            {[
+              { id: "about", label: "•" },
+              { id: "skillset", label: "•" },
+              { id: "hobbies", label: "•" },
+            ].map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id as Category)}
+                className={cn(
+                  "px-4 py-2 transition-colors relative text-sm uppercase tracking-wider text-left",
+                  activeCategory === category.id
+                    ? "text-[#092233] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#ffffff]"
+                    : "text-white hover:text-blue-500",
+                )}
+              >
+                {category.label}
+              </button>
+            ))}
+          </nav>
+
+
         </div>
       </div>
     </section>
-  )
+  );
 }

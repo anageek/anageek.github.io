@@ -212,13 +212,12 @@ export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<Category>("games")
 
   return (
-    <section id="projects" className="pb-20  bg-zinc-900">
-      <div className="gradient-bg-top" />
-      <div className="container margin-top--">
+    <section id="projects" className="" style={{background: "url('/images/profile/bg06.png')"}} >
+      <div className="container py-20">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Projects</h2>
 
-        <div className="flex justify-center mb-12">
-          <nav className="flex space-x-8 border-b border-zinc-700 w-full max-w-2xl justify-center">
+        <div className="flex justify-center mb-5 ">
+          <nav className="flex space-x-8 border-b border-zinc-700 w-full justify-center">
             {[
               { id: "games", label: "Games" },
               { id: "uiux", label: "UI/UX" },
@@ -231,7 +230,7 @@ export default function ProjectsSection() {
                 className={cn(
                   "px-4 py-2 transition-colors relative text-sm uppercase tracking-wider",
                   activeCategory === category.id
-                    ? "text-[#0099ff] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#0099ff]"
+                    ? "text-[#0099ff] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#0099ff]"
                     : "text-zinc-400 hover:text-white",
                 )}
               >
@@ -240,67 +239,70 @@ export default function ProjectsSection() {
             ))}
           </nav>
         </div>
+        <div
+          className="bg-stone-950 p-5 max-h-[calc(2*300px+1.5rem)] overflow-y-auto scrollbar-custom"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {activeCategory === "games" &&
+              projects.games.map((project) => (
+                <Link href={`/project/${project.id}`} key={project.id}>
+                  <ProjectCard
+                    title={project.title}
+                    role={project.role}
+                    platform={project.platform}
+                    tools={project.tools}
+                    image={project.image}
+                    animatedImage={project.animatedImage}
+                    columns={2}
+                  />
+                </Link>
+              ))}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {activeCategory === "games" &&
-            projects.games.map((project) => (
-              <Link href={`/project/${project.id}`} key={project.id}>
-                <ProjectCard
-                  title={project.title}
-                  role={project.role}
-                  platform={project.platform}
-                  tools={project.tools}
-                  image={project.image}
-                  animatedImage={project.animatedImage}
-                  columns={2}
-                />
-              </Link>
-            ))}
+            {activeCategory === "uiux" &&
+              projects.uiux.map((project) => (
+                <Link href={`/project/${project.id}`} key={project.id}>
+                  <ProjectCard
+                    title={project.title}
+                    role={project.role}
+                    platform={project.platform}
+                    tools={project.tools}
+                    image={project.image}
+                    animatedImage={project.animatedImage}
+                    columns={2}
+                  />
+                </Link>
+              ))}
 
-          {activeCategory === "uiux" &&
-            projects.uiux.map((project) => (
-              <Link href={`/project/${project.id}`} key={project.id}>
-                <ProjectCard
-                  title={project.title}
-                  role={project.role}
-                  platform={project.platform}
-                  tools={project.tools}
-                  image={project.image}
-                  animatedImage={project.animatedImage}
-                  columns={2}
-                />
-              </Link>
-            ))}
+            {activeCategory === "modeling" &&
+              projects.modeling.map((project) => (
+                <Link href={`/project/${project.id}`} key={project.id}>
+                  <ProjectCard
+                    title={project.title}
+                    role={project.role}
+                    platform={project.platform}
+                    tools={project.tools}
+                    image={project.image}
+                    animatedImage={project.animatedImage}
+                    columns={3}
+                  />
+                </Link>
+              ))}
 
-          {activeCategory === "modeling" &&
-            projects.modeling.map((project) => (
-              <Link href={`/project/${project.id}`} key={project.id}>
-                <ProjectCard
-                  title={project.title}
-                  role={project.role}
-                  platform={project.platform}
-                  tools={project.tools}
-                  image={project.image}
-                  animatedImage={project.animatedImage}
-                  columns={3}
-                />
-              </Link>
-            ))}
-
-          {activeCategory === "design" &&
-            projects.design.map((project) => (
-              <Link href={`/project/${project.id}`} key={project.id}>
-                <ProjectCard
-                  title={project.title}
-                  role={project.role}
-                  platform={project.platform}
-                  tools={project.tools}
-                  image={project.image}
-                  animatedImage={project.animatedImage}
-                  columns={3}
-                />
-              </Link>
-            ))}
+            {activeCategory === "design" &&
+              projects.design.map((project) => (
+                <Link href={`/project/${project.id}`} key={project.id}>
+                  <ProjectCard
+                    title={project.title}
+                    role={project.role}
+                    platform={project.platform}
+                    tools={project.tools}
+                    image={project.image}
+                    animatedImage={project.animatedImage}
+                    columns={3}
+                  />
+                </Link>
+              ))}
+          </div>
         </div>
       </div>
     </section>

@@ -49,16 +49,16 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-zinc-900">
+    <section id="contact" className=" bg-white bg-cover bg-center" >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Contact Me</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-black">Contact Me</h2>
 
         <div className="max-w-2xl mx-auto ">
           <div className="flex items-center justify-center mb-8">
             <div className="p-3 border border-[#0099ff] mr-4">
               <Mail className="h-6 w-6 text-[#0099ff]" />
             </div>
-            <h3 className="text-xl font-semibold">alcneiva@gmail.com</h3>
+            <h3 className="text-xl font-semibold text-gray-500">alcneiva@gmail.com</h3>
           </div>  
             <div className="flex justify-center space-x-6">
               <a
@@ -101,8 +101,11 @@ export default function ContactSection() {
         </div>
       </div>
       <div className="text-center mt-12 ">      
-        <p className="inline-block border mr-15 border-zinc-800 px-16 py-6">Thank you for viewing my portfolio!</p>
+        <p className="inline-block rounded-full border mr-15 border-zinc-500 px-16 py-6 text-black">Thank you for viewing my portfolio!</p>
       </div>
+      <footer className=" py-6 text-center text-black ">
+        <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
+      </footer>
     </section>
   )
 }
