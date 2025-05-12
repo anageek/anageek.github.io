@@ -15,9 +15,9 @@ const projects = [
       "Naufrago is a survival exploration game set on a remote, mysterious island. This early alpha represents the first playable environment—Crab Island—where players must gather resources, craft tools, and adapt to the challenges of an isolated landscape.Development began in September 2019, with a focus on creating a grounded, immersive survival experience. This prototype showcases the game's core mechanics, atmosphere, and design direction.",
     tools: "Unreal Engine 4, Adobe Photoshop, Blender",
     images: [
-      "/images/projects/games/Naufrago/bamboo.png?height=600&width=800",
-      "/images/projects/games/Naufrago/bananaTree.png?height=600&width=800",
       "/images/projects/games/Naufrago/craftString.gif?height=600&width=800",
+      "/images/projects/games/Naufrago/placetable.gif?height=600&width=800",
+      "/images/projects/games/Naufrago/AnimatedCover.gif?height=600&width=800",
       "/images/projects/games/Naufrago/modifyItem.png?height=600&width=800",
       "/images/projects/games/Naufrago/worktable.png?height=600&width=800",
       "/images/projects/games/Naufrago/fire.png?height=600&width=800",
@@ -72,7 +72,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             {project.videoUrl && (
               <iframe
                 width="900"
-                height="315"
+                height="500"
                 src={project.videoUrl}
                 title="YouTube video player"
                 frameBorder="0"
