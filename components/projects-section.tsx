@@ -11,7 +11,7 @@ const projects = {
     {
       id: 1,
       title: "Ghosts of Tabor",
-      role: "UX UI Artist",
+      role: "UX/UI Artist",
       platform: "VR",
       tools:"",
       image: "/images/projects/games/GhostsOfTabor/Cover.png",
@@ -160,49 +160,15 @@ const projects = {
   design: [
     {
       id: 17,
-      title: "Game Logo Collection",
+      title: "Logo Design",
       role: "",
-      platform: "",
-      tools: "Illustrator, Photoshop",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
+      platform: "Twitch, YouTube",
+      tools: "Photoshop",
+      image: "/images/projects/design/Sousa/lhama-triangulo.png",
+      animatedImage: "/images/projects/design/Sousa/lhama-triangulo.png",
     },
-    {
-      id: 18,
-      title: "Marketing Materials",
-      role: "",
-      platform: "",
-      tools: "InDesign, Photoshop",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 19,
-      title: "Character Concept Art",
-      role: "",
-      platform: "",
-      tools: "Procreate, Photoshop",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 20,
-      title: "UI Icon Set",
-      role: "",
-      platform: "",
-      tools: "Illustrator, Figma",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 21,
-      title: "Game Cover Art",
-      role: "",
-      platform: "",
-      tools: "Photoshop, Illustrator",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
+    
+  
   ],
 }
 
@@ -213,11 +179,11 @@ export default function ProjectsSection() {
 
   return (
     <section id="projects" className="gradient-bg-top bg-slate-900 "  >
-      <div className="container py-20">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Projects</h2>
+      <div className="container pt-20">
+        <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Projects</h2>
 
-        <div className="flex justify-center mb-5 ">
-          <nav className="flex space-x-8 border-b border-zinc-700 w-full justify-center">
+        <div className="flex justify-center ">
+          <nav className="flex space-x-8 border-b border-zinc-700 w-full justify-center mr-10 ml-10">
             {[
               { id: "games", label: "Games" },
               { id: "uiux", label: "UI/UX" },
@@ -240,9 +206,9 @@ export default function ProjectsSection() {
           </nav>
         </div>
         <div
-          className="bg-stone-950 p-5 max-h-[calc(2*300px+1.5rem)] overflow-y-auto scrollbar-custom"
+          className="p-4 max-h-[calc(2*300px+2rem)] overflow-y-auto scrollbar-custom  bg-black/20 mr-10 ml-10 rounded-b-lg"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {activeCategory === "games" &&
               projects.games.map((project) => (
                 <Link href={`/project/${project.id}`} key={project.id}>

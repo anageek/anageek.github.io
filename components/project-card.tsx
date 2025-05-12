@@ -20,9 +20,9 @@ export default function ProjectCard({ title, role, platform, tools, image, anima
   return (
     <div
       className={cn(
-        "rounded-sm group relative overflow-hidden transition-all duration-300 h-[300px] transform",
+        "rounded-sm group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 h-[300px] transform",
         columns === 3 ? "col-span-1" : "col-span-1 md:col-span-1",
-        "rounded-sm hover:-translate-y-2 hover:shadow-[0_4px_15px_rgba(0,150,246,1)]" // Added blue shadow on hover
+        "rounded-sm hover:-translate-y-2 hover:shadow-[2px_2px_5px_#0099ff]" // Added blue shadow on hover
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -37,7 +37,7 @@ export default function ProjectCard({ title, role, platform, tools, image, anima
               src={animatedImage || "/placeholder.svg"}
               alt={title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105 "
+              className="object-cover transition-transform duration-500 group-hover:scale-100 "
             />
           </div>
         ) : (
@@ -45,7 +45,7 @@ export default function ProjectCard({ title, role, platform, tools, image, anima
             src={image || "/placeholder.svg"}
             alt={title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105 "
+            className="object-cover transition-transform duration-500 group-hover:scale-100 "
           />
         )}
       </div>
