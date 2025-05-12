@@ -32,8 +32,8 @@ const projects = {
       role: "Unreal Developer",
       platform: "PC",
       tools:"",
-      image: "/images/projects/games/kalyskah/Cover.png",
-      animatedImage: "/images/projects/games/kalyskah/AnimatedCover.jpeg",
+      image: "/images/projects/games/Kalyskah/Cover.png",
+      animatedImage: "/images/projects/games/Kalyskah/AnimatedCover.jpeg",
     },
     {
       id: 4,
