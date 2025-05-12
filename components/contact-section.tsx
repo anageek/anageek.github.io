@@ -69,7 +69,7 @@ export default function ContactSection() {
                 href="https://www.linkedin.com/in/anageek/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#132244] transition-colors "
+                className="text-blue-950 hover:text-[#2a4d99] transition-colors "
               >
                 <Linkedin className="h-5 w-5"/>
                 <span className="sr-only">Linkedin</span>
@@ -78,7 +78,7 @@ export default function ContactSection() {
                 href="https://www.instagram.com/ana.geek"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#132244] transition-colors"
+                className="text-blue-950 hover:text-[#2a4d99] transition-colors "
               >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
@@ -87,7 +87,7 @@ export default function ContactSection() {
                 href="https://www.youtube.com/AnaGeek"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#132244] transition-colors"
+                className="text-blue-950 hover:text-[#2a4d99] transition-colors "
               >
                 <Youtube className="h-5 w-5" />
                 <span className="sr-only">YouTube</span>
@@ -96,7 +96,7 @@ export default function ContactSection() {
                 href="https://www.twitch.tv/ana_geek"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white hover:text-[#132244] transition-colors"
+                className="text-blue-950 hover:text-[#2a4d99] transition-colors "
               >
                 <Twitch className="h-5 w-5" />
                 <span className="sr-only">Twitch</span>

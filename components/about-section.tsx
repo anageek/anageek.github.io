@@ -34,7 +34,7 @@ export default function AboutSection() {
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">About Me</h2>
 
           {/* Navigation Buttons */}
-          <nav className="flex space-x-8 border-b border-cyan-200 w-full justify-center">
+          <nav className="flex space-x-8 border-b border-cyan-100/25 w-full justify-center">
             {[
               { id: "about", label: "About" },
               { id: "skillset", label: "Skillset" },
@@ -46,7 +46,7 @@ export default function AboutSection() {
                 className={cn(
                   "px-4 py-2 transition-colors relative text-sm uppercase tracking-wider text-left",
                   activeCategory === category.id
-                    ? "text-[#4db8ff] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#ffffff]"
+                    ? "text-[#4db8ff] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#4db8ff]"
                     : "text-white hover:text-blue-500",
                 )}
               >
@@ -59,7 +59,7 @@ export default function AboutSection() {
           {/* Content */}
           <div className="text-left">
             {activeCategory === "about" && (
-              <p className="text-lg text-white">
+              <p className="font-extralight font-sans text-white">
                 I'm a passionate game UI designer and developer with over 5 years of experience creating immersive
                 interfaces for games across multiple platforms. My expertise spans UI/UX design, 3D modeling, and graphic
                 design, allowing me to bring a holistic approach to game development.
