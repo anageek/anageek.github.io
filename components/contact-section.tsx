@@ -105,7 +105,7 @@ export default function ContactSection() {
         </div>
       </div>
       <div className="text-center mt-12 ">      
-        <p className="inline-block rounded-full border mt-5 mr-15 border-zinc-500 px-16 py-6 text-gray-800 bg-black/20">Thank you for viewing my portfolio!</p>
+        <p className="inline-block rounded-full border mt-10 mr-15 border-zinc-500 px-16 py-6 text-gray-800 bg-black/20">Thank you for viewing my portfolio!</p>
       </div>
       <footer className=" py-6 text-center text-gray-700 font-sans font-extralight"> 
         <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
