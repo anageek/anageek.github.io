@@ -87,7 +87,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
               className={`grid gap-4 mb-8 ${
                 project.images.length === 1
                   ? "grid-cols-1"
-                  : "grid-cols-1 md:grid-cols-3"
+                  : "grid-cols-1 md:grid-cols-2"
               }`}
             >
               {project.images.map((image, index) => (
