@@ -1,63 +1,36 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import {projects} from "@/public/Projects-Content"
+import { usePathname } from "next/navigation" 
 
-// This would typically come from a database or API
-// Sample project data
-const projects = [
-  {
-    id: "1",
-    title: "Naufrago",
-    category: "Games",
-    platform: "Solo Dev",
-    description:
-      "Naufrago is a survival exploration game set on a remote, mysterious island. This early alpha represents the first playable environment—Crab Island—where players must gather resources, craft tools, and adapt to the challenges of an isolated landscape.Development began in September 2019, with a focus on creating a grounded, immersive survival experience. This prototype showcases the game's core mechanics, atmosphere, and design direction.",
-    tools: "Unreal Engine 4, Adobe Photoshop, Blender",
-    images: [
-      "/images/projects/games/Naufrago/craftString.gif?height=600&width=800",
-      "/images/projects/games/Naufrago/placetable.gif?height=600&width=800",
-      "/images/projects/games/Naufrago/AnimatedCover.gif?height=600&width=800",
-      "/images/projects/games/Naufrago/modifyItem.png?height=600&width=800",
-      "/images/projects/games/Naufrago/worktable.png?height=600&width=800",
-      "/images/projects/games/Naufrago/fire.png?height=600&width=800",
+
+
+
+const allProjects = Object.values(projects).flat();
+
+export default function ProjectPage() {
+const [category, id] = usePathname().split("/").at(-1)?.split("_") ??[null,null]; // Get the category from the URL
+
+console.log("All Projects:",category ) // Log all projects to see the structure
+const getProjectData = projects[category as keyof typeof projects]??[]
+console.log("getProjectData:", getProjectData)
+const project = getProjectData.find((project) => String(project.id) === id) // Find the project by ID
+
+ console.log("Project: ", project) 
+  if (!project) {
+    return <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
+              <p className="bg-slate-700/50 rounded-lg border border-zinc-500 px-20 py-10 text-slate-200 bg-black/20 font-sans font-light">Project not found</p>
       
-    ],
-    videoUrl: "https://www.youtube.com/embed/EwmypPEZRCk?si=klUukMkoSZrB8KKo",
-    designurl: "https://anageek.github.io",
-    designButtonLabel: "View Design Process", // New parameter for button label
-  },
-  {
-    id: "17",
-    title: "Logo Design",
-    category: "Design",
-    platform: "",
-    description: "Logo done for a twitch channel",
-    tools: "Adobe Photoshop",
-    images: ["/images/projects/design/Sousa/Portfolio.png"],
-    videoUrl: "",
-    designurl: "",
-    designButtonLabel: "", // No button label if no designurl
-  },
-]
-
-const getProjectData = (id: string) => {
-  return projects.find((p) => p.id === id) || projects[0]
-}
-
-export async function generateStaticParams(params: any) {
-  return projects
-}
-
-export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const project = getProjectData(id)
-
+           </div>
+  }
   return (
     <main className="min-h-screen bg-black text-white pt-4">
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
+      {/* <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">
         {project.category}
-      </h2>
+      </h2> */}
       <div className="container mx-auto px-4 ">
         <Link
           href="/#projects"
@@ -105,7 +78,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           </div>
 
           <div className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-36 ">
               <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
               <div className="mb-6">
                 {project.platform && (

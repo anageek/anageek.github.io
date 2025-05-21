@@ -9,18 +9,19 @@ interface ProjectCardProps {
   role: string
   platform: string
   tools: string
-  image: string
-  animatedImage: string
+  coverImage: string
+  coverAnimated: string
   columns: number
 }
 
-export default function ProjectCard({ title, role, platform, tools, image, animatedImage, columns }: ProjectCardProps) {
+export default function ProjectCard({ title, role, platform, tools, coverImage, coverAnimated, columns }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
     <div
       className={cn(
-        "rounded-sm group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 h-[300px] transform",
+        "rounded-sm group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 transform",
+        "w-full h-[15vw] max-h-[320px] min-h-[180px]", // Responsive height
         columns === 3 ? "col-span-1" : "col-span-1 md:col-span-1",
         "rounded-sm hover:-translate-y-2 hover:shadow-[2px_2px_5px_#0099ff]" // Added blue shadow on hover
       )}
@@ -34,7 +35,7 @@ export default function ProjectCard({ title, role, platform, tools, image, anima
         {isHovered ? (
           <div className="absolute inset-0 w-full h-full">
             <Image
-              src={animatedImage || "/placeholder.svg"}
+              src={coverAnimated || "/placeholder.svg"}
               alt={title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-100 "
@@ -42,7 +43,7 @@ export default function ProjectCard({ title, role, platform, tools, image, anima
           </div>
         ) : (
           <Image
-            src={image || "/placeholder.svg"}
+            src={coverImage || "/placeholder.svg"}
             alt={title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-100 "

@@ -1,187 +1,54 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/components/project-card"
+import {projects} from "@/public/Projects-Content"
 
-// Sample project data
-const projects = {
-  games: [
-    {
-      id: 1,
-      title: "Ghosts of Tabor",
-      role: "UX/UI Artist",
-      platform: "VR",
-      tools:"",
-      image: "/images/projects/games/GhostsOfTabor/Cover.png",
-      animatedImage: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
-    },
-    {
-      id: 2,
-      title: "Polker",
-      role: "Unreal Developer",
-      platform: "PC,Mobile",
-      tools:"",
-      image: "/images/projects/games/Polker/Cover.png",
-      animatedImage: "/images/projects/games/Polker/AnimatedCover.png",
-    },
-    {
-      id: 3,
-      title: "Kalyskah",
-      role: "Unreal Developer",
-      platform: "PC",
-      tools:"",
-      image: "/images/projects/games/Kalyskah/Cover.png",
-      animatedImage: "/images/projects/games/Kalyskah/AnimatedCover.jpeg",
-    },
-    {
-      id: 4,
-      title: "Naufrago",
-      role: "Unreal Developer, Personal Project",
-      platform: "PC",
-      tools:"",
-      image: "/images/projects/games/Naufrago/Cover.png",
-      animatedImage: "/images/projects/games/Naufrago/AnimatedCover.gif",
-    },
-    {
-      id: 5,
-      title: "Pixel Escape",
-      role: "Unreal Developer, Personal Project",
-      platform: "PC",
-      tools:"",
-      image: "/images/projects/games/PixelEscape/Cover.png",
-      animatedImage: "/images/projects/games/PixelEscape/AnimatedCover.gif",
-    },
-    {
-      id: 6,
-      title: "Pirate's Attack",
-      role: "Unreal Developer, Personal Project",
-      platform: "PC",
-      tools:"",
-      image: "/images/projects/games/PiratesAttack/Cover.jpeg",
-      animatedImage: "/images/projects/games/PiratesAttack/AnimatedCover.png",
-    },
-    {
-      id: 7,
-      title: "Joe's Christmas",
-      role: "Unreal Developer, Personal Project",
-      platform: "PC",
-      tools:"",
-      image: "/images/projects/games/JoesChristmas/Cover.jpeg",
-      animatedImage: "/images/projects/games/JoesChristmas/AnimatedCover.jpg",
-    },
-  ],
-  uiux: [
-    {
-      id: 8,
-      title: "Game Launcher Redesign",
-      role: "",
-      platform: "",
-      tools: "Figma, Adobe XD",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 9,
-      title: "Mobile Game Store",
-      role: "",
-      platform: "",
-      tools: "Sketch, Principle",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 10,
-      title: "In-game Store UI",
-      role: "",
-      platform: "",
-      tools: "Figma, After Effects",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 11,
-      title: "Game Settings Panel",
-      role: "",
-      platform: "",
-      tools: "Adobe XD, Illustrator",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-  ],
-  modeling: [
-    {
-      id: 12,
-      title: "Character Assets",
-      role: "",
-      platform: "",
-      tools: "Blender, ZBrush",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 13,
-      title: "Environment Props",
-      role: "",
-      platform: "",
-      tools: "Maya, Substance Painter",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 14,
-      title: "Weapon Models",
-      role: "",
-      platform: "",
-      tools: "3DS Max, Substance Designer",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 15,
-      title: "Vehicle Designs",
-      role: "",
-      platform: "",
-      tools: "Blender, Marmoset",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-    {
-      id: 16,
-      title: "Architectural Elements",
-      role: "",
-      platform: "",
-      tools: "Maya, V-Ray",
-      image: "/placeholder.svg?height=400&width=600",
-      animatedImage: "/placeholder.svg?height=400&width=600",
-    },
-  ],
-  design: [
-    {
-      id: 17,
-      title: "Logo Design",
-      role: "",
-      platform: "Twitch, YouTube",
-      tools: "Photoshop",
-      image: "/images/projects/design/Sousa/lhama-triangulo.png",
-      animatedImage: "/images/projects/design/Sousa/lhama-triangulo.png",
-    },
-    
-  
-  ],
-}
 
 type Category = "games" | "uiux" | "modeling" | "design"
 
 export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<Category>("games")
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Reset scroll when category changes
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0
+    }
+  }, [activeCategory])
+
+  // Reset scroll when section comes into view
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && scrollRef.current) {
+            scrollRef.current.scrollTop = 0
+          }
+        })
+      },
+      { threshold: 0.5 } // Adjust as needed
+    )
+
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section id="projects" className="gradient-bg-top bg-slate-900 "  >
-      <div className="container pt-20">
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="gradient-bg-top bg-slate-900 "
+    >
+      <div className="container pt-20 pb-20">
         <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Projects</h2>
-
         <div className="flex justify-center ">
           <nav className="flex space-x-8 border-b border-zinc-700 w-full justify-center mr-10 ml-10">
             {[
@@ -206,19 +73,25 @@ export default function ProjectsSection() {
           </nav>
         </div>
         <div
-          className="p-4 max-h-[calc(2*300px+2rem)] overflow-y-auto scrollbar-custom  bg-black/20 mr-10 ml-10 rounded-b-lg"
+          ref={scrollRef}
+          className="p-4 overflow-y-auto scrollbar-custom  bg-black/20 mr-10 ml-10 rounded-b-lg"
+          style={{
+            height: "calc(2 * 17.5vw)", // 2 rows + 1 gap (adjust if you change card height/gap)
+            maxHeight: "700px", // Optional: prevent it from getting too tall on huge screens
+            minHeight: "380px", // Optional: minimum height for small screens
+          }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {activeCategory === "games" &&
               projects.games.map((project) => (
-                <Link href={`/project/${project.id}`} key={project.id}>
+                <Link href={`/project/games_${project.id}`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
                     platform={project.platform}
                     tools={project.tools}
-                    image={project.image}
-                    animatedImage={project.animatedImage}
+                    coverImage={project.coverImage}
+                    coverAnimated={project.coverAnimated}
                     columns={2}
                   />
                 </Link>
@@ -226,14 +99,14 @@ export default function ProjectsSection() {
 
             {activeCategory === "uiux" &&
               projects.uiux.map((project) => (
-                <Link href={`/project/${project.id}`} key={project.id}>
+                <Link href={`/project/uiux_${project.id}`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
                     platform={project.platform}
                     tools={project.tools}
-                    image={project.image}
-                    animatedImage={project.animatedImage}
+                    coverImage={project.coverImage}
+                    coverAnimated={project.coverAnimated}
                     columns={2}
                   />
                 </Link>
@@ -241,14 +114,14 @@ export default function ProjectsSection() {
 
             {activeCategory === "modeling" &&
               projects.modeling.map((project) => (
-                <Link href={`/project/${project.id}`} key={project.id}>
+                <Link href={`/project/modeling_${project.id}`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
                     platform={project.platform}
                     tools={project.tools}
-                    image={project.image}
-                    animatedImage={project.animatedImage}
+                    coverImage={project.coverImage}
+                    coverAnimated={project.coverAnimated}
                     columns={3}
                   />
                 </Link>
@@ -256,14 +129,14 @@ export default function ProjectsSection() {
 
             {activeCategory === "design" &&
               projects.design.map((project) => (
-                <Link href={`/project/${project.id}`} key={project.id}>
+                <Link href={`/project/design_${project.id}`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
                     platform={project.platform}
                     tools={project.tools}
-                    image={project.image}
-                    animatedImage={project.animatedImage}
+                    coverImage={project.coverImage}
+                    coverAnimated={project.coverAnimated}
                     columns={3}
                   />
                 </Link>
