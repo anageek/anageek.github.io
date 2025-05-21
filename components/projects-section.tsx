@@ -84,7 +84,7 @@ export default function ProjectsSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {activeCategory === "games" &&
               projects.games.map((project) => (
-                <Link href={`/project/games_${project.id}`} key={project.id}>
+                <Link href={`/project?id=${project.id}&category=games`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}

@@ -6,9 +6,12 @@ import ProjectsSection from "@/components/projects-section"
 import AboutSection from "@/components/about-section"
 import ContactSection from "@/components/contact-section"
 import Header from "@/components/header"
+import { Suspense } from "react"
 
 export default function HomePage() {
   return (
+
+    <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}> 
     <main className="min-h-screen bg-white text-white">
       <Header />
 
@@ -64,5 +67,6 @@ export default function HomePage() {
 
 
     </main>
+    </Suspense>
   )
 }
