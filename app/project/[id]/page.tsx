@@ -19,6 +19,7 @@ const getProjectData = projects[category as keyof typeof projects]??[]
 console.log("getProjectData:", getProjectData)
 const project = getProjectData.find((project) => String(project.id) === id) // Find the project by ID
 
+
  console.log("Project: ", project) 
   if (!project) {
     return <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
