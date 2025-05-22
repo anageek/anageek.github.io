@@ -13,7 +13,7 @@ import { Suspense, useEffect, useState } from "react"
 const allProjects = Object.values(projects).flat();
 
 export default function ProjectPage() {
-  const [params,setParams] = useState({
+  const [params, setParams] = useState({
     category: "",
     id: "",
   })
@@ -27,10 +27,10 @@ export default function ProjectPage() {
         category: category || "",
       })
     }
-  },[])
-   
-const { id, category } = params
-  
+  }, [])
+
+  const { id, category } = params
+
   console.log("ID:", id) // Log the ID to see if it's correct
   console.log("Category:", category) // Log the category to see if it's correct
   if (!id || !category) {
@@ -50,7 +50,9 @@ const { id, category } = params
 
   console.log("Project: ", project)
   if (!project) {
-    return (<Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
+    return (<Suspense fallback={
+      //When there's no project show not found page
+      <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
 
       <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
         <p className="bg-slate-700/50 rounded-lg border border-zinc-500 px-20 py-10 text-slate-200 bg-black/20 font-sans font-light">Project not found</p>
@@ -59,86 +61,134 @@ const { id, category } = params
   }
   return (
     <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
-      <main className="min-h-screen bg-black text-white pt-4">
-        {/* <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">
-        {project.category}
-      </h2> */}
-        <div className="container mx-auto px-4 ">
-          <Link
-            href="/#projects"
-            className="inline-flex items-center text-[#0099ff] hover:text-[#007acc] mb-8"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Projects
-          </Link>
+      <main className="min-h-screen bg-zinc-900 text-white grid grid-cols-1 lg:grid-cols-3 ">
+        {/* Left column: sticky info */}
+        <div id="FixedInfo" className="bg-black/50 col-span-1 container shadow-[2px_2px_10px_black] ">
+          <div className="sticky top-0 py-10">
+            <Link
+              href="/#projects"
+              className="  inline-flex items-center text-[#0099ff] hover:text-[#007acc] mb-10"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Projects
+            </Link>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              {project.videoUrl && (
-                <iframe
-                  width="900"
-                  height="500"
-                  src={project.videoUrl}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="mb-8"
-                ></iframe>
+            <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
+            <div className="mb-6">
+              {project.platform && (
+                <span className="inline-block border border-zinc-700 text-white text-sm px-3 py-1">
+                  {project.platform}
+                </span>
               )}
-
-              <div
-                className={`grid gap-4 mb-8 ${project.images.length === 1
-                    ? "grid-cols-1"
-                    : "grid-cols-1 md:grid-cols-2"
-                  }`}
-              >
-                {project.images.map((image, index) => (
-                  <div key={index} className="overflow-hidden">
-                    <Image
-                      src={image || "/placeholder.svg"}
-                      alt={`${project.title} - Image ${index + 1}`}
-                      width={800}
-                      height={600}
-                      className="w-full h-auto"
-                    />
-                  </div>
-                ))}
-              </div>
             </div>
-
-            <div className="lg:col-span-1">
-              <div className="sticky top-36 ">
-                <h1 className="text-3xl font-bold mb-4">{project.title}</h1>
-                <div className="mb-6">
-                  {project.platform && (
-                    <span className="inline-block border border-zinc-700 text-white text-sm px-3 py-1">
-                      {project.platform}
-                    </span>
-                  )}
-                </div>
-
-                <div className="mb-6">
-                  <h2 className="text-xl font-semibold mb-2">Description</h2>
-                  <p className="text-zinc-300 font-extralight font-sans">{project.description}</p>
-                </div>
-
-                <div className="mb-6">
-                  <h2 className="text-xl font-semibold mb-2">Tools Used</h2>
-                  <p className="text-zinc-300 font-extralight font-sans">{project.tools}</p>
-                </div>
-
-                {/* Conditionally render the button */}
-                {project.designurl && project.designButtonLabel && (
-                  <Button className="bg-[#0099ff] hover:bg-[#007acc] border-0 px-10">
-                    <a href={project.designurl}>{project.designButtonLabel}</a>
-                  </Button>
-                )}
-              </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Description</h2>
+              <p className="text-zinc-300 font-extralight font-sans">{project.description}</p>
             </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">Tools Used</h2>
+              <p className="text-zinc-300 font-extralight font-sans">{project.tools}</p>
+            </div>
+            {project.designurl && project.designButtonLabel && (
+              <Button className="bg-[#0099ff] hover:bg-[#007acc] border-0 px-10">
+                <a href={project.designurl}>{project.designButtonLabel}</a>
+              </Button>
+            )}
           </div>
         </div>
+
+        {/* Right column: video, sections, images, etc. */}
+        <div className="col-span-2 container py-10">
+
+
+          {/* Video URL*/}
+          {project.videoUrl && (
+            <div className="mb-8 w-full aspect-video rounded-lg overflow-hidden shadow-[2px_2px_10px_black] ">
+            <iframe
+              width="500"
+              height="500"
+              src={project.videoUrl}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="w-full h-full rounded-lg "
+            ></iframe>
+            </div>
+          )}
+
+          {/* Sections*/}
+          {project.sections?.map((section, index) => (
+            <div key={index} className="flex flex-col mb-8 ">
+              <h1 className="bg-stone-950  px-10 py-5  rounded-sm text-2xl font-bold ">{section.title}</h1>
+
+              <div className={`grid ${section.image ? "lg:grid-cols-2" : "grid-cols-1"}`}>
+                <div className={section.image ? "" : "col-span-1"}>
+                  {section.description.map((item, idx) => {
+                    if (item.type === "heading") {
+                      return <h3 key={idx} className="text-lg font-bold mt-10 mx-10 text-white">{item.text}</h3>
+                    }
+                    if (item.type === "paragraph") {
+                      return <p key={idx} className="text-zinc-300 font-light font-sans mx-10 ">{item.text}</p>
+                    }
+                    if (item.type === "list" && Array.isArray(item.items)) {
+                      return (
+                        <ul key={idx} className="list-disc pl-8 mb-4 text-zinc-300 font-extralight font-sans mx-10">
+                          {item.items.map((point: string, i: number) => (
+                            <li key={i}>{point}</li>
+                          ))}
+                        </ul>
+                      )
+                    }
+                    return null
+                  })}
+
+                </div>
+
+                {section.image && (
+                  <div className="col-span-1 items-center justify-center flex  ">
+
+                    <Image
+                      src={section.image || "/placeholder.svg"}
+                      alt={`${project.title} - Section ${index + 1}`}
+                      width={800}
+                      height={400}
+                      className="w-full max-w-3xl h-auto mx-auto my-6 rounded-lg "
+                    />
+                  </div>
+                )}
+
+
+              </div>
+
+
+            </div>
+          ))}
+          {/* Images*/}
+          <div
+            className={`grid gap-4 mb-8 ${project.images.length === 1
+                ? "grid-cols-1"
+                : "grid-cols-1 md:grid-cols-2"
+              }`}
+          >
+            {project.images.map((image, index) => (
+              <div key={index} className="overflow-hidden shadow-[2px_2px_10px_black] rounded-lg">
+                <Image
+                  src={image || "/placeholder.svg"}
+                  alt={`${project.title} - Image ${index + 1}`}
+                  width={800}
+                  height={600}
+                  className="w-full h-auto  "
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+
+
       </main>
     </Suspense>
   )
