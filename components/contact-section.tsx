@@ -55,7 +55,7 @@ export default function ContactSection() {
 
         <div className="max-w-2xl mx-auto ">
           <div className="flex justify-center">
-            <div className="inline-flex items-center mb-8 bg-blue-600/20 rounded-full">
+            <div className="inline-flex items-center mb-8 bg-blue-600/40 rounded-full">
               <div className="p-3 border rounded-full border-[#ffffff] mr-4">
                 <Mail className="h-6 w-6 text-[#ffffff]" />
               </div>
