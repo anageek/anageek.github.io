@@ -7,14 +7,13 @@ import { cn } from "@/lib/utils"
 interface ProjectCardProps {
   title: string
   role: string
-  platform: string
   tools: string
   coverImage: string
   coverAnimated: string
   columns: number
 }
 
-export default function ProjectCard({ title, role, platform, tools, coverImage, coverAnimated, columns }: ProjectCardProps) {
+export default function ProjectCard({ title, role, tools, coverImage, coverAnimated, columns }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (

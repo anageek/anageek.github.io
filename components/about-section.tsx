@@ -124,9 +124,9 @@ export default function AboutSection() {
                 </nav>
               </div>
               {/* Content */}
-              <div className="text-left w-full text-lg">
+              <div className="w-full text-lg text-justify">
                 {activeCategory === "hello" && (
-                  <div className={` font-light font-sans text-blue-100 px-20 text-left ${fadeIn ? "fade-in" : ""}`}>
+                  <div className={` font-light font-sans text-blue-100 px-10  ${fadeIn ? "fade-in" : ""}`}>
                     <div className="">
                       <p className="pb-5 ">
                         Hi! I'm Ana, a Brazilian UI/UX designer with a background in Unreal development and over five years of experience creating engaging, user-centered experiences for PC, mobile, and VR.
@@ -138,7 +138,7 @@ export default function AboutSection() {
                 )}
 
                 {activeCategory === "workstuff" && (
-                  <div className={` font-light font-sans text-blue-100 px-10 text-left ${fadeIn ? "fade-in" : " "}`}>
+                  <div className={` font-light font-sans text-blue-100 px-10  ${fadeIn ? "fade-in" : " "}`}>
                     <div className="  w-full  font-sans text-blue-100 ">
                       <div className=" bg-slate-900/40 px-10 py-2 grid grid-cols-2 gap-5 mb-2 font-semibold text-base text-blue-100 w-full rounded-sm uppercase">
                         <div>Tool</div>
@@ -198,7 +198,7 @@ export default function AboutSection() {
                 )}
 
                 {activeCategory === "sidequests" && (
-                  <div className={`font-light font-sans text-blue-100 px-20  text-left ${fadeIn ? "fade-in" : ""}`}>
+                  <div className={`font-light font-sans text-blue-100 px-10  ${fadeIn ? "fade-in" : ""}`}>
                     <p className="pb-4">When I'm not designing, I'm probably:</p>
                     <ul className="space-y-2 pb-4">
                       <li>🕵️‍♀️ Binge-watching <b className="font-semibold">crime shows</b>, especially detective stories and investigation dramas. I've probably seen every one available, seriously.</li>
@@ -213,7 +213,7 @@ export default function AboutSection() {
                 )}
 
                 {activeCategory === "dream" && (
-                  <div className={`font-light font-sans text-blue-100 px-20 text-left ${fadeIn ? "fade-in" : ""}`}>
+                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? "fade-in" : ""}`}>
                     <p>
                       I'd love to work on stylized or cartoon-inspired games that put creativity and charm at the heart of the experience. I'm especially drawn to technically challenging projects where the UI is not just functional but also fun and meaningful.
                       <br /><br />

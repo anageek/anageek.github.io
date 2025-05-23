@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/components/project-card"
-import {projects} from "@/public/Projects-Content"
+import { projects } from "@/public/Projects-Content"
 
 
 type Category = "games" | "uiux" | "modeling" | "design"
@@ -13,6 +13,26 @@ export default function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<Category>("games")
   const scrollRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
+  const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+
+
+   // For sliding indicator
+  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 })
+
+  useEffect(() => {
+    const activeBtn = btnRefs.current[activeCategory]
+    const nav = navRef.current
+    if (activeBtn && nav) {
+      const navRect = nav.getBoundingClientRect()
+      const btnRect = activeBtn.getBoundingClientRect()
+      setIndicatorStyle({
+        left: btnRect.left - navRect.left,
+        width: btnRect.width,
+      })
+    }
+  }, [activeCategory])
+
 
   // Reset scroll when category changes
   useEffect(() => {
@@ -49,8 +69,20 @@ export default function ProjectsSection() {
     >
       <div className="container pt-20 pb-20">
         <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Projects</h2>
-        <div className="flex justify-center ">
-          <nav className="flex space-x-8 border-b border-zinc-700 w-full justify-center mr-10 ml-10">
+<div className="flex justify-center ">
+          <nav
+            ref={navRef}
+            className="relative flex border-b border-zinc-700 w-full justify-center mr-10 ml-10"
+          >
+            {/* Sliding indicator */}
+            <span
+              className="absolute bottom-0 h-[4px] bg-[#0099ff] transition-all duration-300"
+              style={{
+                left: indicatorStyle.left,
+                width: indicatorStyle.width,
+                pointerEvents: "none",
+              }}
+            />
             {[
               { id: "games", label: "Games" },
               { id: "uiux", label: "UI/UX" },
@@ -59,11 +91,12 @@ export default function ProjectsSection() {
             ].map((category) => (
               <button
                 key={category.id}
+                ref={el => { btnRefs.current[category.id] = el; }}
                 onClick={() => setActiveCategory(category.id as Category)}
                 className={cn(
-                  "px-4 py-2 transition-colors relative text-sm uppercase tracking-wider",
+                  "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-regular text-md font-sans text-white",
                   activeCategory === category.id
-                    ? "text-[#0099ff] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#0099ff]"
+                    ? "text-[#ffffff] font-bold"
                     : "text-zinc-400 hover:text-white",
                 )}
               >
@@ -88,7 +121,6 @@ export default function ProjectsSection() {
                   <ProjectCard
                     title={project.title}
                     role={project.role}
-                    platform={project.platform}
                     tools={project.tools}
                     coverImage={project.coverImage}
                     coverAnimated={project.coverAnimated}
@@ -99,11 +131,10 @@ export default function ProjectsSection() {
 
             {activeCategory === "uiux" &&
               projects.uiux.map((project) => (
-                <Link href={`/project/uiux_${project.id}`} key={project.id}>
+                <Link href={`/project?id=${project.id}&category=uiux`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
-                    platform={project.platform}
                     tools={project.tools}
                     coverImage={project.coverImage}
                     coverAnimated={project.coverAnimated}
@@ -114,11 +145,10 @@ export default function ProjectsSection() {
 
             {activeCategory === "modeling" &&
               projects.modeling.map((project) => (
-                <Link href={`/project/modeling_${project.id}`} key={project.id}>
+                <Link href={`/project?id=${project.id}&category=modeling`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
-                    platform={project.platform}
                     tools={project.tools}
                     coverImage={project.coverImage}
                     coverAnimated={project.coverAnimated}
@@ -129,11 +159,10 @@ export default function ProjectsSection() {
 
             {activeCategory === "design" &&
               projects.design.map((project) => (
-                <Link href={`/project/design_${project.id}`} key={project.id}>
+                <Link href={`/project?id=${project.id}&category=design`} key={project.id}>
                   <ProjectCard
                     title={project.title}
                     role={project.role}
-                    platform={project.platform}
                     tools={project.tools}
                     coverImage={project.coverImage}
                     coverAnimated={project.coverAnimated}
