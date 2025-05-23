@@ -19,8 +19,8 @@ export const projects = {
       coverImage: "/images/projects/games/Naufrago/Overview.png",
       coverAnimated: "/images/projects/games/Naufrago/AnimatedCover.gif",
       videoUrl: "https://www.youtube.com/embed/EwmypPEZRCk?si=klUukMkoSZrB8KKo",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
+      designurl: "https://anageek.itch.io/naufrago",
+      designButtonLabel: "Download Game",
       images: [
         "/images/projects/games/Naufrago/craftString.gif?height=600&width=800",
         "/images/projects/games/Naufrago/placetable.gif?height=600&width=800",
@@ -86,9 +86,9 @@ export const projects = {
       tools: "",
       coverImage: "/images/projects/games/PixelEscape/Cover.png",
       coverAnimated: "/images/projects/games/PixelEscape/AnimatedCover.gif",
-      videoUrl: "",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
+      videoUrl: "https://www.youtube.com/embed/my30Iyym_0o?si=yQpem1K0mEu53PAk",
+      designurl: "https://anageek.itch.io/pixel-escape-o-enigma-de-lucas",
+      designButtonLabel: "Download Game",
       sections: [
         {
           title: "Project Overview",
@@ -124,9 +124,9 @@ export const projects = {
       tools: "",
       coverImage: "/images/projects/games/PiratesAttack/Cover.jpeg",
       coverAnimated: "/images/projects/games/PiratesAttack/AnimatedCover.png",
-      videoUrl: "",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
+      videoUrl: "https://www.youtube.com/embed/_s-V_9SB6fs?si=OHAMfSQIR6by9zsl",
+      designurl: "https://anageek.itch.io/pirates-attack",
+      designButtonLabel: "Download Game",
       sections: [
         {
           title: "Project Overview",
@@ -241,7 +241,7 @@ export const projects = {
       ],
       images: [
         "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
-        "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
+        "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
       ],
 
     },
