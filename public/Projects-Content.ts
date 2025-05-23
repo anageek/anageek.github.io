@@ -75,7 +75,7 @@ export const projects = {
     {
       id: 2,
       title: "Pixel Escape",
-      role: "Unreal Developer, Personal Project",
+      role: "Unreal Developer",
       company: "Personal Project",
       status: "Alpha Version",
       category: "",
@@ -482,7 +482,7 @@ export const projects = {
       role: "UX/UI ",
       category: "Design",
       platform: [
-        "PC",
+        "",
       ],
       description: "Logo done for a twitch channel",
       tools: "Adobe Photoshop",
