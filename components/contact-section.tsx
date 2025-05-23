@@ -51,11 +51,11 @@ export default function ContactSection() {
   return (
     <section id="contact" className="relative bg-cover bg-center  w-full pt-40"  style={{ background: "url('/images/profile/bg06.png')", backgroundRepeat: "no-repeat",backgroundSize: "cover", backgroundColor: "#00254a" }}>
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-White">Contact Me</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-black">Contact Me</h2>
 
         <div className="max-w-2xl mx-auto ">
           <div className="flex justify-center">
-            <div className="inline-flex items-center mb-8 bg-sky-300/50 rounded-full">
+            <div className="inline-flex items-center mb-8 bg-blue-600/20 rounded-full">
               <div className="p-3 border rounded-full border-[#ffffff] mr-4">
                 <Mail className="h-6 w-6 text-[#ffffff]" />
               </div>
@@ -104,10 +104,10 @@ export default function ContactSection() {
             </div>
         </div>
       </div>
-      <div className="text-center mt-12 ">      
-        <p className="inline-block rounded-full border mt-10 mr-15 border-zinc-500 px-16 py-6 text-gray-800 bg-black/20">Thank you for viewing my portfolio!</p>
+      <div className="text-center mt-8">        
+        <p className="inline-block rounded-full border  mr-15 border-zinc-500 px-16 py-4 text-gray-800 bg-black/20  bg-blend-">Thank you for viewing my portfolio!</p>
       </div>
-      <footer className=" py-6 text-center text-gray-700 font-sans font-extralight"> 
+      <footer className=" py-6 text-center text-gray-900 font-sans font-extralight"> 
         <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
       </footer>
     </section>
