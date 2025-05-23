@@ -96,7 +96,7 @@ export default function AboutSection() {
               {tabOptions.map((category, idx) => (
                 <button
                   key={category.id}
-                  ref={el => (tabRefs.current[idx] = el)}
+                  ref={el => { tabRefs.current[idx] = el; }}
                   onClick={() => {
                     setActiveCategory(category.id as Category);
                     if (category.id === "workstuff") {
