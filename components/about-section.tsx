@@ -241,7 +241,7 @@ export default function AboutSection() {
 
 
             </div>
-            <div className="col-span-1 flex justify-center items-center">
+            <div className="col-span-1 flex justify-start items-start">
               <Image
                 src="/images/profile/AboutMe2.png"
                 alt="Ana's Profile Picture"
