@@ -222,24 +222,6 @@ export default function AboutSection() {
                   </div>
                 )}
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
             <div className="col-span-1 flex justify-start items-start">
               <Image
