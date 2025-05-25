@@ -183,7 +183,7 @@ export default function AboutSection() {
 
 
                     <div className="flex justify-center mt-5">
-                      <Link href="/CV.pdf" target="_blank" download>
+                      <Link href="https://docs.google.com/document/d/1pfsjhUDq0WJ0484mZKJoVkk8qn7vb_0lwefoMUKdkIU/edit?usp=sharing" target="_blank" download>
                         <Button variant="outline" className="bg-blue-400 text-slate-900 hover:bg-blue-500">
                           <Download className="mr-2 h-4 w-4" />
                           Resume
