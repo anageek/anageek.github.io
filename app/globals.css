@@ -7,7 +7,7 @@ body {
  }
 
 .gradient-bg {
-  height: 300px;
+  height: 200px;
   background: linear-gradient(to top, #000000, #00000000);
   margin-top: 0;
   padding-top: 2%;

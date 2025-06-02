@@ -39,14 +39,14 @@ export default function HomePage() {
       <main className="min-h-screen bg-black text-white">
         <Header />
 
-        <section id="hero" className="min-h-screen relative flex flex-col items-center justify-center">
-          <div className="text-center gradient-bg w-full py-24">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Tech UI Designer</h1>
-            <p className="text-xl md:text-2xl mb-8">Creative Designer & Developer</p>
-            <div className="relative inline-block">
+        <section id="hero" className="min-h-screen relative flex flex-col items-center justify-between">
+          <div className="text-center gradient-bg w-full flex-1 flex items-end justify-center">
+            {/* <h1 className="text-4xl md:text-6xl font-bold mb-4">Tech UI Designer</h1>
+            <p className="text-xl md:text-2xl mb-8">Creative Designer & Developer</p> */}
+            <div className="w-full flex flex-col items-center mb-5">
               <Link
                 href="#projects"
-                className="cursor-pointer z-50 px-6 py-3 border border-[#0099ff] text-[#0099ff] rounded-md hover:bg-[#0099ff] hover:bg-opacity-10 transition-colors inline-flex items-center justify-center"
+                className="cursor-pointer z-50 px-6 py-3 border border-[#0099ff] bg-[#0099ff] text-white rounded-md hover:bg-[#0099ff] hover:bg-opacity-10 transition-colors inline-flex items-center justify-center"
                 onClick={(e) => {
                   e.preventDefault()
                   document.getElementById("projects")?.scrollIntoView({
@@ -75,7 +75,9 @@ export default function HomePage() {
                   </svg>
                 </span>
               </div>
+
             </div>
+
           </div>
 
           <VideoHero />
