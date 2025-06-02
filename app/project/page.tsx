@@ -84,7 +84,7 @@ export default function ProjectPage() {
             <div className="hidden lg:block mb-10">
               <Link
                 href="/#projects"
-                className="inline-flex items-center text-[#0099ff] hover:text-[#007acc] bg-black px-4 py-2 rounded"
+                className="inline-flex items-center text-[#0099ff] hover:text-[#007acc] px-4 py-2 rounded"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Projects
