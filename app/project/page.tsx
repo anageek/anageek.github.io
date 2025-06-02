@@ -31,52 +31,67 @@ export default function ProjectPage() {
 
   const { id, category } = params
 
-  console.log("ID:", id) // Log the ID to see if it's correct
-  console.log("Category:", category) // Log the category to see if it's correct
   if (!id || !category) {
-    return (<Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
-
-      <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
-        <p className="bg-slate-700/50 rounded-lg border border-zinc-500 px-20 py-10 text-slate-200  font-sans font-light">Project not found</p>
-      </div>
-    </Suspense>)
+    return (
+      <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
+        <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
+          <p className="bg-slate-700/50 rounded-lg border border-zinc-500 px-20 py-10 text-slate-200  font-sans font-light">Project not found</p>
+        </div>
+      </Suspense>
+    )
   }
 
-  console.log("All Projects:", category) // Log all projects to see the structure
   const getProjectData = projects[category as keyof typeof projects] ?? []
-  console.log("getProjectData:", getProjectData)
-  const project = getProjectData.find((project) => String(project.id) === id) // Find the project by ID
+  const project = getProjectData.find((project) => String(project.id) === id)
 
-
-  console.log("Project: ", project)
   if (!project) {
-    return (<Suspense fallback={
-      //When there's no project show not found page
-      <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
-
-      <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
-        <p className="bg-slate-700/50 rounded-lg border border-zinc-500 px-20 py-10 text-slate-200  font-sans font-light">Project not found</p>
-      </div>
-    </Suspense>)
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>
+      }>
+        <div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl">
+          <p className="bg-slate-700/50 rounded-lg border border-zinc-500 px-20 py-10 text-slate-200  font-sans font-light">Project not found</p>
+        </div>
+      </Suspense>
+    )
   }
+
   return (
     <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
-      <main className="min-h-screen bg-zinc-900 text-white grid grid-cols-1 lg:grid-cols-3 ">
-        {/* Left column: sticky info */}
-        <div id="FixedInfo" className="bg-black/50 col-span-1 container shadow-[2px_2px_10px_black] ">
-          <div className="sticky top-0 py-10">
-            <Link
-              href="/#projects"
-              className="  inline-flex items-center text-[#0099ff] hover:text-[#007acc] mb-10"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Projects
-            </Link>
-            <br />
+      <main className="min-h-screen bg-zinc-900 text-white grid grid-cols-1 lg:grid-cols-3">
+        {/* Mobile: Fixed top bar for Back link */}
+        <div className="lg:hidden fixed top-0 left-0 w-full z-50 bg-black/80 shadow-md">
+          <Link
+            href="/#projects"
+            className="flex items-center text-[#0099ff] hover:text-[#007acc] px-4 py-3"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Projects
+          </Link>
+        </div>
 
+        {/* Left column: info (sidebar on desktop, block on mobile) */}
+        <div
+          id="FixedInfo"
+          className="
+            bg-black/50 col-span-1 container shadow-[2px_2px_10px_black]
+            pt-16 lg:pt-0
+            lg:static lg:w-auto
+          "
+        >
+          <div className="py-6 px-2 lg:sticky lg:top-0 lg:py-10">
+            {/* Desktop: Back link in sidebar */}
+            <div className="hidden lg:block mb-10">
+              <Link
+                href="/#projects"
+                className="inline-flex items-center text-[#0099ff] hover:text-[#007acc] bg-black px-4 py-2 rounded"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Projects
+              </Link>
+            </div>
             <div className="flex items-center space-x-6">
               <h1 className="text-3xl font-bold ">{project.title}</h1>
-
               {project.platform && (
                 <div className="my-2 space-x-2">
                   {(Array.isArray(project.platform) ? project.platform : [project.platform]).map((platform, idx) => (
