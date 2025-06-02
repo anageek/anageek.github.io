@@ -9,6 +9,7 @@ import Header from "@/components/header"
 import { Suspense } from "react"
 import { projects } from "@/public/Projects-Content"
 import Image from "next/image"
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
   // Define highlighted projects by category and id
@@ -26,6 +27,12 @@ export default function HomePage() {
     })
     .filter(Boolean) as { project: any; category: string }[]
 
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWidth(window.innerWidth);
+    }
+  }, []);
   return (
 
     <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>

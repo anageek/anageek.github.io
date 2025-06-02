@@ -1,9 +1,11 @@
+"use client"
 import Image from "next/image"
 import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+
 
 type Category = "hello" | "workstuff" | "sidequests" | "dream"
 
@@ -27,7 +29,17 @@ export default function AboutSection() {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 0, color: "#602bfc" });
   const [fadeIn, setFadeIn] = useState(false);
-
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+  useEffect(() => {
+    // Set initial width
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      // Listen for resize
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
   useEffect(() => {
     setFadeIn(false);
     const timeout = setTimeout(() => setFadeIn(true), 10);
@@ -110,11 +122,9 @@ export default function AboutSection() {
                       style={{
                         color: activeCategory === category.id ? "#fff" : "#e0e7ef",
                         transition: "color 0.3s",
-                        // Mobile: left border and background color for active tab
-                        borderLeft: activeCategory === category.id && window.innerWidth < 768 ? `4px solid ${tabOptions[idx].color}` : "4px solid transparent",
-                        background: activeCategory === category.id && window.innerWidth < 768 ? `${tabOptions[idx].color}22` : "transparent", // subtle bg
-                        // Desktop: bottom border for active tab
-                        borderBottom: activeCategory === category.id && window.innerWidth >= 768 ? `4px solid ${tabOptions[idx].color}` : "4px solid transparent",
+                        borderLeft: activeCategory === category.id && windowWidth < 768 ? `4px solid ${tabOptions[idx].color}` : "4px solid transparent",
+                        background: activeCategory === category.id && windowWidth < 768 ? `${tabOptions[idx].color}22` : "transparent",
+                        borderBottom: activeCategory === category.id && windowWidth >= 768 ? `4px solid ${tabOptions[idx].color}` : "4px solid transparent",
                       }}
                     >
                       {category.label}
