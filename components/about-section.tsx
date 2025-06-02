@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Download, Instagram, Youtube, Twitch } from "lucide-react"
+import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Link from "next/link"
@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils"
 type Category = "hello" | "workstuff" | "sidequests" | "dream"
 
 const tabOptions = [
-  { id: "hello", label: "Hello!", color: "bg-purple-800" },
-  { id: "workstuff", label: "Work Stuff", color: "bg-yellow-400" },
-  { id: "sidequests", label: "Side Quests", color: "bg-blue-400" },
-  { id: "dream", label: "Dream Collab", color: "bg-green-400" },
+  { id: "hello", label: "Hello!", color: "#602bfc" },
+  { id: "workstuff", label: "Work Stuff", color: "#fde047" },
+  { id: "sidequests", label: "Side Quests", color: "#147eff" },
+  { id: "dream", label: "Dream Collab", color: "#08ff62" },
 ];
 
 const workTools = [
@@ -19,17 +19,15 @@ const workTools = [
   { name: "Adobe Photoshop", level: 90 },
   { name: "Figma", level: 85 },
   { name: "Blender", level: 70 },
-
 ];
-
-
 
 export default function AboutSection() {
   const [activeCategory, setActiveCategory] = useState<Category>("hello");
   const [animateBars, setAnimateBars] = useState(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 0, color: "#602bfc" }); // default to purple-400
+  const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 0, color: "#602bfc" });
   const [fadeIn, setFadeIn] = useState(false);
+
   useEffect(() => {
     setFadeIn(false);
     const timeout = setTimeout(() => setFadeIn(true), 10);
@@ -42,16 +40,10 @@ export default function AboutSection() {
     if (node) {
       const rect = node.getBoundingClientRect();
       const parentRect = node.parentElement!.getBoundingClientRect();
-      const colorMap: Record<string, string> = {
-        "bg-purple-400": "#602bfc",
-        "bg-yellow-400": "#fde047",
-        "bg-blue-400": "#147eff",
-        "bg-green-400": "#08ff62",
-      };
       setSliderStyle({
         left: rect.left - parentRect.left,
         width: rect.width,
-        color: colorMap[tabOptions[idx].color] || "#602bfc",
+        color: tabOptions[idx].color,
       });
     }
   }, [activeCategory]);
@@ -60,16 +52,11 @@ export default function AboutSection() {
     tabRefs.current = Array(tabOptions.length).fill(null);
   }, []);
 
-
-
-  // Only reset animateBars if leaving workstuff
   useEffect(() => {
     if (activeCategory !== "workstuff") {
       setAnimateBars(false);
     }
   }, [activeCategory]);
-
-  const backgroundImage = "url('/images/profile/bg05.png')";
 
   return (
     <section
@@ -81,14 +68,20 @@ export default function AboutSection() {
         <div className="w-full items-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center text-white">About Me</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-10">
-            <div className="col-span-1">
+          {/* Responsive: stack vertically on mobile, side-by-side on desktop */}
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-4 pt-10">
+            <div className="w-full">
               {/* Navigation Menu */}
               <div className="relative flex justify-center pb-5">
-                <nav className="relative flex  border-b border-cyan-100/25 w-full justify-center overflow-hidden">
-                  {/* Sliding background */}
+                <nav
+                  className={cn(
+                    "relative w-full justify-center overflow-hidden border-b border-cyan-100/25",
+                    "flex flex-col gap-2 md:flex-row md:gap-0"
+                  )}
+                >
+                  {/* Sliding background - only show on desktop */}
                   <div
-                    className="absolute w-full top-0 left-0 h-full z-0 transition-all duration-300"
+                    className="absolute top-0 left-0 h-full z-0 transition-all duration-300 hidden md:block"
                     style={{
                       left: sliderStyle.left,
                       width: sliderStyle.width,
@@ -108,7 +101,8 @@ export default function AboutSection() {
                         }
                       }}
                       className={cn(
-                        "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-regular text-md font-sans text-white",
+                        "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-center font-regular text-md font-sans text-white",
+                        "w-full md:w-auto",
                         activeCategory === category.id
                           ? "font-semibold"
                           : "opacity-80 hover:opacity-100"
@@ -116,6 +110,11 @@ export default function AboutSection() {
                       style={{
                         color: activeCategory === category.id ? "#fff" : "#e0e7ef",
                         transition: "color 0.3s",
+                        // Mobile: left border and background color for active tab
+                        borderLeft: activeCategory === category.id && window.innerWidth < 768 ? `4px solid ${tabOptions[idx].color}` : "4px solid transparent",
+                        background: activeCategory === category.id && window.innerWidth < 768 ? `${tabOptions[idx].color}22` : "transparent", // subtle bg
+                        // Desktop: bottom border for active tab
+                        borderBottom: activeCategory === category.id && window.innerWidth >= 768 ? `4px solid ${tabOptions[idx].color}` : "4px solid transparent",
                       }}
                     >
                       {category.label}
@@ -126,9 +125,9 @@ export default function AboutSection() {
               {/* Content */}
               <div className="w-full text-lg text-justify">
                 {activeCategory === "hello" && (
-                  <div className={` font-light font-sans text-blue-100 px-10  ${fadeIn ? "fade-in" : ""}`}>
-                    <div className="">
-                      <p className="pb-5 ">
+                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? "fade-in" : ""}`}>
+                    <div>
+                      <p className="pb-5">
                         Hi! I'm Ana, a Brazilian UI/UX designer with a background in Unreal development and over five years of experience creating engaging, user-centered experiences for PC, mobile, and VR.
                         <br /><br />
                         I began my career as a graphic designer and later moved into Unreal development, which helped me develop a strong foundation in logic and technical thinking. But it was UI/UX that truly brought together my passion for problem-solving and visual design. Since then, I've worked on a range of interactive projects, focusing on interfaces that are both functional and visually appealing.
@@ -138,14 +137,13 @@ export default function AboutSection() {
                 )}
 
                 {activeCategory === "workstuff" && (
-                  <div className={` font-light font-sans text-blue-100 px-10  ${fadeIn ? "fade-in" : " "}`}>
-                    <div className="  w-full  font-sans text-blue-100 ">
-                      <div className=" bg-slate-900/40 px-10 py-2 grid grid-cols-2 gap-5 mb-2 font-semibold text-base text-blue-100 w-full rounded-sm uppercase">
+                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? "fade-in" : ""}`}>
+                    <div className="w-full font-sans text-blue-100">
+                      <div className="bg-slate-900/40 px-10 py-2 grid grid-cols-2 gap-5 mb-2 font-semibold text-base text-blue-100 w-full rounded-sm uppercase">
                         <div>Tool</div>
                         <div>Level</div>
                       </div>
                       {workTools.map((tool, idx) => {
-                        // Determine level label
                         let levelLabel = "";
                         if (tool.level >= 90) levelLabel = "Advanced";
                         else if (tool.level >= 75) levelLabel = "Proficient";
@@ -181,7 +179,6 @@ export default function AboutSection() {
                       </ul>
                     </div>
 
-
                     <div className="flex justify-center mt-5">
                       <Link href="https://docs.google.com/document/d/1pfsjhUDq0WJ0484mZKJoVkk8qn7vb_0lwefoMUKdkIU/edit?usp=sharing" target="_blank" download>
                         <Button variant="outline" className="bg-blue-400 text-slate-900 hover:bg-blue-500">
@@ -190,15 +187,11 @@ export default function AboutSection() {
                         </Button>
                       </Link>
                     </div>
-
-
-
-
                   </div>
                 )}
 
                 {activeCategory === "sidequests" && (
-                  <div className={`font-light font-sans text-blue-100 px-10  ${fadeIn ? "fade-in" : ""}`}>
+                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? "fade-in" : ""}`}>
                     <p className="pb-4">When I'm not designing, I'm probably:</p>
                     <ul className="space-y-2 pb-4">
                       <li>🕵️‍♀️ Binge-watching <b className="font-semibold">crime shows</b>, especially detective stories and investigation dramas. I've probably seen every one available, seriously.</li>
@@ -207,7 +200,6 @@ export default function AboutSection() {
                       <li>🎮 Playing <b className="font-semibold">co-op games</b>. I wish there were more out there.</li>
                       <li>📺 …and yes, watching <b className="font-semibold">reality TV</b>. Not proud. Not ashamed either.</li>
                     </ul>
-
                     <p>I'm a very competitive player and I've sunk thousands of hours into <b className="font-semibold">League of Legends</b> since 2015, <b className="font-semibold">PUBG</b> since 2016, and <b className="font-semibold">Clash Royale</b> since 2017.</p>
                   </div>
                 )}
@@ -223,7 +215,7 @@ export default function AboutSection() {
                 )}
               </div>
             </div>
-            <div className="col-span-1 flex justify-start items-start">
+            <div className="w-full md:col-span-1 flex justify-start items-start">
               <Image
                 src="/images/profile/AboutMe2.png"
                 alt="Ana's Profile Picture"
@@ -233,11 +225,6 @@ export default function AboutSection() {
               />
             </div>
           </div>
-
-
-
-
-
         </div>
       </div>
     </section>
