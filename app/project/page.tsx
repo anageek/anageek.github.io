@@ -188,20 +188,32 @@ export default function ProjectPage() {
                         </ul>
                       )
                     }
+                    if (item.type === "image") {
+                      return (
+                        <Image
+                          key={idx}
+                          src={item.image || "/placeholder.svg"}
+                          alt={`${project.title} - Section Image`}
+                          width={800}
+                          height={600}
+                          className="container mx-auto my-6 rounded-md w-full h-auto"
+                        />
+                      )
+                    }
                     return null
                   })}
 
                 </div>
 
                 {section.image && (
-                  <div className="col-span-1 items-center justify-center flex  ">
+                  <div className="col-span-1 items-center justify-center flex space-x-10 ">
 
                     <Image
                       src={section.image || "/placeholder.svg"}
                       alt={`${project.title} - Section ${index + 1}`}
                       width={400}
                       height={400}
-                      className="w-full max-w-3xl h-auto mx-auto my-6 rounded-lg "
+                      className="mx-10 my-6 rounded-md w-auto max-w-lg md:max-w-xl lg:max-w-lg h-auto container"
                     />
                   </div>
                 )}

@@ -37,17 +37,8 @@ export const projects = {
             { type: "paragraph", text: "The development took around 2 years" },
 
             { type: "heading", text: "My Role" },
-            { type: "paragraph", text: "The development took around 2 years" },
-            {
-              type: "list", items: [
-                "Game Design: Conceptualizing mechanics, systems, and gameplay.",
-                "Programming: Writing and optimizing gameplay, UI, and system code.",
-                "UI/UX Design: Creating intuitive interfaces for easy navigation and interaction.",
-                "Art and Animation: Designing and animating visual elements.",
-                "Sound Design: Integrating sound effects and music for immersion.",
-                "Testing and Debugging: Conducting playtesting and debugging for a polished experience.",
-              ]
-            },
+            { type: "paragraph", text: "Solo Developer - Responsible for the entire development cycle of the game, including game design, programming, art direction, UI/UX, sound integration, and testing. Managed all aspects from concept to release." },
+
           ],
           image: "/images/projects/games/Naufrago/Overview.png",
         },
@@ -61,10 +52,62 @@ export const projects = {
             { type: "paragraph", text: "The research for Naufrago identified a target audience of players who enjoy stylized, vibrant survival games with a touch of whimsy. This audience appreciates bright colors, engaging narratives, and unique interactions. By studying player behavior in similar games and gathering feedback through streaming platforms like Twitch." },
 
             { type: "heading", text: "Benchmark" },
-            { type: "paragraph", text: "To find inspiration for my game, I benchmarked against successful titles such as Raft, The Sims 2 Castaway, The Forest, Astroneer, and Subnautica. The objective was to analyze gameplay mechanics, UI/UX design, and player interaction patterns. My criteria included aesthetics, user experience, and customization options. These games excel in areas like multiplayer capabilities and high-quality graphics, but they often fall short in customization and offering a diverse range of enemies and challenges. By understanding the strengths and weaknesses of these titles, I aim to create a game that offers a well-rounded and engaging player experience." },
-            
+            { type: "paragraph", text: "To find inspiration for this game, I benchmarked against successful titles such as Raft, The Sims 2 Castaway, The Forest, Astroneer, and Subnautica. The objective was to analyze gameplay mechanics, UI/UX design, and player interaction patterns. My criteria included aesthetics, user experience, and customization options. These games excel in areas like multiplayer capabilities and high-quality graphics, but they often fall short in customization and offering a diverse range of enemies and challenges. By understanding the strengths and weaknesses of these titles, I aim to create a game that offers a well-rounded and engaging player experience." },
+
           ],
           image: "/images/projects/games/Naufrago/Research.png",
+        },
+        {
+          title: "Logo Design",
+          description: [
+            { type: "heading", text: "Overview" },
+            { type: "paragraph", text: "The idea was to bring the tropical environment to the logo since the game is on a island. with that in mind I wanted to use natural elements as stone and wood as a texture material" },
+
+            { type: "heading", text: "Drafts" },
+            { type: "image", image: "/images/projects/games/Naufrago/Logo-Study.png" },
+
+            { type: "heading", text: "Typography" },
+            { type: "image", image: "/images/projects/games/Naufrago/Woodpecker demo.png" },
+            { type: "paragraph", text: "I chose the Woodpecker demo font for the 'Naufrago' game logo because its rustic, handcrafted look aligns with the game's theme of survival and crafting on a wild island. The font's distinctive, natural texture sets an adventurous mood and ensures memorable brand recognition." },
+
+            { type: "heading", text: "Color Pallete" },
+            { type: "image", image: "/images/projects/games/Naufrago/Logo-Color-Palette.png" },
+
+          ],
+          image: "/images/projects/games/Naufrago/Logo-Redesign.png",
+        },
+        {
+          title: "Character Design",
+          description: [
+            { type: "paragraph", text: "Creating this female character centered on her vibrant and adventurous personality, inspired by themes from Moana and Fortnite. Her beach-themed attire, warm tones, and cultural jewelry highlight her strength, empathy, and wit. While the male character is still in progress, this design reflects my approach to crafting characters that enhance the game’s story and style." },
+            { type: "image", image: "/images/projects/games/Naufrago/Character-Design.png" },
+
+          ],
+          image: "",
+        },
+       
+        {
+          title: "UX/UI Design",
+          description: [
+            { type: "heading", text: "User Flow" },
+            { type: "paragraph", text: "The user flow for Naufrago is designed to provide a seamless and engaging experience for players. It guides them through the game's core mechanics, from initial exploration to crafting and survival tasks." },
+            { type: "image", image: "/images/projects/games/Naufrago/UserFlow.png" },
+
+            { type: "heading", text: "Wireframes" },
+            { type: "paragraph", text: "The wireframes for Naufrago were created to visualize the game's user interface and interactions. They serve as a blueprint for the game's design, ensuring that all elements are intuitive and user-friendly." },
+            { type: "image", image: "/images/projects/games/Naufrago/Wireframes.png" },
+
+            { type: "heading", text: "Mockups" },
+            { type: "paragraph", text: "The mockups for Naufrago provide a detailed view of the game's user interface, showcasing the design elements and layout. They are essential for visualizing the final look and feel of the game." },
+            { type: "image", image: "/images/projects/games/Naufrago/Mockups.png" },
+
+            { type: "heading", text: "UI/Design Systems" },
+            { type: "paragraph", text: "The UI/Design systems for Naufrago are crafted to enhance player immersion and interaction. The design focuses on intuitive navigation, clear feedback, and a cohesive visual style that complements the game's tropical setting." },
+            { type: "image", image: "/images/projects/games/Naufrago/Elements.png" },
+            { type: "image", image: "/images/projects/games/Naufrago/Elements2.png" },
+
+          ],
+          image: "",
         },
       ],
 
@@ -101,6 +144,7 @@ export const projects = {
                 " ",
               ]
             },
+            { type: "image", image: "" },
           ],
           image: "",
         },
@@ -139,6 +183,7 @@ export const projects = {
                 " ",
               ]
             },
+            { type: "image", image: "" },
           ],
           image: "",
         },
@@ -207,6 +252,7 @@ export const projects = {
                 "Maintaining consistency in design elements across platforms"
               ]
             },
+            { type: "image", image: "" },
 
           ],
           image: "",
@@ -230,6 +276,7 @@ export const projects = {
                 "Maintaining consistency in design elements across platforms"
               ]
             },
+            { type: "image", image: "" },
 
           ],
           image: "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
@@ -280,6 +327,7 @@ export const projects = {
                 "I maintained consistency in design elements and visual standards across multiple platforms and devices.",
               ]
             },
+            { type: "image", image: "" },
           ],
           image: "/images/projects/uiux/Polker/Project-Overview.png",
         },
@@ -295,7 +343,7 @@ export const projects = {
 
             { type: "heading", text: "Benchmark" },
             { type: "paragraph", text: " I benchmarked Poker Club and Zynga Poker for their UI/UX. Poker Club provided inspiration for the PC version of Polker with its sleek visuals and immersive interface, while Zynga Poker helped shape the mobile version thanks to its clean, accessible design. These references guided the development of Polker's UI, helping us create a polished and engaging experience across platforms." },
-
+            { type: "image", image: "" },
 
           ],
           image: "/images/projects/uiux/Polker/Research-games.png",
@@ -311,7 +359,7 @@ export const projects = {
         {
           title: "UI/Design Systems",
           description: [
-           
+
           ],
           image: "/placeholder.svg",
         },
@@ -360,6 +408,7 @@ export const projects = {
                 "Maintaining consistency in design elements across platforms"
               ]
             },
+            { type: "image", image: "" },
 
           ],
           image: "",
@@ -383,6 +432,7 @@ export const projects = {
                 "Maintaining consistency in design elements across platforms"
               ]
             },
+            { type: "image", image: "" },
 
           ],
           image: "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
@@ -425,6 +475,7 @@ export const projects = {
 
               ]
             },
+            { type: "image", image: "" },
           ],
           image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
         },
@@ -500,6 +551,7 @@ export const projects = {
 
               ]
             },
+            { type: "image", image: "" },
           ],
           image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
         },
@@ -535,6 +587,7 @@ export const projects = {
 
               ]
             },
+            { type: "image", image: "" },
           ],
           image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
         },

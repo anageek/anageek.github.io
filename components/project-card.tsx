@@ -28,8 +28,13 @@ export default function ProjectCard({ title, role, tools, coverImage, coverAnima
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Blue highlight effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-20" />
-
+<div
+        className={`
+          absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-20
+          transition-opacity duration-500
+          ${isHovered ? "opacity-0" : "opacity-100"}
+        `}
+      />
       <div className="relative w-full h-full ">
         {isHovered ? (
           <div className="absolute inset-0 w-full h-full">
