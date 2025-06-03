@@ -4,7 +4,7 @@ import { title } from "process"
 // Sample project data
 export const projects = {
   games: [
-    //Naufrago
+    //Naufrago 
     {
       id: 1,
       title: "Naufrago",
@@ -127,7 +127,7 @@ export const projects = {
         "PC",
       ],
       description: "Step into the pixelated shoes of a young boy who finds himself mysteriously trapped inside an old Game Boy console. From within the screen, he can still see the real world, but he no longer belongs to it. To escape, players must guide the boy through a series of surreal, game-inspired challenges that blur the line between reality and retro gameplay.",
-      tools: "Unreal Engine 4, Adobe Photoshop, Blender, Figma",
+      tools: "Unreal Engine 4, Adobe Photoshop, Blender, Figma, Assets from Unreal Marketplace",
       coverImage: "/images/projects/games/PixelEscape/Logo.png",
       coverAnimated: "/images/projects/games/PixelEscape/Gameplay1_GIF_Small.gif",
       videoUrl: "https://www.youtube.com/embed/DBvb68m_vlE?si=ZCFxf5Qhf0T475ZW",
@@ -200,10 +200,11 @@ export const projects = {
 
       ],
     },
+    //Pirate's Attack
     {
       id: 3,
       title: "Pirate's Attack",
-      role: "Unreal Developer, Personal Project",
+      role: "Unreal Developer",
       company: "Ana Neiva",
       status: "Alpha Version",
       category: "Tower Defense",
@@ -221,21 +222,63 @@ export const projects = {
         {
           title: "Project Overview",
           description: [
-            { type: "heading", text: "Product" },
-            { type: "paragraph", text: "It's a tower defense game, where you have to protect the king from the pirates. You have cannons, explosive barrels and barriers, and you can also upgrade your items. Try to survive and have fun! Click on the tower (middle of island) to start upgrading your items by consuming your points. You get points by every boat you sink. This is made for Crie seus jogos gamejam - Theme Infinity Loop" },
+            { type: "heading", text: "Project Overview" },
+            { type: "paragraph", text: "Pirate’s Attack is a tower defense game set on a tropical island under siege. Players strategically place cannons, barrels, and barriers to fend off waves of invading pirates. With each successful defense, players earn points they can use to upgrade their defenses and prepare for more intense attacks. The game was developed as a personal project to explore a new genre and experiment with reusing existing assets. It is currently in its alpha stage, with plans for further balancing and refinement based on early feedback." },
             { type: "image", image: "/images/projects/games/PiratesAttack/cover.png" },
 
             { type: "heading", text: "Project Duration" },
             { type: "paragraph", text: "The development took around 2 months" },
 
-            { type: "heading", text: "Research" },
-            { type: "paragraph", text: "Inspired in Clash Royalle" },
-           
-            { type: "image", image: "/images/projects/games/PiratesAttack/Cannon Prototype.gif" },
+            { type: "heading", text: "Design Goals" },
+
+            {
+              type: "list", items: [
+                "Explore a New Genre: I typically work in different genres, so this was an opportunity to break out of my usual patterns and apply my design knowledge to a tower defense setting.",
+                "Asset Reuse: I challenged myself to build a compelling experience using assets I had already created or sourced.",
+                "Inspired by Clash Royale: The real-time tension and upgrade mechanics of Clash Royale influenced my decisions around pacing and UI style.",
+              ]
+            },
+
+            { type: "heading", text: "Target Audience" },
+            { type: "paragraph", text: "While the target audience wasn't initially defined, the game appeals to:" },
+            {
+              type: "list", items: [
+                "Strategy game enthusiasts who enjoy resource management and tactical gameplay.",
+                "Casual PC gamers looking for short, engaging play sessions.",
+                "Players who enjoy pirate-themed settings and light-hearted action.",
+              ]
+            },
+            { type: "paragraph", text: "This insight will help shape marketing and polish priorities in future iterations." },
+
+
+
+
+
+          ],
+          image: "",
+        },
+        {
+          title: "User Research",
+          description: [
+            { type: "heading", text: "User Testing" },
+            { type: "paragraph", text: "I conducted informal playtests with friends, who provided valuable feedback on:" },
+            {
+              type: "list", items: [
+                "Game pacing",
+                "Upgrade effectiveness",
+                "Visual clarity of enemy waves and defenses",
+              ]
+            },
+            { type: "paragraph", text: "This feedback loop led to small but meaningful improvements in the core gameplay loop." },
+
+          ],
+          image: "/images/projects/games/PiratesAttack/acheta.png",
+        },
+        {
+          title: "UI/Design Systems",
+          description: [
 
             { type: "image", image: "/images/projects/games/PiratesAttack/UI Elements.png" },
-
-
 
           ],
           image: "",
@@ -252,28 +295,43 @@ export const projects = {
 
       ],
     },
-    // {
-    //     id: 7,
-    //     title: "Joe's Christmas",
-    //     role: "Unreal Developer, Personal Project",
-    //company: "Personal Project",
-    // status: "Alpha Version",
-    //     category:"",
-    //     platform: "PC",
-    //     description:"",
-    //     tools:"",
-    //     coverImage: "/images/projects/games/JoesChristmas/Cover.jpeg",
-    //     coverAnimated: "/images/projects/games/JoesChristmas/AnimatedCover.jpg",
-    //     images: [
-    //         "/images/projects/games/Kalyskah/AnimatedCover.jpeg",
+    //Joe's Christmas
+    {
+      id: 4,
+      title: "Joe's Christmas",
+      role: "Unreal Developer",
+      company: "Ana Neiva",
+      status: "Alpha Version",
+      category: "Adventure",
+      platform: [
+        "PC",
+      ],
+      description: "Joe is curious boy, In christmas eve he was hidden and prepared to see the moment when Santa visits him.However something he didn't expect happenned.",
+      tools: "Unreal Engine 4, Adobe Photoshop, Blender, Figma",
+      coverImage: "/images/projects/games/JoesChristmas/Logo.png",
+      coverAnimated: "/images/projects/games/JoesChristmas/AnimatedCover.jpg",
+      videoUrl: "https://www.youtube.com/embed/5W_ecUMFbdw?si=iU7PF2j6ZGbwLOuW",
+      designurl: "https://anageek.itch.io/joes-christmas",
+      designButtonLabel: "Download Game",
+      sections: [
+        // {
+        //   title: "Project Overview",
+        //   description: [
+        //     { type: "heading", text: "" },
+        //     { type: "paragraph", text: ""},
+        //   ],
+        //   image: "",
+        // },
+      ],
+      images: [
+        "/images/projects/games/JoesChristmas/img-1.png",
+        "/images/projects/games/JoesChristmas/img-2.png",
 
-    //     ],
-    //     videoUrl: "",
-    //     designurl: "https://anageek.github.io",
-    //     designButtonLabel: "View Design Process",
-    // },
+      ],
+    },
   ],
   uiux: [
+    //Ghosts of Tabor
     {
       id: 1,
       title: "Ghosts of Tabor",
@@ -351,6 +409,7 @@ export const projects = {
       ],
 
     },
+    //Polker
     {
       id: 2,
       title: "Polker",
@@ -432,6 +491,7 @@ export const projects = {
 
       ],
     },
+    //Kalyskah
     {
       id: 3,
       title: "Kalyskah",
