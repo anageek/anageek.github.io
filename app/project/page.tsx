@@ -90,7 +90,7 @@ export default function ProjectPage() {
                 Back to Projects
               </Link>
             </div>
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-6 my-2">
               <h1 className="text-3xl font-bold ">{project.title}</h1>
               {project.platform && (
                 <div className="my-2 space-x-2">
@@ -125,19 +125,40 @@ export default function ProjectPage() {
                 </div>
               )}
             </div>
-            <div className="mb-6">
+
+            <div className="flex items-start justify-start space-x-3">
+              <p className="text-md font-semibold">Genre:</p>
+              <p className="text-zinc-300 font-extralight font-sans text-justify">{project.category}</p>
+            </div>
+            <div className="flex items-start justify-start space-x-3">
+              <p className="text-md font-semibold ">Role:</p>
               <p className="text-zinc-300 text- font-sans">{project.role}</p>
             </div>
-            <div className="mb-6">
-              {/*<h2 className="text-xl font-semibold mb-2">Description</h2>*/}
+            <div className="flex items-start justify-start space-x-3">
+              <p className="text-md font-semibold ">Developed by:</p>
+              <p className="text-zinc-300 font-extralight font-sans">{project.company}</p>
+            </div>
+            <div className="flex items-start justify-start space-x-3">
+              <p className="text-md font-semibold">Status:</p>
+              <p className="text-zinc-300 font-extralight font-sans">{project.status}</p>
+            </div>
+            <div className="flex items-start justify-start space-x-3 flex-nowrap">
+              <p className="text-md font-semibold whitespace-nowrap">Tools Used:</p>
+              <p className="text-zinc-300 font-extralight font-sans break-words">{project.tools}</p>
+            </div>
+            <div className="my-3">
+              <p className="text-zinc-300 font-extralight font-sans text-justify">
+                <span className="text-white text-md font-semibold mr-2">Description: </span>
+                {project.description}
+              </p>
+            </div>
+            {/* <div className="my-3">  
+              <p className="text-md font-semibold">Description</p>
               <p className="text-zinc-300 font-extralight font-sans text-justify">{project.description}</p>
-            </div>
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-2">Tools Used</h2>
-              <p className="text-zinc-300 font-extralight font-sans">{project.tools}</p>
-            </div>
+            </div> */}
+
             {project.designurl && project.designButtonLabel && (
-              <Button className="bg-[#0099ff] hover:bg-[#007acc] border-0 px-10">
+              <Button className="bg-[#0099ff] hover:bg-[#007acc] border-0 px-10 my-3">
                 <a href={project.designurl}>{project.designButtonLabel}</a>
               </Button>
             )}

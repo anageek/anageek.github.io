@@ -1,3 +1,4 @@
+import { platform } from "os";
 import { title } from "process"
 
 // Sample project data
@@ -8,14 +9,14 @@ export const projects = {
       id: 1,
       title: "Naufrago",
       role: "Unreal Developer",
-      company: "Personal Project",
+      company: "Ana Neiva",
       status: "Alpha Version",
-      category: "",
+      category: "Suvival/Exploration",
       platform: [
         "PC",
       ],
       description: "Naufrago is a survival exploration game set on a remote island. This early alpha represents the first playable environment: Crab Island, where players must gather resources, craft tools, and adapt to the challenges of an isolated landscape.Development began in September 2019, with a focus on creating a grounded, immersive survival experience. This prototype showcases the game's core mechanics, atmosphere, and design direction.",
-      tools: "Unreal Engine 4, Adobe Photoshop, Blender",
+      tools: "Unreal Engine 4, Adobe Photoshop, Blender, Figma",
       coverImage: "/images/projects/games/Naufrago/Overview.png",
       coverAnimated: "/images/projects/games/Naufrago/AnimatedCover.gif",
       videoUrl: "https://www.youtube.com/embed/EwmypPEZRCk?si=klUukMkoSZrB8KKo",
@@ -85,7 +86,7 @@ export const projects = {
           ],
           image: "",
         },
-       
+
         {
           title: "UX/UI Design",
           description: [
@@ -119,38 +120,83 @@ export const projects = {
       id: 2,
       title: "Pixel Escape",
       role: "Unreal Developer",
-      company: "Personal Project",
+      company: "Ana Neiva, Cory Webb",
       status: "Alpha Version",
-      category: "",
+      category: "Puzzle/Adventure",
       platform: [
         "PC",
       ],
-      description: "",
-      tools: "",
-      coverImage: "/images/projects/games/PixelEscape/Cover.png",
-      coverAnimated: "/images/projects/games/PixelEscape/AnimatedCover.gif",
-      videoUrl: "https://www.youtube.com/embed/my30Iyym_0o?si=yQpem1K0mEu53PAk",
+      description: "Step into the pixelated shoes of a young boy who finds himself mysteriously trapped inside an old Game Boy console. From within the screen, he can still see the real world, but he no longer belongs to it. To escape, players must guide the boy through a series of surreal, game-inspired challenges that blur the line between reality and retro gameplay.",
+      tools: "Unreal Engine 4, Adobe Photoshop, Blender, Figma",
+      coverImage: "/images/projects/games/PixelEscape/Logo.png",
+      coverAnimated: "/images/projects/games/PixelEscape/Gameplay1_GIF_Small.gif",
+      videoUrl: "https://www.youtube.com/embed/DBvb68m_vlE?si=ZCFxf5Qhf0T475ZW",
       designurl: "https://anageek.itch.io/pixel-escape-o-enigma-de-lucas",
       designButtonLabel: "Download Game",
       sections: [
         {
-          title: "Project Overview",
+          title: "Game Design Document",
           description: [
-            { type: "heading", text: "Product" },
-            { type: "paragraph", text: " " },
+            { type: "heading", text: "Overview" },
+            { type: "paragraph", text: "It's a unique adventure that combines elements of the real and virtual world in an innovative way. Players take on the role of a boy who finds himself trapped inside an old Game Boy console. While holding the Game Boy, he has a peripheral view of the 3D world around him, while on the Game Boy screen, he has a top view. -down which can be used as a map. The objective is to navigate the game's various levels, each representing an environment from the character's real life, and find a way to escape back to the real world. The journey is full of challenges, puzzles and dangers, but also clues that reveal the truth behind your virtual prison." },
+            { type: "image", image: "/images/projects/games/PixelEscape/Cover.png" },
+
+            { type: "heading", text: "Environment" },
+            { type: "paragraph", text: "The game takes place in several rooms of a house full of riddles and dangers. Each room represents a unique challenge that Lucas must overcome to find the exit and escape the house. The house has a variety of rooms, such as the hallway, library, living room, kitchen, bedrooms, bathroom, basement and attic. Each room is a puzzle in itself, with hidden clues, security devices and obstacles to overcome. These challenges can involve finding hidden keys, deciphering codes, avoiding traps and manipulating objects to open a path. As Lucas explores the rooms, he discovers clues about his prison and the truth behind the alternate reality he is trapped in. The game's progression is non-linear, allowing players to choose the order in which they explore the rooms of the house. Each choice affects the story and the unfolding of events, providing a unique gaming experience for each player." },
+            { type: "image", image: "/images/projects/games/PixelEscape/Game-Design-Plan.png" },
+
+            { type: "heading", text: "Plot" },
+            { type: "paragraph", text: "A young man named Lucas, a video game enthusiast who, on an ordinary afternoon, finds an old Game Boy console in the attic of his house. Fascinated by the retro device, Lucas decides to test it. Upon turning on the Game Boy, Lucas is suddenly sucked into the game and finds himself trapped inside the device's virtual world. He finds himself in a 2D, pixelated version of his own neighborhood, where all elements are represented as if they were inside the Game Boy.With the console in his hands, Lucas realizes that he has a peripheral view of the 3D world around him, while the Game Boy's screen shows a top-down view that works like a map. He soon realizes that to escape, he must navigate the game's various levels, each representing a real-life environment, and uncover the mysteries behind his virtual prison. During his journey, Lucas encounters strange characters and unexpected challenges, many of which are inspired by his own memories and life experiences. He discovers that, to escape the game, he must gather clues, solve puzzles and face increasingly complex challenges. As he progresses, Lucas discovers that his virtual prison is related to a mysterious event from his past, and he must uncover the truth behind this incident to find a way to return to the real world. With the help of unlikely allies and his determination, Lucas embarks on an epic journey to escape the Game Boy and discover his destiny. " },
+
+            { type: "heading", text: "Art and Visual Style" },
+            { type: "paragraph", text: "The 3D world around the character is represented with more cartoonish and stylized graphics, while the Game Boy screen displays a top-down view with a pixelated aesthetic and a limited color palette." },
+
+            { type: "heading", text: "Target Platform" },
+            { type: "paragraph", text: "The Game is developed for PC, taking advantage of graphics and processing resources to offer an engaging and immersive gaming experience." },
+
+            { type: "heading", text: "Target Audience" },
+            { type: "paragraph", text: "The game is aimed at players of all ages who enjoy puzzle challenges, exploration, and immersive narratives." },
+
+            { type: "heading", text: "Main Game Mechanics" },
+            { type: "paragraph", text: "Room exploration:" },
             {
               type: "list", items: [
-                " ",
-                " ",
+                "Players have a view of the 3D world around them while holding the Gameboy and can walk, jump and interact with objects.",
+                "On the Game Boy screen, they have a top-down view that can be used as a map to navigate rooms.",
               ]
             },
-            { type: "image", image: "" },
+            { type: "paragraph", text: "Puzzle Solving:" },
+            {
+              type: "list", items: [
+                "Each level presents unique puzzles and challenges that players must solve to advance.",
+                "The puzzles are inspired by the character's real-life environments and require logical thinking and creativity to overcome.",
+              ]
+            },
+            { type: "paragraph", text: "Using Game Boy Game Mechanics:" },
+            {
+              type: "list", items: [
+                "Players use Game Boy-specific gameplay mechanics such as walking, jumping, interacting with objects, to progress through levels and overcome challenges.",
+                "These mechanics can be controlled using the Game Boy's on-screen buttons.",
+              ]
+            },
+            { type: "paragraph", text: "Immersive Narrative:" },
+            {
+              type: "list", items: [
+                "The narrative is delivered through dialogue with non-playable characters and events in the game environment.",
+                "As they progress through the game, players discover clues and information that help them understand why they are trapped inside the Game Boy and how to escape into real life",
+              ]
+            },
           ],
           image: "",
         },
       ],
       images: [
-        "/images/projects/games/PixelEscape/Cover.png",
+        "/images/projects/games/PixelEscape/AnimatedCover.gif",
+        "/images/projects/games/PixelEscape/Collect-Gameboy.gif",
+        "/images/projects/games/PixelEscape/Cut_Thunder-GIF.gif",
+        "/images/projects/games/PixelEscape/Enter-Portal.gif",
+        "/images/projects/games/PixelEscape/Image-1.png",
+        "/images/projects/games/PixelEscape/Image-2.png",
 
       ],
     },
@@ -158,15 +204,15 @@ export const projects = {
       id: 3,
       title: "Pirate's Attack",
       role: "Unreal Developer, Personal Project",
-      company: "Personal Project",
+      company: "Ana Neiva",
       status: "Alpha Version",
-      category: "",
+      category: "Tower Defense",
       platform: [
         "PC",
       ],
-      description: "",
-      tools: "",
-      coverImage: "/images/projects/games/PiratesAttack/Cover.jpeg",
+      description: "It's a tower defense game, where you have to protect the king from the pirates. You have cannons, explosive barrels and barriers, and you can also upgrade your items. Try to survive and have fun! Click on the tower (middle of island) to start upgrading your items by consuming your points. You get points by every boat you sink. This is made for Crie seus jogos gamejam - Theme Infinity Loop",
+      tools: "Unreal Engine 4, Adobe Photoshop, Blender, Figma",
+      coverImage: "/images/projects/games/PiratesAttack/Thumbnail.png",
       coverAnimated: "/images/projects/games/PiratesAttack/AnimatedCover.png",
       videoUrl: "https://www.youtube.com/embed/_s-V_9SB6fs?si=OHAMfSQIR6by9zsl",
       designurl: "https://anageek.itch.io/pirates-attack",
@@ -176,20 +222,33 @@ export const projects = {
           title: "Project Overview",
           description: [
             { type: "heading", text: "Product" },
-            { type: "paragraph", text: " " },
-            {
-              type: "list", items: [
-                " ",
-                " ",
-              ]
-            },
-            { type: "image", image: "" },
+            { type: "paragraph", text: "It's a tower defense game, where you have to protect the king from the pirates. You have cannons, explosive barrels and barriers, and you can also upgrade your items. Try to survive and have fun! Click on the tower (middle of island) to start upgrading your items by consuming your points. You get points by every boat you sink. This is made for Crie seus jogos gamejam - Theme Infinity Loop" },
+            { type: "image", image: "/images/projects/games/PiratesAttack/cover.png" },
+
+            { type: "heading", text: "Project Duration" },
+            { type: "paragraph", text: "The development took around 2 months" },
+
+            { type: "heading", text: "Research" },
+            { type: "paragraph", text: "Inspired in Clash Royalle" },
+           
+            { type: "image", image: "/images/projects/games/PiratesAttack/Cannon Prototype.gif" },
+
+            { type: "image", image: "/images/projects/games/PiratesAttack/UI Elements.png" },
+
+
+
           ],
           image: "",
         },
       ],
       images: [
-        "/images/projects/games/PiratesAttack/Cover.jpeg",
+        "/images/projects/games/PiratesAttack/Cannon Placement.gif",
+        "/images/projects/games/PiratesAttack/Cannon test.gif",
+        "/images/projects/games/PiratesAttack/Placement Mechanic.gif",
+        "/images/projects/games/PiratesAttack/AnimatedCover.png",
+        "/images/projects/games/PiratesAttack/img3.png",
+        "/images/projects/games/PiratesAttack/img1.png",
+        "/images/projects/games/PiratesAttack/img2.png",
 
       ],
     },
@@ -377,6 +436,8 @@ export const projects = {
       id: 3,
       title: "Kalyskah",
       role: "Unreal Developer",
+      company: "lobo",
+      status: "Alpha Version",
       category: "",
       platform: [
         "PC",
@@ -455,6 +516,8 @@ export const projects = {
       id: 1,
       title: "Titlte Placeholder",
       role: "Role Placeholder",
+      company: "Personal Project",
+      status: "Alpha Version",
       category: "Category Placeholder",
       platform: [
         "PC",
@@ -531,6 +594,8 @@ export const projects = {
       id: 1,
       title: "Logo Design",
       role: "UX/UI ",
+      company: "Personal Project",
+      status: "Alpha Version",
       category: "Design",
       platform: [
         "",
@@ -567,6 +632,8 @@ export const projects = {
       id: 2,
       title: "Titlte Placeholder",
       role: "Role Placeholder",
+      company: "Personal Project",
+      status: "Alpha Version",
       category: "Category Placeholder",
       platform: [
         "PC",
