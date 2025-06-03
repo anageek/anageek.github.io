@@ -338,7 +338,7 @@ export const projects = {
       role: "UX/UI Artist",
       company: "Combat Waffle Studios",
       status: "Early Access",
-      category: "Game",
+      category: "VR FPS",
       platform: [
         "VR",
       ],
@@ -346,27 +346,25 @@ export const projects = {
       tools: "Unreal Engine 4, Adobe Photoshop, Figma",
       coverImage: "/images/projects/uiux/GhostsOfTabor/Cover.png",
       coverAnimated: "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
-      videoUrl: "https://www.youtube.com/embed/7vhGAQvUl2g?si=mQyfS-3dz4UxxnXW&autoplay=1&mute=1&loop=1&playlist=7vhGAQvUl2g",
+      videoUrl: "https://www.youtube.com/embed/R_gKKFyLb9Y?si=9R0Brl8z0UhckDco",
       designurl: "https://store.steampowered.com/app/1957780/Ghosts_of_Tabor/",
-      designButtonLabel: "Steam Page",
+      designButtonLabel: "Download Game",
       sections: [
         {
           title: "Project Overview",
           description: [
             { type: "heading", text: "Product" },
-            { type: "paragraph", text: "The research was an exploration into player preferences within the survival game genre. This process included personal gameplay experiences and engaging directly with streamers and their audiences, which provided insights into mechanics, user interfaces, and overall player enjoyment factors." },
+            { type: "paragraph", text: " " },
 
             { type: "heading", text: "Project Duration" },
-            { type: "paragraph", text: "Development began in September 2019, with a focus on creating a grounded, immersive survival experience." },
+            { type: "paragraph", text: "" },
 
             { type: "heading", text: "My Role" },
-            { type: "paragraph", text: "I was involved in various aspects of the game's development." },
+            { type: "paragraph", text: "" },
             {
               type: "list", items: [
-                "Design of User Interfaces for desktop and mobile platforms",
-                "Implementation of interactive elements",
-                "Team collaboration with designers, developers, and QA",
-                "Maintaining consistency in design elements across platforms"
+                // "",
+                
               ]
             },
             { type: "image", image: "" },
@@ -378,34 +376,54 @@ export const projects = {
           title: "Research",
           description: [
             { type: "heading", text: "Summary" },
-            { type: "paragraph", text: "The research was an exploration into player preferences within the survival game genre. This process included personal gameplay experiences and engaging directly with streamers and their audiences, which provided insights into mechanics, user interfaces, and overall player enjoyment factors." },
+            { type: "paragraph", text: "" },
 
             { type: "heading", text: "Target Audience" },
-            { type: "paragraph", text: "Development began in September 2019, with a focus on creating a grounded, immersive survival experience." },
+            { type: "paragraph", text: "" },
 
             { type: "heading", text: "Benchmark" },
-            { type: "paragraph", text: "I was involved in various aspects of the game's development." },
+            { type: "paragraph", text: "" },
             {
               type: "list", items: [
-                "Design of User Interfaces for desktop and mobile platforms",
-                "Implementation of interactive elements",
-                "Team collaboration with designers, developers, and QA",
-                "Maintaining consistency in design elements across platforms"
+
               ]
             },
             { type: "image", image: "" },
 
           ],
-          image: "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
+          image: "",
         },
+        {
+          title: "Design",
+          description: [
+            { type: "heading", text: "Userflow" },
+            { type: "paragraph", text: "" },
 
+            { type: "heading", text: "Wireframes" },
+            { type: "paragraph", text: "" },
+
+            { type: "heading", text: "Mockups" },
+            { type: "paragraph", text: "" },
+
+            { type: "heading", text: "UI/Design System" },
+            { type: "paragraph", text: "" },
+            {
+              type: "list", items: [
+
+              ]
+            },
+            { type: "image", image: "" },
+
+          ],
+          image: "",
+        },
 
 
 
       ],
       images: [
-        "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
-        "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
+        //"",
+        
       ],
 
     },
@@ -568,189 +586,89 @@ export const projects = {
 
       ],
     },
-
-
   ],
   modeling: [
-    {
-      id: 1,
-      title: "Titlte Placeholder",
-      role: "Role Placeholder",
-      company: "Personal Project",
-      status: "Alpha Version",
-      category: "Category Placeholder",
-      platform: [
-        "PC",
-      ],
-      description: "Description Placeholder",
-      tools: "Tools Placeholder",
-      coverImage: "placeholder.svg?height=400&width=600",
-      coverAnimated: "placeholder.svg?height=400&width=600",
-      sections: [
-        {
-          title: "teste",
-          description: [
-            { type: "heading", text: " " },
-            { type: "paragraph", text: " " },
-            {
-              type: "list", items: [
-                " ",
 
-              ]
-            },
-            { type: "image", image: "" },
-          ],
-          image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
-        },
-      ],
-      images: [
-        "placeholder.svg?height=400&width=600",
-        "placeholder.svg?height=400&width=600",
-      ],
-      videoUrl: "",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
-    },
     // {
-    //     id: 2,
-    //     title: "Titlte Placeholder",
-    //     role: "Role Placeholder",
-    //     category:"Category Placeholder",
-    //     platform: "Platform Placeholder",
-    //     description:"Description Placeholder",
-    //     tools:"Tools Placeholder",
-    //     coverImage: "placeholder.svg?height=400&width=600",
-    //     coverAnimated: "placeholder.svg?height=400&width=600",
-    //     images: [
-    //         "placeholder.svg?height=400&width=600",
-    //         "placeholder.svg?height=400&width=600",
-    //     ],
-    //     videoUrl: "",
-    //     designurl: "https://anageek.github.io",
-    //     designButtonLabel: "View Design Process",
-    // },
-    // {
-    //     id: 3,
-    //     title: "Titlte Placeholder",
-    //     role: "Role Placeholder",
-    //     category:"Category Placeholder",
-    //     platform: "Platform Placeholder",
-    //     description:"Description Placeholder",
-    //     tools:"Tools Placeholder",
-    //     coverImage: "placeholder.svg?height=400&width=600",
-    //     coverAnimated: "placeholder.svg?height=400&width=600",
-    //     images: [
-    //         "placeholder.svg?height=400&width=600",
-    //         "placeholder.svg?height=400&width=600",
-    //     ],
-    //     videoUrl: "",
-    //     designurl: "https://anageek.github.io",
-    //     designButtonLabel: "View Design Process",
-    // },
+    //   id: 1,
+    //   title: "Titlte Placeholder",
+    //   role: "Role Placeholder",
+    //   company: "Personal Project",
+    //   status: "Alpha Version",
+    //   category: "Category Placeholder",
+    //   platform: [
+    //     "PC",
+    //   ],
+    //   description: "Description Placeholder",
+    //   tools: "Tools Placeholder",
+    //   coverImage: "placeholder.svg?height=400&width=600",
+    //   coverAnimated: "placeholder.svg?height=400&width=600",
+    //   sections: [
+    //     {
+    //       title: "teste",
+    //       description: [
+    //         { type: "heading", text: " " },
+    //         { type: "paragraph", text: " " },
+    //         {
+    //           type: "list", items: [
+    //             " ",
 
+    //           ]
+    //         },
+    //         { type: "image", image: "" },
+    //       ],
+    //       image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
+    //     },
+    //   ],
+    //   images: [
+    //     "placeholder.svg?height=400&width=600",
+    //     "placeholder.svg?height=400&width=600",
+    //   ],
+    //   videoUrl: "",
+    //   designurl: "https://anageek.github.io",
+    //   designButtonLabel: "View Design Process",
+    // },
   ],
   design: [
-    {
-      id: 1,
-      title: "Logo Design",
-      role: "UX/UI ",
-      company: "Personal Project",
-      status: "Alpha Version",
-      category: "Design",
-      platform: [
-        "",
-      ],
-      description: "Logo done for a twitch channel",
-      tools: "Adobe Photoshop",
-      coverImage: "/images/projects/design/Sousa/Portfolio.png",
-      coverAnimated: "/images/projects/design/Sousa/Portfolio.png",
-      sections: [
-        {
-          title: "teste",
-          description: [
-            { type: "heading", text: " " },
-            { type: "paragraph", text: " " },
-            {
-              type: "list", items: [
-                " ",
 
-              ]
-            },
-            { type: "image", image: "" },
-          ],
-          image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
-        },
-      ],
-      images: [
-        "/images/projects/design/Sousa/Portfolio.png",
-      ],
-      videoUrl: "",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
-    },
-    {
-      id: 2,
-      title: "Titlte Placeholder",
-      role: "Role Placeholder",
-      company: "Personal Project",
-      status: "Alpha Version",
-      category: "Category Placeholder",
-      platform: [
-        "PC",
-      ],
-      description: "Description Placeholder",
-      tools: "Tools Placeholder",
-      coverImage: "placeholder.svg?height=400&width=600",
-      coverAnimated: "placeholder.svg?height=400&width=600",
-      sections: [
-        {
-          title: "test222e",
-          description: [
-            { type: "heading", text: "Summary" },
-            { type: "paragraph", text: "The research was an exploration into player preferences within the survival game genre. This process included personal gameplay experiences and engaging directly with streamers and their audiences, which provided insights into mechanics, user interfaces, and overall player enjoyment factors." },
-            {
-              type: "list", items: [
-                " ",
-
-              ]
-            },
-            { type: "image", image: "" },
-          ],
-          image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
-        },
-
-
-
-      ],
-      images: [
-        "placeholder.svg?height=400&width=600",
-        "placeholder.svg?height=400&width=600",
-      ],
-      videoUrl: "",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
-    },
+    //Placeholder
     // {
-    //     id: 2,
-    //     title: "Titlte Placeholder",
-    //     role: "Role Placeholder",
-    //     category:"Category Placeholder",
-    //     platform: "Platform Placeholder",
-    //     description:"Description Placeholder",
-    //     tools:"Tools Placeholder",
-    //     coverImage: "placeholder.svg?height=400&width=600",
-    //     coverAnimated: "placeholder.svg?height=400&width=600",
-    //     images: [
-    //         "placeholder.svg?height=400&width=600",
-    //         "placeholder.svg?height=400&width=600",
-    //     ],
-    //     videoUrl: "",
-    //     designurl: "https://anageek.github.io",
-    //     designButtonLabel: "View Design Process",
+    //   id: 1,
+    //   title: "Logo Design",
+    //   role: "UX/UI ",
+    //   company: "Personal Project",
+    //   status: "Alpha Version",
+    //   category: "Design",
+    //   platform: [
+    //     "",
+    //   ],
+    //   description: "Logo done for a twitch channel",
+    //   tools: "Adobe Photoshop",
+    //   coverImage: "/images/projects/design/Sousa/Portfolio.png",
+    //   coverAnimated: "/images/projects/design/Sousa/Portfolio.png",
+    //   sections: [
+    //     {
+    //       title: "teste",
+    //       description: [
+    //         { type: "heading", text: " " },
+    //         { type: "paragraph", text: " " },
+    //         {
+    //           type: "list", items: [
+    //             " ",
+
+    //           ]
+    //         },
+    //         { type: "image", image: "" },
+    //       ],
+    //       image: "/images/projects/games/GhostsOfTabor/AnimatedCover.gif",
+    //     },
+    //   ],
+    //   images: [
+    //     "/images/projects/design/Sousa/Portfolio.png",
+    //   ],
+    //   videoUrl: "",
+    //   designurl: "https://anageek.github.io",
+    //   designButtonLabel: "View Design Process",
     // },
-
-
-
-
   ],
 };

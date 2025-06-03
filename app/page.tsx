@@ -15,8 +15,8 @@ export default function HomePage() {
   // Define highlighted projects by category and id
   const highlighted = [
     { category: "games", id: "1" },
-    { category: "games", id: "2" },
-    { category: "games", id: "3" },
+    { category: "uiux", id: "1" },
+    { category: "uiux", id: "2" },
   ]
   // Filter the highlighted projects
   const highlightedProjects = highlighted

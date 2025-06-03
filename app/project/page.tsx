@@ -194,10 +194,10 @@ export default function ProjectPage() {
               <div className={`grid ${section.image ? "lg:grid-cols-2" : "grid-cols-1"}`}>
                 <div className={section.image ? "" : "col-span-1"}>
                   {section.description.map((item, idx) => {
-                    if (item.type === "heading") {
+                    if (item.type === "heading" && item.text) {
                       return <h3 key={idx} className="text-lg font-bold mt-5 mx-10 text-white text-justify">{item.text}</h3>
                     }
-                    if (item.type === "paragraph") {
+                    if (item.type === "paragraph" && item.text) {
                       return <p key={idx} className="text-zinc-300 font-light font-sans mx-10 text-justify">{item.text}</p>
                     }
                     if (item.type === "list" && Array.isArray(item.items)) {
@@ -209,7 +209,7 @@ export default function ProjectPage() {
                         </ul>
                       )
                     }
-                    if (item.type === "image") {
+                    if (item.type === "image"&& item.image)  {
                       return (
                         <Image
                           key={idx}
