@@ -17,7 +17,7 @@ export default function ProjectsSection() {
   const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
 
-   // For sliding indicator
+  // For sliding indicator
   const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number; top: number; height: number }>({
     left: 0,
     width: 0,
@@ -93,7 +93,7 @@ export default function ProjectsSection() {
   }, [])
 
   return (
-<section
+    <section
       id="projects"
       ref={sectionRef}
       className="gradient-bg-top bg-slate-900 "
@@ -168,60 +168,106 @@ export default function ProjectsSection() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {activeCategory === "games" &&
-              projects.games.map((project) => (
-                <Link href={`/project?id=${project.id}&category=games`} key={project.id}>
-                  <ProjectCard
-                    title={project.title}
-                    role={project.role}
-                    tools={project.tools}
-                    coverImage={project.coverImage}
-                    coverAnimated={project.coverAnimated}
-                    columns={2}
-                  />
-                </Link>
-              ))}
+              projects.games && projects.games.length > 0 ? (
+              projects.games.map((project: any, idx: number) =>
+                project.id ? (
+                  <Link href={`/project?id=${project.id}&category=games`} key={`games${project.id}-${idx}`}>
+                    <ProjectCard
+                      title={project.title}
+                      role={project.role}
+                      tools={project.tools}
+                      coverImage={project.coverImage}
+                      coverAnimated={project.coverAnimated}
+                      columns={2}
+                    />
+                  </Link>
+                ) : null
+              )
+            ) : (
+              activeCategory === "games" && (
+                <div className="col-span-full text-center text-zinc-400 py-8">
+                  No Games projects found.
+                </div>
+              )
+            )
+            }
 
             {activeCategory === "uiux" &&
-              projects.uiux.map((project) => (
-                <Link href={`/project?id=${project.id}&category=uiux`} key={project.id}>
-                  <ProjectCard
-                    title={project.title}
-                    role={project.role}
-                    tools={project.tools}
-                    coverImage={project.coverImage}
-                    coverAnimated={project.coverAnimated}
-                    columns={2}
-                  />
-                </Link>
-              ))}
+              projects.uiux && projects.uiux.length > 0 ? (
+              projects.uiux.map((project: any, idx: number) =>
+                project.id ? (
+                  <Link href={`/project?id=${project.id}&category=uiux`} key={`uiux${project.id}-${idx}`}>
+                    <ProjectCard
+                      title={project.title}
+                      role={project.role}
+                      tools={project.tools}
+                      coverImage={project.coverImage}
+                      coverAnimated={project.coverAnimated}
+                      columns={2}
+                    />
+                  </Link>
+                ) : null
+              )
+            ) : (
+              activeCategory === "uiux" && (
+                <div className="col-span-full text-center text-zinc-400 py-8">
+                  No UI/UX projects found.
+                </div>
+              )
+            )
+            }
 
             {activeCategory === "modeling" &&
-              projects.modeling.map((project) => (
-                <Link href={`/project?id=${project.id}&category=modeling`} key={project.id}>
-                  <ProjectCard
-                    title={project.title}
-                    role={project.role}
-                    tools={project.tools}
-                    coverImage={project.coverImage}
-                    coverAnimated={project.coverAnimated}
-                    columns={3}
-                  />
-                </Link>
-              ))}
+              projects.modeling && projects.modeling.length > 0 ? (
+              projects.modeling.map((project: any, idx: number) => // <-- add ': any' or your Project type
+                project.id ? (
+                  <Link href={`/project?id=${project.id}&category=modeling`} key={`modeling${project.id}-${idx}`}>
+                    <ProjectCard
+                      title={project.title}
+                      role={project.role}
+                      tools={project.tools}
+                      coverImage={project.coverImage}
+                      coverAnimated={project.coverAnimated}
+                      columns={3}
+                    />
+                  </Link>
+                ) : null
+              )
+            ) : (
+              activeCategory === "modeling" && (
+                <div className="col-span-full text-center text-zinc-400 py-8">
+                  No 3D Modeling projects found.
+                </div>
+              )
+            )
+            }
 
             {activeCategory === "design" &&
-              projects.design.map((project) => (
-                <Link href={`/project?id=${project.id}&category=design`} key={project.id}>
-                  <ProjectCard
-                    title={project.title}
-                    role={project.role}
-                    tools={project.tools}
-                    coverImage={project.coverImage}
-                    coverAnimated={project.coverAnimated}
-                    columns={3}
-                  />
-                </Link>
-              ))}
+              projects.design && projects.design.length > 0 ? (
+              projects.design.map((project: any, idx: number) =>
+                project.id ? (
+                  <Link href={`/project?id=${project.id}&category=design`} key={`design${project.id}-${idx}`}>
+                    <ProjectCard
+                      title={project.title}
+                      role={project.role}
+                      tools={project.tools}
+                      coverImage={project.coverImage}
+                      coverAnimated={project.coverAnimated}
+                      columns={3}
+                    />
+                  </Link>
+                ) : null
+              )
+            ) : (
+              activeCategory === "design" && (
+                <div className="col-span-full text-center text-zinc-400 py-8">
+                  No Graphic Design projects found.
+                </div>
+              )
+            )
+            }
+
+
           </div>
         </div>
       </div>

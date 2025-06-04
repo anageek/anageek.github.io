@@ -88,11 +88,11 @@ export default function HomePage() {
         <div className="relative z-10 mt-12 max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-[#0099ff] mb-8 text-center">Featured Projects</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {highlightedProjects.map(({ project, category }) => {
+            {highlightedProjects.map(({ project, category }, idx) => {
               const { coverImage, coverAnimated, title, role } = project;
               return (
                 <Link
-                  key={project.id}
+                  key={`${category}-${project.id}-${idx}`}
                   href={`/project?id=${project.id}&category=${category}`}
                   className="block w-full h-full"
                 >

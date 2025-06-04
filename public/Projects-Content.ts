@@ -591,7 +591,7 @@ export const projects = {
 
     // {
     //   id: 1,
-    //   title: "Titlte Placeholder",
+    //   title: "Title Placeholder",
     //   role: "Role Placeholder",
     //   company: "Personal Project",
     //   status: "Alpha Version",
