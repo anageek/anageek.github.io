@@ -125,33 +125,44 @@ export default function ProjectPage() {
                 </div>
               )}
             </div>
-
-            <div className="flex items-start justify-start space-x-3">
-              <p className="text-md font-semibold">Genre:</p>
-              <p className="text-zinc-300 font-extralight font-sans text-justify">{project.category}</p>
-            </div>
+            {project.category && (
+              <div className="flex items-start justify-start space-x-3">
+                <p className="text-md font-semibold">Genre:</p>
+                <p className="text-zinc-300 font-extralight font-sans text-justify">{project.category}</p>
+              </div>
+            )}
+            {project.role && (
             <div className="flex items-start justify-start space-x-3">
               <p className="text-md font-semibold ">Role:</p>
               <p className="text-zinc-300 text- font-sans">{project.role}</p>
             </div>
+            )}
+            {project.company && (
             <div className="flex items-start justify-start space-x-3">
               <p className="text-md font-semibold ">Developed by:</p>
               <p className="text-zinc-300 font-extralight font-sans">{project.company}</p>
             </div>
+            )}
+            {project.status && (
             <div className="flex items-start justify-start space-x-3">
               <p className="text-md font-semibold">Status:</p>
               <p className="text-zinc-300 font-extralight font-sans">{project.status}</p>
             </div>
+            )}
+            {project.tools && (
             <div className="flex items-start justify-start space-x-3 flex-nowrap">
               <p className="text-md font-semibold whitespace-nowrap">Tools Used:</p>
               <p className="text-zinc-300 font-extralight font-sans break-words">{project.tools}</p>
             </div>
+            )}
+            {project.description && (
             <div className="my-3">
               <p className="text-zinc-300 font-extralight font-sans text-justify">
                 <span className="text-white text-md font-semibold mr-2">Description: </span>
                 {project.description}
               </p>
             </div>
+            )}
             {/* <div className="my-3">  
               <p className="text-md font-semibold">Description</p>
               <p className="text-zinc-300 font-extralight font-sans text-justify">{project.description}</p>
@@ -209,7 +220,7 @@ export default function ProjectPage() {
                         </ul>
                       )
                     }
-                    if (item.type === "image"&& item.image)  {
+                    if (item.type === "image" && item.image) {
                       return (
                         <Image
                           key={idx}
