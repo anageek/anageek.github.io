@@ -349,6 +349,7 @@ export const projects = {
       videoUrl: "https://www.youtube.com/embed/R_gKKFyLb9Y?si=9R0Brl8z0UhckDco",
       designurl: "https://store.steampowered.com/app/1957780/Ghosts_of_Tabor/",
       designButtonLabel: "Download Game",
+      /** 
       sections: [
         {
           title: "Project Overview",
@@ -421,8 +422,29 @@ export const projects = {
 
 
       ],
+      */
       images: [
-        //"",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Character Calibration  Hover Custom.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Character Customization.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Character Screen Calibration.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Character_Preferences.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Kiosk_Insuficient_Funds.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Kiosk_Products.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Kiosk_ProductsBuy.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Kiosk_Sell_Items.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_MainMenu_Profile.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_MainMenu_SafeHouse.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_MainMenu_SafeHouse_ActiveMissions.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_MainMenu_SafeHouse_Settings_Audio.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_MainMenu_SafeHouse_Settings_Graphics.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Raid_Failed_Summary.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Raid_Not_Enough_Time.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Raid_Success_KillList.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Terminal_Contacts.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Terminal_Map_Location_Choosen.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Terminal_Mission.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Terminal_ProfileGhosts.png",
+        "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Terminal_SITREP.png",
 
       ],
 
@@ -588,7 +610,6 @@ export const projects = {
     },
   ],
   modeling: [
-
     // {
     //   id: 1,
     //   title: "Title Placeholder",
@@ -630,7 +651,6 @@ export const projects = {
     // },
   ],
   design: [
-
     //Logo Souza
     {
       id: 1,
@@ -1034,8 +1054,5 @@ export const projects = {
         "/images/projects/design/Rudan/Portfolio.png",
       ],
     },
-
-
-
   ],
 };
