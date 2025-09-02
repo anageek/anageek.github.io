@@ -349,12 +349,11 @@ export const projects = {
       videoUrl: "https://www.youtube.com/embed/R_gKKFyLb9Y?si=9R0Brl8z0UhckDco",
       designurl: "https://store.steampowered.com/app/1957780/Ghosts_of_Tabor/",
       designButtonLabel: "Download Game",
-      /** 
       sections: [
         {
           title: "Project Overview",
           description: [
-            { type: "heading", text: "Product" },
+            /**{ type: "heading", text: "Product" },
             { type: "paragraph", text: " " },
 
             { type: "heading", text: "Project Duration" },
@@ -369,11 +368,12 @@ export const projects = {
               ]
             },
             { type: "image", image: "" },
-
+          */
           ],
           image: "",
+          
         },
-        {
+        /**  {
           title: "Research",
           description: [
             { type: "heading", text: "Summary" },
@@ -418,11 +418,11 @@ export const projects = {
           ],
           image: "",
         },
-
+        */
 
 
       ],
-      */
+      
       images: [
         "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Character Calibration  Hover Custom.png",
         "/images/projects/uiux/GhostsOfTabor/Screen/GOT_Character Customization.png",
