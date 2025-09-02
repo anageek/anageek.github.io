@@ -474,15 +474,16 @@ export const projects = {
           description: [
 
             { type: "heading", text: "Project Duration" },
-            { type: "paragraph", text: "My contribution to the Polker project spanned approximately XX months. " },
+            { type: "paragraph", text: "My contribution to the Polker project spanned approximately 10 months." },
 
             { type: "heading", text: "My Role" },
+            { type: "paragraph", text: "I was involved in various aspects of the game's development, including:" },
             {
               type: "list", items: [
-                "I designed user interfaces for both desktop applications and mobile platforms, ensuring a seamless and engaging user experience.",
-                "I implemented these user interfaces, translating design concepts into functional and interactive elements.",
-                "I collaborated with a team of designers, developers, and QA testers to conceptualize and execute innovative solutions.",
-                "I maintained consistency in design elements and visual standards across multiple platforms and devices.",
+                "Design of User Interfaces: I designed user interfaces for both desktop applications and mobile platforms, ensuring a seamless and engaging user experience.",
+                "Implementation: I implemented these user interfaces, translating design concepts into functional and interactive elements.",
+                "Team Collaboration: I collaborated with a team of designers, developers, and QA testers to conceptualize and execute innovative solutions.",
+                "Consistency in Design: I maintained consistency in design elements and visual standards across multiple platforms and devices.",
               ]
             },
             { type: "image", image: "" },
@@ -510,24 +511,31 @@ export const projects = {
           title: "Design",
           description: [
             { type: "heading", text: "User Flow" },
-            { type: "paragraph", text: "My contribution to the Polker project spanned approximately 10 months. " },
+            
+            { type: "image", image: "/images/projects/uiux/Polker/UserFlow.png" },
           ],
-          image: "/images/projects/uiux/Polker/UserFlow.png",
+          image: "",
         },
         {
           title: "UI/Design Systems",
           description: [
 
           ],
-          image: "/placeholder.svg",
+          image: "",
         },
-
-
 
 
       ],
       images: [
-        "/images/projects/uiux/Polker/AnimatedCover.png",
+        "/images/projects/uiux/Polker/Screen/Polker_Home.png",
+        "/images/projects/uiux/Polker/Screen/Polker_Dashboard_Mobile.png", 
+        "/images/projects/uiux/Polker/Screen/Polker_Select_Game_Mode.png", 
+        "/images/projects/uiux/Polker/Screen/Polker_Settings_Display.png",
+        "/images/projects/uiux/Polker/Screen/Polker_NFT.png",
+        "/images/projects/uiux/Polker/Screen/Polker_Adventure_Mode.png",
+        "/images/projects/uiux/Polker/Screen/Polker_Tournament_Mode.png",
+        "/images/projects/uiux/Polker/Screen/Polker_ViewMedals.png",
+        
 
       ],
     },
@@ -536,37 +544,33 @@ export const projects = {
       id: 3,
       title: "Kalyskah",
       role: "Unreal Developer",
-      company: "lobo",
+      company: "Nobre lobo",
       status: "Alpha Version",
       category: "",
       platform: [
         "PC",
       ],
-      description: "",
-      tools: "",
+      description: "Kalyskah is a digital action role-playing game (ARPG) set in a dark fantasy world. The game blends dynamic combat, rich exploration, and narrative-driven gameplay. It stands out for its mature content, targeting an adult audience with its intricate romance options and complex character interactions. Currently early access on Steam.",
+      tools: "Unreal Engine 4, Adobe Photoshop",
       coverImage: "/images/projects/uiux/Kalyskah/Cover.png",
       coverAnimated: "/images/projects/uiux/Kalyskah/AnimatedCover.jpeg",
-      videoUrl: "",
-      designurl: "https://anageek.github.io",
-      designButtonLabel: "View Design Process",
+      videoUrl: "https://www.youtube.com/embed/YuvIb2-DXhk?si=3yErcYB0St6JsORX",
+      designurl: "https://store.steampowered.com/app/1818660/Kalyskah",
+      designButtonLabel: "Download Game",
       sections: [
         {
           title: "Project Overview",
           description: [
-            { type: "heading", text: "Product" },
-            { type: "paragraph", text: "The research was an exploration into player preferences within the survival game genre. This process included personal gameplay experiences and engaging directly with streamers and their audiences, which provided insights into mechanics, user interfaces, and overall player enjoyment factors." },
-
             { type: "heading", text: "Project Duration" },
-            { type: "paragraph", text: "Development began in September 2019, with a focus on creating a grounded, immersive survival experience." },
+            { type: "paragraph", text: "My contribution to the game spanned a period of 1 year and 5 months. " },
 
             { type: "heading", text: "My Role" },
-            { type: "paragraph", text: "I was involved in various aspects of the game's development." },
+            { type: "paragraph", text: "As Unreal developer my responsibilities included designing and implementing user interfaces that enhance the player's experience." },
             {
               type: "list", items: [
-                "Design of User Interfaces for desktop and mobile platforms",
-                "Implementation of interactive elements",
-                "Team collaboration with designers, developers, and QA",
-                "Maintaining consistency in design elements across platforms"
+                "Design of User Interfaces: I designed user interfaces for desktop application.",
+                "Implementation: I implemented these user interfaces, translating design concepts into functional and interactive elements.",
+              
               ]
             },
             { type: "image", image: "" },
@@ -578,34 +582,44 @@ export const projects = {
           title: "Research",
           description: [
             { type: "heading", text: "Summary" },
-            { type: "paragraph", text: "The research was an exploration into player preferences within the survival game genre. This process included personal gameplay experiences and engaging directly with streamers and their audiences, which provided insights into mechanics, user interfaces, and overall player enjoyment factors." },
+            { type: "paragraph", text: "The research for Kalyskah focused on understanding and integrating key elements of successful action role-playing games (ARPGs) to enhance its UI design. By studying player behavior, preferences, and feedback from these games, the research aimed to create a UI that balances functionality, aesthetics, and intuitive navigation, ensuring a seamless and immersive experience for players." },
 
             { type: "heading", text: "Target Audience" },
-            { type: "paragraph", text: "Development began in September 2019, with a focus on creating a grounded, immersive survival experience." },
+            { type: "paragraph", text: "The UI research for Kalyskah focused on mature gamers who enjoy dark fantasy action RPGs. These players seek intuitive, visually appealing interfaces that enhance storytelling and gameplay. They value clear menus, efficient inventory management, and seamless navigation. The goal was to create a UI that meets their expectations for a sophisticated and user-friendly experience." },
 
             { type: "heading", text: "Benchmark" },
-            { type: "paragraph", text: "I was involved in various aspects of the game's development." },
+            { type: "paragraph", text: "The UI design for Kalyskah was benchmarked against games like Skyrim, The Witcher, and Assassin's Creed Odyssey. These titles were chosen for their effective interfaces that balance detailed information with user-friendly layouts. Key elements such as menu layouts, inventory systems, and quest tracking were analyzed. Insights from these benchmarks were used to ensure Kalyskah’s UI is intuitive, visually appealing, and enhances the overall gameplay experience." },
+            /**
             {
               type: "list", items: [
                 "Design of User Interfaces for desktop and mobile platforms",
                 "Implementation of interactive elements",
-                "Team collaboration with designers, developers, and QA",
-                "Maintaining consistency in design elements across platforms"
+            
               ]
             },
             { type: "image", image: "" },
-
+             */ 
           ],
-          image: "/images/projects/uiux/GhostsOfTabor/AnimatedCover.gif",
+          image: "/images/projects/uiux/Kalyskah/Research.png",
         },
-
-
-
-
+        {
+          title: "Design",
+          description:[
+              { type: "heading", text: "Userflow" },
+              { type: "image", image: "/images/projects/uiux/Kalyskah/User Flow - Kalyskah.png" },
+          ],
+          image: "",
+        },
       ],
       images: [
-        "/images/projects/uiux/Kalyskah/AnimatedCover.jpeg",
-
+        "/images/projects/uiux/Kalyskah/Screen/Kalyskah_MainMenu.png",
+        "/images/projects/uiux/Kalyskah/Screen/Kalyaskah_Inventory.png", 
+        "/images/projects/uiux/Kalyskah/Screen/Kalyskah_Inventory_Items.png", 
+        "/images/projects/uiux/Kalyskah/Screen/Kalyaskah_Settings.png",
+        "/images/projects/uiux/Kalyskah/Screen/Kalyskah_Chest.png",
+        "/images/projects/uiux/Kalyskah/Screen/Kalyskah_Customize.jpg",
+        
+        
       ],
     },
   ],
