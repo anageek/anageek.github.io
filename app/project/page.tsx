@@ -229,7 +229,7 @@ function ProjectContent() {
                       <div 
                         key={idx}
                         className="my-8 rounded-3xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
-                        onClick={() => setSelectedImageIndex(lightboxImages.indexOf(item.image))}
+                        onClick={() => setSelectedImageIndex(lightboxImages.indexOf(item.image!))}
                       >
                         <Image
                           src={item.image || "/placeholder.svg"}
@@ -248,7 +248,7 @@ function ProjectContent() {
               {section.image && (
                 <div 
                   className="relative group cursor-zoom-in rounded-3xl overflow-hidden border border-zinc-800/50 shadow-xl"
-                  onClick={() => setSelectedImageIndex(lightboxImages.indexOf(section.image))}
+                  onClick={() => setSelectedImageIndex(lightboxImages.indexOf(section.image!))}
                 >
                   <Image
                     src={section.image || "/placeholder.svg"}

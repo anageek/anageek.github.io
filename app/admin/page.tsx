@@ -291,9 +291,9 @@ export default function AdminDashboard() {
                               <div>
                                  <p className="text-white font-black text-base tracking-tight leading-none mb-1.5">{project.title}</p>
                                  <div className="flex items-center gap-2">
-                                    <Badge variant="ghost" className="p-0 text-zinc-500 text-[10px] uppercase font-bold hover:bg-transparent">
+                                    <span className="p-0 text-zinc-500 text-[10px] uppercase font-bold">
                                        {project.tools.split(',')[0]}
-                                    </Badge>
+                                    </span>
                                     <div className="w-1 h-1 rounded-full bg-zinc-800" />
                                     <span className="text-[10px] text-zinc-600 font-medium ">{project.platform.join(', ')}</span>
                                  </div>
