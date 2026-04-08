@@ -7,32 +7,34 @@ import AboutSection from "@/components/about-section"
 import ContactSection from "@/components/contact-section"
 import Header from "@/components/header"
 import { Suspense } from "react"
-import { projects } from "@/public/Projects-Content"
 import Image from "next/image"
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 export default function HomePage() {
-  // Define highlighted projects by category and id
-  const highlighted = [
-    { category: "games", id: "1" },
-    { category: "uiux", id: "1" },
-    { category: "uiux", id: "2" },
-  ]
-  // Filter the highlighted projects
-  const highlightedProjects = highlighted
-    .map(({ category, id }) => {
-      const getProjectData = projects[category as keyof typeof projects] ?? []
-      const project = getProjectData.find((project) => String(project.id) === id)
-      return project ? { project, category } : null
-    })
-    .filter(Boolean) as { project: any; category: string }[]
+  const [featuredProjects, setFeaturedProjects] = useState<{ project: any; category: string }[]>([])
+  const [siteConfig, setSiteConfig] = useState<any>(null)
 
-  const [width, setWidth] = useState(0);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setWidth(window.innerWidth);
-    }
-  }, []);
+    fetch("/api/site")
+      .then(res => res.json())
+      .then(data => setSiteConfig(data))
+      .catch(console.error)
+
+    fetch("/api/projects")
+      .then((r) => r.json())
+      .then((data: Record<string, any[]>) => {
+        const featured: { project: any; category: string }[] = []
+        for (const [category, list] of Object.entries(data)) {
+          for (const project of list) {
+            if (project.featured === true && project.visible !== false) {
+              featured.push({ project, category })
+            }
+          }
+        }
+        setFeaturedProjects(featured)
+      })
+      .catch(() => {})
+  }, [])
   return (
 
     <Suspense fallback={<div className="min-h-screen w-full flex items-center justify-center bg-slate-900 text-white text-2xl"></div>}>
@@ -80,15 +82,19 @@ export default function HomePage() {
 
           </div>
 
-          <VideoHero />
+          {siteConfig?.heroVideoUrl ? (
+            <VideoHero src={siteConfig.heroVideoUrl} />
+          ) : (
+            <VideoHero src="https://www.youtube.com/embed/mzg3fhwPQQc?si=014MDzNOCnpXGT15&autoplay=1&mute=1&loop=1&playlist=mzg3fhwPQQc" />
+          )}
         </section>
 
-
-        {/* Highlighted Projects Section */}
+        {/* Featured Projects Section */}
+        {featuredProjects.length > 0 && (
         <div className="relative z-10 mt-12 max-w-5xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-[#0099ff] mb-8 text-center">Featured Projects</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {highlightedProjects.map(({ project, category }, idx) => {
+            {featuredProjects.map(({ project, category }, idx) => {
               const { coverImage, coverAnimated, title, role } = project;
               return (
                 <Link
@@ -133,9 +139,7 @@ export default function HomePage() {
             })}
           </div>
         </div>
-
-
-
+        )}
 
         <ProjectsSection />
         <AboutSection />

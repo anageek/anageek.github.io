@@ -4,13 +4,33 @@ import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/components/project-card"
-import { projects } from "@/public/Projects-Content"
-
 
 type Category = "games" | "uiux" | "modeling" | "design"
 
 export default function ProjectsSection() {
-  const [activeCategory, setActiveCategory] = useState<Category>("games")
+  const [activeCategory, setActiveCategory] = useState<string>("")
+  const [categories, setCategories] = useState<{slug: string, label: string, visible?: boolean}[]>([])
+  const [projectsData, setProjectsData] = useState<Record<string, any[]>>({
+    games: [], uiux: [], modeling: [], design: []
+  })
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/categories").then(r => r.json()),
+      fetch("/api/projects").then(r => r.json())
+    ])
+    .then(([catData, projData]) => {
+      if (Array.isArray(catData)) {
+        setCategories(catData)
+        if (catData.length > 0 && !activeCategory) setActiveCategory(catData[0].slug)
+      }
+      setProjectsData(projData)
+    })
+    .catch(() => {})
+  }, [])
+
+  const visibleProjects = (cat: string) =>
+    (projectsData[cat] ?? []).filter((p: any) => p.visible !== false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const navRef = useRef<HTMLDivElement>(null)
@@ -42,7 +62,8 @@ export default function ProjectsSection() {
   useEffect(() => {
     const activeBtn = btnRefs.current[activeCategory]
     const nav = navRef.current
-    if (activeBtn && nav) {
+    if (activeBtn && nav && !isMobile) {
+      // In mobile, width is dynamic
       const navRect = nav.getBoundingClientRect()
       const btnRect = activeBtn.getBoundingClientRect()
       if (isMobile) {
@@ -129,22 +150,17 @@ export default function ProjectsSection() {
                 : { left: indicatorStyle.left, width: indicatorStyle.width, height: 4 }
             }
           />
-          {[
-            { id: "games", label: "Games" },
-            { id: "uiux", label: "UI/UX" },
-            { id: "modeling", label: "3D Modeling" },
-            { id: "design", label: "Graphic Design" },
-          ].map((category) => (
+          {categories.map((category) => (
             <button
-              key={category.id}
-              ref={el => { btnRefs.current[category.id] = el; }}
-              onClick={() => setActiveCategory(category.id as Category)}
+              key={category.slug}
+              ref={el => { btnRefs.current[category.slug] = el; }}
+              onClick={() => setActiveCategory(category.slug)}
               className={cn(
                 "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-regular text-md font-sans text-white",
                 isMobile
                   ? "border-b border-zinc-700 last:border-b-0"
                   : "",
-                activeCategory === category.id
+                activeCategory === category.slug
                   ? "text-[#ffffff] font-bold"
                   : "text-zinc-400 hover:text-white",
               )}
@@ -167,107 +183,29 @@ export default function ProjectsSection() {
           }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {activeCategory === "games" &&
-              projects.games && projects.games.length > 0 ? (
-              projects.games.map((project: any, idx: number) =>
+            {categories.map((cat) => {
+              if (activeCategory !== cat.slug) return null
+              const list = visibleProjects(cat.slug)
+              if (list.length === 0) return (
+                <div key={cat.slug} className="col-span-full text-center text-zinc-400 py-8">
+                  No projects found.
+                </div>
+              )
+              return list.map((project: any, idx: number) =>
                 project.id ? (
-                  <Link href={`/project?id=${project.id}&category=games`} key={`games${project.id}-${idx}`}>
+                  <Link href={`/project?id=${project.id}&category=${cat.slug}`} key={`${cat.slug}${project.id}-${idx}`}>
                     <ProjectCard
                       title={project.title}
                       role={project.role}
                       tools={project.tools}
                       coverImage={project.coverImage}
                       coverAnimated={project.coverAnimated}
-                      columns={2}
+                      columns={cat.slug === "games" || cat.slug === "uiux" ? 2 : 3}
                     />
                   </Link>
                 ) : null
               )
-            ) : (
-              activeCategory === "games" && (
-                <div className="col-span-full text-center text-zinc-400 py-8">
-                  No Games projects found.
-                </div>
-              )
-            )
-            }
-
-            {activeCategory === "uiux" &&
-              projects.uiux && projects.uiux.length > 0 ? (
-              projects.uiux.map((project: any, idx: number) =>
-                project.id ? (
-                  <Link href={`/project?id=${project.id}&category=uiux`} key={`uiux${project.id}-${idx}`}>
-                    <ProjectCard
-                      title={project.title}
-                      role={project.role}
-                      tools={project.tools}
-                      coverImage={project.coverImage}
-                      coverAnimated={project.coverAnimated}
-                      columns={2}
-                    />
-                  </Link>
-                ) : null
-              )
-            ) : (
-              activeCategory === "uiux" && (
-                <div className="col-span-full text-center text-zinc-400 py-8">
-                  No UI/UX projects found.
-                </div>
-              )
-            )
-            }
-
-            {activeCategory === "modeling" &&
-              projects.modeling && projects.modeling.length > 0 ? (
-              projects.modeling.map((project: any, idx: number) => // <-- add ': any' or your Project type
-                project.id ? (
-                  <Link href={`/project?id=${project.id}&category=modeling`} key={`modeling${project.id}-${idx}`}>
-                    <ProjectCard
-                      title={project.title}
-                      role={project.role}
-                      tools={project.tools}
-                      coverImage={project.coverImage}
-                      coverAnimated={project.coverAnimated}
-                      columns={3}
-                    />
-                  </Link>
-                ) : null
-              )
-            ) : (
-              activeCategory === "modeling" && (
-                <div className="col-span-full text-center text-zinc-400 py-8">
-                  No 3D Modeling projects found.
-                </div>
-              )
-            )
-            }
-
-            {activeCategory === "design" &&
-              projects.design && projects.design.length > 0 ? (
-              projects.design.map((project: any, idx: number) =>
-                project.id ? (
-                  <Link href={`/project?id=${project.id}&category=design`} key={`design${project.id}-${idx}`}>
-                    <ProjectCard
-                      title={project.title}
-                      role={project.role}
-                      tools={project.tools}
-                      coverImage={project.coverImage}
-                      coverAnimated={project.coverAnimated}
-                      columns={3}
-                    />
-                  </Link>
-                ) : null
-              )
-            ) : (
-              activeCategory === "design" && (
-                <div className="col-span-full text-center text-zinc-400 py-8">
-                  No Graphic Design projects found.
-                </div>
-              )
-            )
-            }
-
-
+            })}
           </div>
         </div>
       </div>

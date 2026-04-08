@@ -29,6 +29,7 @@ function ProjectContent() {
     project.sections?.forEach(section => {
       section.description.forEach((item: any) => {
         if (item.type === "image" && item.image) imgs.push(item.image)
+        if (!item.type && item.image) imgs.push(item.image)
       })
       if (section.image) imgs.push(section.image)
     })
@@ -61,15 +62,35 @@ function ProjectContent() {
 
   return (
     <main className="min-h-screen bg-zinc-900 text-white grid grid-cols-1 lg:grid-cols-3">
-      {/* Mobile: Fixed top bar for Back link */}
-      <div className="lg:hidden fixed top-0 left-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50 shadow-md">
+      {/* Mobile: Fixed top bar for Back link & Navigation */}
+      <div className="lg:hidden fixed top-0 left-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50 shadow-md flex items-center justify-between px-2">
         <Link
           href="/#projects"
-          className="flex items-center text-blue-500 hover:text-blue-400 px-4 py-3 font-medium transition-colors"
+          className="flex items-center text-zinc-500 hover:text-white px-2 py-3 font-medium transition-colors text-sm"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Projects
         </Link>
+        <div className="flex items-center gap-2 pr-2">
+          <Link
+            href={`/project?id=${prevProject.id}&category=${category}`}
+            className="w-8 h-8 bg-zinc-900 border border-zinc-800 rounded-lg flex items-center justify-center hover:bg-zinc-800 transition-colors"
+          >
+            <ChevronLeft className="w-4 h-4 text-zinc-400 hover:text-white" />
+          </Link>
+
+          <div className="text-xs font-bold font-sans flex items-center">
+            <span className="text-blue-500">{currentIndex + 1}</span>
+            <span className="text-zinc-500">/{categoryProjects.length}</span>
+          </div>
+
+          <Link
+            href={`/project?id=${nextProject.id}&category=${category}`}
+            className="w-8 h-8 bg-zinc-900 border border-zinc-800 rounded-lg flex items-center justify-center hover:bg-zinc-800 transition-colors"
+          >
+            <ChevronRight className="w-4 h-4 text-zinc-400 hover:text-white" />
+          </Link>
+        </div>
       </div>
 
       {/* Left column: info (sidebar on desktop, block on mobile) */}
@@ -82,15 +103,36 @@ function ProjectContent() {
         "
       >
         <div className="py-6 px-2 lg:sticky lg:top-0 lg:py-10">
-          {/* Desktop: Back link in sidebar */}
-          <div className="hidden lg:block mb-10">
+          {/* Desktop: Back link and Navigation */}
+          <div className="hidden lg:flex items-center justify-between mb-10 w-full">
             <Link
               href="/#projects"
-              className="inline-flex items-center text-zinc-500 hover:text-blue-500 px-4 py-2 rounded-xl border border-transparent hover:border-blue-500/10 hover:bg-blue-500/5 transition-all group"
+              className="inline-flex items-center text-zinc-500 hover:text-white font-medium transition-colors group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
               Back to Projects
             </Link>
+
+            <div className="flex items-center gap-3">
+              <Link
+                href={`/project?id=${prevProject.id}&category=${category}`}
+                className="w-9 h-9 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center hover:bg-zinc-800 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4 text-zinc-400 hover:text-white" />
+              </Link>
+
+              <div className="text-xs font-bold font-sans flex items-center">
+                <span className="text-blue-500">{currentIndex + 1}</span>
+                <span className="text-zinc-500">/{categoryProjects.length}</span>
+              </div>
+
+              <Link
+                href={`/project?id=${nextProject.id}&category=${category}`}
+                className="w-9 h-9 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center hover:bg-zinc-800 transition-colors"
+              >
+                <ChevronRight className="w-4 h-4 text-zinc-400 hover:text-white" />
+              </Link>
+            </div>
           </div>
           
           <div className="flex items-center space-x-6 my-2">
@@ -154,27 +196,7 @@ function ProjectContent() {
             </Button>
           )}
 
-          {/* Project Navigation (Desktop) */}
-          <div className="hidden lg:flex items-center gap-2 mt-12 pt-8 border-t border-zinc-800/50">
-             <Link 
-               href={`/project?id=${prevProject.id}&category=${category}`}
-               className="flex-1 group flex flex-col gap-1.5"
-             >
-                <div className="text-[10px] text-zinc-600 uppercase tracking-widest font-black group-hover:text-blue-500 transition-colors">Prev</div>
-                <div className="bg-zinc-900/50 border border-zinc-800 h-14 w-full rounded-2xl flex items-center justify-center group-hover:bg-zinc-800 group-hover:border-blue-500/50 transition-all">
-                   <ChevronLeft className="w-5 h-5 text-white/50 group-hover:text-white group-hover:-translate-x-0.5 transition-all" />
-                </div>
-             </Link>
-             <Link 
-               href={`/project?id=${nextProject.id}&category=${category}`}
-               className="flex-1 group flex flex-col gap-1.5 items-end text-right"
-             >
-                <div className="text-[10px] text-zinc-600 uppercase tracking-widest font-black group-hover:text-blue-500 transition-colors">Next</div>
-                <div className="bg-zinc-900/50 border border-zinc-800 h-14 w-full rounded-2xl flex items-center justify-center group-hover:bg-zinc-800 group-hover:border-blue-500/50 transition-all">
-                   <ChevronRight className="w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
-                </div>
-             </Link>
-          </div>
+          {/* Project Navigation moved to Header */}
         </div>
       </div>
 
@@ -203,9 +225,24 @@ function ProjectContent() {
               <div className="h-1 w-20 bg-blue-600 rounded-full" />
             </div>
 
+            {/* Per-section video (new format) */}
+            {(section as any).video && (
+              <div className="mb-8 w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-800/50">
+                <iframe
+                  src={(section as any).video}
+                  title={`${section.title} video`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+            )}
+
             <div className={`grid gap-12 ${section.image ? "lg:grid-cols-2" : "grid-cols-1"}`}>
               <div className="space-y-6">
                 {section.description.map((item, idx) => {
+                  // Legacy typed format
                   if (item.type === "heading" && item.text) {
                     return <h3 key={idx} className="text-xl font-bold text-white">{item.text}</h3>
                   }
@@ -226,7 +263,7 @@ function ProjectContent() {
                   }
                   if (item.type === "image" && item.image) {
                     return (
-                      <div 
+                      <div
                         key={idx}
                         className="my-8 rounded-3xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
                         onClick={() => setSelectedImageIndex(lightboxImages.indexOf(item.image!))}
@@ -241,12 +278,62 @@ function ProjectContent() {
                       </div>
                     )
                   }
+                  if (item.type === "video" && (item as any).video) {
+                    return (
+                      <div key={idx} className="my-8 w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-800/50">
+                        <iframe
+                          src={(item as any).video}
+                          title={`${project.title} block video`}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="w-full h-full"
+                        />
+                      </div>
+                    )
+                  }
+                  // New simplified format (no type field)
+                  if (!item.type) {
+                    return (
+                      <div key={idx} className="space-y-6">
+                        {item.text && (
+                          <p className="text-zinc-400 font-light leading-relaxed text-justify">{item.text}</p>
+                        )}
+                        {item.image && (
+                          <div
+                            className="rounded-3xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
+                            onClick={() => setSelectedImageIndex(lightboxImages.indexOf(item.image!))}
+                          >
+                            <Image
+                              src={item.image}
+                              alt={`${project.title} - Section Image`}
+                              width={800}
+                              height={600}
+                              className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+                            />
+                          </div>
+                        )}
+                        {(item as any).video && (
+                          <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-800/50">
+                            <iframe
+                              src={(item as any).video}
+                              title={`${project.title} block video`}
+                              frameBorder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="w-full h-full"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  }
                   return null
                 })}
               </div>
 
               {section.image && (
-                <div 
+                <div
                   className="relative group cursor-zoom-in rounded-3xl overflow-hidden border border-zinc-800/50 shadow-xl"
                   onClick={() => setSelectedImageIndex(lightboxImages.indexOf(section.image!))}
                 >
@@ -294,22 +381,7 @@ function ProjectContent() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-sm bg-zinc-950/80 backdrop-blur-2xl border border-zinc-800/50 p-2 rounded-3xl flex items-center gap-2 z-40 shadow-2xl shadow-black/50">
-         <Link 
-           href={`/project?id=${prevProject.id}&category=${category}`} 
-           className="flex-1 bg-zinc-900 border border-zinc-800 h-14 rounded-2xl flex items-center justify-center active:bg-zinc-800 transition-colors"
-         >
-            <ChevronLeft className="w-6 h-6 text-white" />
-         </Link>
-         <div className="w-[1px] h-8 bg-zinc-800" />
-         <Link 
-           href={`/project?id=${nextProject.id}&category=${category}`} 
-           className="flex-1 bg-zinc-900 border border-zinc-800 h-14 rounded-2xl flex items-center justify-center active:bg-zinc-800 transition-colors"
-         >
-            <ChevronRight className="w-6 h-6 text-white" />
-         </Link>
-      </div>
+      {/* Mobile Navigation moved to Header */}
 
       {/* Lightbox Modal */}
       {selectedImageIndex !== null && (

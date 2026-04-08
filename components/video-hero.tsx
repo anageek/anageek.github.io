@@ -1,8 +1,10 @@
-export default function VideoHero() {
+export default function VideoHero({ src }: { src?: string }) {
+  if (!src) return <div className="w-screen h-screen bg-black" />;
+
   return (
     <iframe 
     className="w-screen h-screen" 
-    src="https://www.youtube.com/embed/mzg3fhwPQQc?si=014MDzNOCnpXGT15&autoplay=1&mute=1&loop=1&playlist=mzg3fhwPQQc" 
+    src={src} 
     title="YouTube video player" 
     frameBorder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -10,16 +12,5 @@ export default function VideoHero() {
     allowFullScreen
     suppressHydrationWarning>
     </iframe>
-
-
-    // <div className="absolute inset-0 w-full h-full overflow-hidden">
-    //   <div className="absolute inset-0 bg-black/50 z-10" />
-
-    //   {/*<img autoPlay muted loop playsInline className="w-full h-full object-cover">
-    //     <source src="/videos/placetableGIF.gif" type="gif" />
-    //     Your browser does not support the video tag.
-    //   </img> */}
-
-    // </div>
   )
 }

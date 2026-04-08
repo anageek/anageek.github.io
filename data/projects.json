@@ -192,7 +192,8 @@
           ],
           "image": ""
         }
-      ]
+      ],
+      "featured": true
     },
     {
       "id": 2,
@@ -330,7 +331,8 @@
         "/images/projects/games/PixelEscape/Enter-Portal.gif",
         "/images/projects/games/PixelEscape/Image-1.png",
         "/images/projects/games/PixelEscape/Image-2.png"
-      ]
+      ],
+      "featured": true
     },
     {
       "id": 3,
@@ -453,7 +455,8 @@
         "/images/projects/games/PiratesAttack/img3.png",
         "/images/projects/games/PiratesAttack/img1.png",
         "/images/projects/games/PiratesAttack/img2.png"
-      ]
+      ],
+      "featured": true
     },
     {
       "id": 4,
@@ -476,7 +479,9 @@
       "images": [
         "/images/projects/games/JoesChristmas/img-1.png",
         "/images/projects/games/JoesChristmas/img-2.png"
-      ]
+      ],
+      "featured": true,
+      "visible": true
     }
   ],
   "uiux": [

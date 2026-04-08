@@ -1,8 +1,8 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
 import { 
   LayoutDashboard, 
   Gamepad2, 
@@ -11,7 +11,8 @@ import {
   LogOut,
   User,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Settings as SettingsIcon
 } from "lucide-react"
 
 export default function AdminLayout({
@@ -20,10 +21,34 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const router = useRouter()
+  const [categories, setCategories] = useState<any[]>([])
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
+  const fetchCategories = async () => {
+    try {
+      const resp = await fetch("/api/admin/categories")
+      const data = await resp.json()
+      if (Array.isArray(data)) setCategories(data)
+    } catch (err) {
+      console.error("Failed to fetch categories")
+    }
+  }
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" })
     router.push("/login")
+  }
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Gamepad2': return <Gamepad2 />
+      case 'Palette': return <Palette />
+      case 'Boxes': return <Boxes />
+      default: return <Palette />
+    }
   }
 
   return (
@@ -41,27 +66,37 @@ export default function AdminLayout({
         </div>
 
         <nav className="flex-1 space-y-1">
-          <NavItem icon={<LayoutDashboard />} label="Dashboard" href="/admin" active />
+          <NavItem icon={<LayoutDashboard />} label="Dashboard" href="/admin" />
           <div className="pt-4 pb-2 px-3">
-             <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-black">Categorias</p>
+             <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-black">Categories</p>
           </div>
-          <NavItem icon={<Gamepad2 />} label="Games" href="/admin?category=games" />
-          <NavItem icon={<Palette />} label="UI/UX" href="/admin?category=uiux" />
-          <NavItem icon={<Boxes />} label="Modeling" href="/admin?category=modeling" />
-          <NavItem icon={<Palette />} label="Design" href="/admin?category=design" />
+          {categories.map((cat) => (
+            <NavItem 
+              key={cat.slug} 
+              icon={getIcon(cat.icon)} 
+              label={cat.label} 
+              href={`/admin?category=${cat.slug}`} 
+            />
+          ))}
+          
+          <div className="pt-8 pb-2 px-3 border-t border-zinc-900 mt-4">
+             <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-black">Settings</p>
+          </div>
+          <NavItem icon={<Palette />} label="Categories" href="/admin/categories" />
+          <NavItem icon={<SettingsIcon />} label="General Settings" href="/admin/settings" />
         </nav>
 
         <div className="space-y-4 pt-6 border-t border-zinc-900">
            <Link href="/" target="_blank" className="flex items-center gap-3 px-3 py-2 text-sm hover:text-white transition-colors group">
               <ExternalLink className="w-4 h-4 text-zinc-500 group-hover:text-blue-400" />
-              <span>Ver Site Público</span>
+              <span>View Public Site</span>
            </Link>
            <button 
              onClick={handleLogout}
              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-zinc-500 hover:text-red-400 transition-colors group"
            >
               <LogOut className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-              <span>Sair</span>
+              <span>Logout</span>
            </button>
         </div>
       </aside>
@@ -72,7 +107,7 @@ export default function AdminLayout({
            <h2 className="text-sm font-medium text-white flex items-center gap-2">
               <span className="text-zinc-600">Admin</span>
               <ChevronRight className="w-4 h-4 text-zinc-800" />
-              <span>Gestão de Conteúdo</span>
+              <span>Content Management</span>
            </h2>
            <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800">

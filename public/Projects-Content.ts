@@ -28,6 +28,8 @@ export interface Project {
   designButtonLabel: string;
   images: string[];
   sections: ProjectSection[];
+  visible?: boolean;
+  featured?: boolean;
 }
 
 export interface Projects {

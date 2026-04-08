@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const { action, category, project } = await request.json();
+    const { action, category, originalCategory, project } = await request.json();
     const projects = await getProjects();
 
     if (!projects[category]) {
@@ -42,12 +42,30 @@ export async function POST(request: NextRequest) {
       // Find max ID for this category
       const maxId = Math.max(0, ...projects[category].map((p: any) => p.id));
       const newProject = { ...project, id: maxId + 1 };
+      delete newProject.projectCategory; // Don't persist UI-only field
       projects[category].push(newProject);
     } 
     else if (action === 'update') {
-      const index = projects[category].findIndex((p: any) => p.id === project.id);
-      if (index !== -1) {
-        projects[category][index] = project;
+      const isMovingCategory = originalCategory && category !== originalCategory;
+      const targetCategory = isMovingCategory ? originalCategory : category;
+      
+      const index = projects[targetCategory]?.findIndex((p: any) => p.id === project.id);
+      
+      if (index !== -1 && index !== undefined) {
+        const updated = { ...project };
+        delete updated.projectCategory;
+
+        if (isMovingCategory) {
+          // Remove from old category
+          projects[originalCategory].splice(index, 1);
+          // Add to new category (giving it a fresh maxId to prevent collisions)
+          if (!projects[category]) projects[category] = [];
+          const maxId = Math.max(0, ...projects[category].map((p: any) => p.id));
+          updated.id = maxId + 1;
+          projects[category].push(updated);
+        } else {
+          projects[category][index] = updated;
+        }
       }
     } 
     else if (action === 'delete') {
