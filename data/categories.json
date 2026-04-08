@@ -1,26 +1,6 @@
 [
-  {
-    "id": "games",
-    "slug": "games",
-    "label": "Games",
-    "icon": "Gamepad2"
-  },
-  {
-    "id": "uiux",
-    "slug": "uiux",
-    "label": "UI/UX",
-    "icon": "Palette"
-  },
-  {
-    "id": "modeling",
-    "slug": "modeling",
-    "label": "Modeling",
-    "icon": "Boxes"
-  },
-  {
-    "id": "design",
-    "slug": "design",
-    "label": "Design",
-    "icon": "Palette"
-  }
+  { "id": "games", "slug": "games", "label": "Games", "icon": "Gamepad2" },
+  { "id": "uiux", "slug": "uiux", "label": "UI/UX", "icon": "Palette" },
+  { "id": "modeling", "slug": "modeling", "label": "Modeling", "icon": "Boxes" },
+  { "id": "design", "slug": "design", "label": "Design", "icon": "Palette" }
 ]
