@@ -1,28 +1,6 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-
-const categoriesPath = path.join(process.cwd(), 'data', 'categories.json');
-const projectsPath = path.join(process.cwd(), 'data', 'projects.json');
-
-async function getCategories() {
-  const fileData = await fs.readFile(categoriesPath, 'utf8');
-  return JSON.parse(fileData);
-}
-
-async function saveCategories(categories: any) {
-  await fs.writeFile(categoriesPath, JSON.stringify(categories, null, 2), 'utf8');
-}
-
-async function getProjects() {
-  const fileData = await fs.readFile(projectsPath, 'utf8');
-  return JSON.parse(fileData);
-}
-
-async function saveProjects(projects: any) {
-  await fs.writeFile(projectsPath, JSON.stringify(projects, null, 2), 'utf8');
-}
+import { getCategories, saveCategories, getProjects, saveProjects } from '@/lib/db';
 
 export async function GET() {
   try {
@@ -47,31 +25,23 @@ export async function POST(request: NextRequest) {
     let categories = await getCategories();
 
     if (action === 'create') {
-      const newCategory = { ...category };
-      categories.push(newCategory);
-      
-      // Also update projects.json structure
+      categories.push({ ...category });
       const projects = await getProjects();
-      if (!projects[newCategory.slug]) {
-        projects[newCategory.slug] = [];
+      if (!projects[category.slug]) {
+        projects[category.slug] = [];
         await saveProjects(projects);
       }
-    } 
-    else if (action === 'update') {
+    } else if (action === 'update') {
       const index = categories.findIndex((c: any) => c.slug === category.slug);
-      if (index !== -1) {
-        categories[index] = category;
-      }
-    } 
-    else if (action === 'delete') {
+      if (index !== -1) categories[index] = category;
+    } else if (action === 'delete') {
       categories = categories.filter((c: any) => c.slug !== category.slug);
-      // Optional: hide or move projects of this category? 
-      // For now we just remove from the list, the projects.json key remains.
     }
 
     await saveCategories(categories);
     return NextResponse.json({ success: true, categories });
   } catch (error) {
+    console.error('POST /api/admin/categories error:', error);
     return NextResponse.json({ error: 'Failed to update categories' }, { status: 500 });
   }
 }
