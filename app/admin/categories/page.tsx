@@ -122,6 +122,7 @@ export default function CategoriesPage() {
     try {
       const response = await fetch("/api/admin/categories", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "update", category: updated }),
       })
       if (!response.ok) {

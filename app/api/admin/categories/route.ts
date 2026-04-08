@@ -47,7 +47,8 @@ export async function POST(request: NextRequest) {
     let categories = await getCategories();
 
     if (action === 'create') {
-      const newCategory = { ...category };
+      const { isNew, ...rest } = category;
+      const newCategory = { id: rest.slug, ...rest };
       categories.push(newCategory);
       
       // Also update projects.json structure
@@ -58,10 +59,9 @@ export async function POST(request: NextRequest) {
       }
     } 
     else if (action === 'update') {
-      const index = categories.findIndex((c: any) => c.slug === category.slug);
-      if (index !== -1) {
-        categories[index] = category;
-      }
+      const { isNew, ...rest } = category;
+      const index = categories.findIndex((c: any) => c.slug === rest.slug);
+      if (index !== -1) categories[index] = rest;
     } 
     else if (action === 'delete') {
       categories = categories.filter((c: any) => c.slug !== category.slug);
