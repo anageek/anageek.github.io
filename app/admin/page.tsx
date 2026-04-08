@@ -93,8 +93,8 @@ function StatCard({ label, value, icon, color }: any) {
 function Field({ label, children, error }: any) {
   return (
     <div className="space-y-1.5">
-      {label && <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{label}</Label>}
       {children}
+      {label && <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{label}</Label>}
       {error && <p className="text-[10px] text-red-500 font-medium">{error}</p>}
     </div>
   )
@@ -116,7 +116,6 @@ function LinkField({ value, onChange, placeholder, onUpload, uploading }: {
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
         className="flex-1 bg-transparent text-[11px] font-mono text-zinc-300 px-3 focus:outline-none placeholder:text-zinc-700 h-full"
       />
       {onUpload && (
@@ -529,7 +528,6 @@ function AdminContent() {
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3.5 top-3 h-4 w-4 text-zinc-600" />
             <Input
-              placeholder="Search projects..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-11 h-11 bg-zinc-950/60 border-zinc-800 text-zinc-200 rounded-xl"
@@ -756,7 +754,6 @@ function AdminContent() {
                       <LinkField
                         value={watchedProject?.coverImage ?? ""}
                         onChange={(v) => setValue("coverImage", v)}
-                        placeholder="/images/projects/..."
                         onUpload={(e) => handleFieldUpload(e, "coverImage")}
                         uploading={isUploading === "coverImage"}
                       />
@@ -766,7 +763,6 @@ function AdminContent() {
                       <LinkField
                         value={watchedProject?.coverAnimated ?? ""}
                         onChange={(v) => setValue("coverAnimated", v)}
-                        placeholder="Animated cover URL..."
                         onUpload={(e) => handleFieldUpload(e, "coverAnimated")}
                         uploading={isUploading === "coverAnimated"}
                       />
@@ -779,7 +775,6 @@ function AdminContent() {
                       <Input
                         {...register("title")}
                         className="bg-zinc-900 border-zinc-800 h-10 text-white font-bold rounded-lg"
-                        placeholder="Project Title"
                       />
                     </Field>
 
@@ -788,14 +783,12 @@ function AdminContent() {
                         <Input
                           {...register("category")}
                           className="bg-zinc-900 border-zinc-800 h-10 rounded-lg"
-                          placeholder="e.g. Survival/Exploration"
                         />
                       </Field>
                       <Field label="Role">
                         <Input
                           {...register("role")}
                           className="bg-zinc-900 border-zinc-800 h-10 rounded-lg"
-                          placeholder="e.g. UX Designer"
                         />
                       </Field>
                     </div>
@@ -805,14 +798,12 @@ function AdminContent() {
                         <Input
                           {...register("company")}
                           className="bg-zinc-900 border-zinc-800 h-10 rounded-lg"
-                          placeholder="e.g. Ana Neiva"
                         />
                       </Field>
                       <Field label="Status">
                         <Input
                           {...register("status")}
                           className="bg-zinc-900 border-zinc-800 h-10 rounded-lg"
-                          placeholder="e.g. Alpha Version"
                         />
                       </Field>
                     </div>
@@ -822,7 +813,6 @@ function AdminContent() {
                         <Input
                           {...register("tools")}
                           className="bg-zinc-900 border-zinc-800 h-10 rounded-lg"
-                          placeholder="Unreal, Figma, Photoshop..."
                         />
                       </Field>
                       <Field label="Category">
@@ -853,7 +843,6 @@ function AdminContent() {
                         {...register("description")}
                         rows={4}
                         className="bg-zinc-900 border-zinc-800 resize-none rounded-lg text-sm leading-relaxed"
-                        placeholder="Tell the story of this project..."
                       />
                     </Field>
 
@@ -861,7 +850,6 @@ function AdminContent() {
                       <Input
                         {...register("designButtonLabel")}
                         className="bg-zinc-900 border-zinc-800 h-10 rounded-lg"
-                        placeholder="e.g. Download Game"
                       />
                     </Field>
 
@@ -869,7 +857,6 @@ function AdminContent() {
                       <LinkField
                         value={watchedProject?.designurl ?? ""}
                         onChange={(v) => setValue("designurl", v)}
-                        placeholder="https://..."
                       />
                     </Field>
                   </div>
@@ -968,7 +955,6 @@ function AdminContent() {
                           <LinkField
                             value={(watchedProject?.images?.[idx] as any) ?? ""}
                             onChange={(v) => setValue(`images.${idx}` as any, v)}
-                            placeholder="/images/projects/..."
                             onUpload={(e) => handleFieldUpload(e, "images", idx)}
                             uploading={isUploading === `images.${idx}`}
                           />
@@ -998,7 +984,6 @@ function AdminContent() {
                     value={sectionDraft.title}
                     onChange={(e) => setSectionDraft(p => ({ ...p, title: e.target.value }))}
                     className="bg-zinc-900 border-zinc-800 h-10 text-white font-bold rounded-lg"
-                    placeholder="Section Title"
                   />
                 </Field>
 
@@ -1007,7 +992,6 @@ function AdminContent() {
                     <LinkField
                       value={sectionDraft.image}
                       onChange={(v) => setSectionDraft(p => ({ ...p, image: v }))}
-                      placeholder="/images/..."
                       onUpload={uploadSectionCoverImage}
                       uploading={isUploading === "section.image"}
                     />
@@ -1016,7 +1000,6 @@ function AdminContent() {
                     <LinkField
                       value={sectionDraft.video}
                       onChange={(v) => setSectionDraft(p => ({ ...p, video: v }))}
-                      placeholder="https://youtube.com/embed/..."
                     />
                   </Field>
                 </div>
@@ -1067,7 +1050,6 @@ function AdminContent() {
                             onChange={(e) => updateDescBlock(idx, "text", e.target.value)}
                             rows={3}
                             className="bg-zinc-900 border-zinc-800 resize-none rounded-lg text-sm leading-relaxed"
-                            placeholder={block.type === "heading" ? "Heading text..." : "Description text..."}
                           />
                         </Field>
                       )}
@@ -1079,7 +1061,6 @@ function AdminContent() {
                             onChange={(e) => updateDescListItems(idx, e.target.value)}
                             rows={4}
                             className="bg-zinc-900 border-zinc-800 resize-none rounded-lg text-sm leading-relaxed"
-                            placeholder={"First item\nSecond item\nThird item..."}
                           />
                         </Field>
                       )}
@@ -1089,7 +1070,6 @@ function AdminContent() {
                           <LinkField
                             value={block.image || ""}
                             onChange={(v) => updateDescBlock(idx, "image", v)}
-                            placeholder="/images/..."
                             onUpload={(e) => uploadDescBlockImage(e, idx)}
                             uploading={isUploading === `desc.image.${idx}`}
                           />
@@ -1101,7 +1081,6 @@ function AdminContent() {
                           <LinkField
                             value={block.video || ""}
                             onChange={(v) => updateDescBlock(idx, "video", v)}
-                            placeholder="https://youtube.com/embed/..."
                           />
                         </Field>
                       )}

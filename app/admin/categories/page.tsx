@@ -239,7 +239,6 @@ export default function CategoriesPage() {
                     value={currentCategory?.label || ""} 
                     onChange={(e) => setCurrentCategory({...currentCategory, label: e.target.value})}
                     className="bg-zinc-900/60 border-zinc-800 h-11 rounded-xl"
-                    placeholder="e.g. Mobile Games"
                     required
                   />
                </div>
@@ -249,7 +248,6 @@ export default function CategoriesPage() {
                     value={currentCategory?.slug || ""} 
                     onChange={(e) => setCurrentCategory({...currentCategory, slug: e.target.value.toLowerCase().replace(/\s+/g, '-')})}
                     className="bg-zinc-900/60 border-zinc-800 h-11 rounded-xl font-mono text-sm"
-                    placeholder="e.g. mobile-games"
                     disabled={!currentCategory?.isNew}
                     required
                   />
@@ -257,18 +255,26 @@ export default function CategoriesPage() {
                </div>
                <div className="space-y-2">
                   <Label className="text-xs uppercase font-black text-zinc-500">Icon</Label>
-                  <Select 
-                    value={currentCategory?.icon || "Palette"} 
+                  <Select
+                    value={currentCategory?.icon || "Palette"}
                     onValueChange={(val) => setCurrentCategory({...currentCategory, icon: val})}
                   >
                     <SelectTrigger className="bg-zinc-900/60 border-zinc-800 h-11 rounded-xl">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-zinc-950 border-zinc-900 text-zinc-300">
-                      <SelectItem value="Gamepad2">Gamepad (Games)</SelectItem>
-                      <SelectItem value="Palette">Palette (Design/UI)</SelectItem>
-                      <SelectItem value="Boxes">Boxes (Modeling)</SelectItem>
-                      <SelectItem value="Grid">Grid (Others)</SelectItem>
+                      <SelectItem value="Gamepad2">
+                        <span className="flex items-center gap-2"><Gamepad2 className="w-4 h-4 text-blue-400" /> Games</span>
+                      </SelectItem>
+                      <SelectItem value="Palette">
+                        <span className="flex items-center gap-2"><Palette className="w-4 h-4 text-pink-400" /> Design / UI</span>
+                      </SelectItem>
+                      <SelectItem value="Boxes">
+                        <span className="flex items-center gap-2"><Boxes className="w-4 h-4 text-orange-400" /> 3D / Modeling</span>
+                      </SelectItem>
+                      <SelectItem value="Grid">
+                        <span className="flex items-center gap-2"><Grid className="w-4 h-4 text-zinc-400" /> Others</span>
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                </div>
