@@ -278,11 +278,11 @@ function ProjectContent() {
                       </div>
                     )
                   }
-                  if (item.type === "video" && (item as any).video) {
+                  if (item.type === "video" && item.video) {
                     return (
                       <div key={idx} className="my-8 w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-800/50">
                         <iframe
-                          src={(item as any).video}
+                          src={item.video}
                           title={`${project.title} block video`}
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -3,9 +3,10 @@ import projectsData from "../data/projects.json";
 export interface ProjectSection {
   title: string;
   description: {
-    type: "heading" | "paragraph" | "image" | "list";
+    type: "heading" | "paragraph" | "image" | "list" | "video";
     text?: string;
     image?: string;
+    video?: string;
     items?: string[];
   }[];
   image: string;
