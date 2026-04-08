@@ -75,6 +75,7 @@ export default function CategoriesPage() {
     try {
       const response = await fetch("/api/admin/categories", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action, category: currentCategory }),
       })
       if (response.ok) {
@@ -96,6 +97,7 @@ export default function CategoriesPage() {
     try {
       const response = await fetch("/api/admin/categories", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "delete", category: currentCategory }),
       })
       if (response.ok) {

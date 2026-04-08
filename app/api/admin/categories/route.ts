@@ -25,19 +25,20 @@ async function saveProjects(projects: any) {
 }
 
 export async function GET() {
-  const session = await getSession();
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
   try {
+    const session = await getSession();
+    if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     const categories = await getCategories();
     return NextResponse.json(categories);
   } catch (error) {
+    console.error('GET /api/admin/categories error:', error);
     return NextResponse.json({ error: 'Failed to fetch categories' }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
-  const session = await getSession();
+  let session;
+  try { session = await getSession(); } catch { /* invalid token */ }
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
