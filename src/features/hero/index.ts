@@ -1,1 +1,1 @@
-// Components will be added later
+export { VideoHero } from './components/video-hero'

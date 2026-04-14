@@ -1,1 +1,1 @@
-// Components will be added later
+export { ContactSection } from './components/contact-section'
