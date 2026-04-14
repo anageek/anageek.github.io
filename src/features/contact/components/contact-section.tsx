@@ -75,41 +75,41 @@ export function ContactSection() {
             </div>
           </div>
 
-          <div className="flex justify-center space-x-6 ">
+          <div className="flex justify-center space-x-8">
             <a
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-primary transition-colors "
+              className="text-zinc-300 hover:text-primary transition-colors"
             >
-              <Linkedin className="h-5 w-5" />
+              <Linkedin className="h-6 w-6" />
               <span className="sr-only">Linkedin</span>
             </a>
             <a
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-primary transition-colors "
+              className="text-zinc-300 hover:text-primary transition-colors"
             >
-              <Instagram className="h-5 w-5" />
+              <Instagram className="h-6 w-6" />
               <span className="sr-only">Instagram</span>
             </a>
             <a
               href={siteConfig.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-primary transition-colors "
+              className="text-zinc-300 hover:text-primary transition-colors"
             >
-              <Youtube className="h-5 w-5" />
+              <Youtube className="h-6 w-6" />
               <span className="sr-only">YouTube</span>
             </a>
             <a
               href={siteConfig.social.twitch}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-primary transition-colors "
+              className="text-zinc-300 hover:text-primary transition-colors"
             >
-              <Twitch className="h-5 w-5" />
+              <Twitch className="h-6 w-6" />
               <span className="sr-only">Twitch</span>
             </a>
           </div>
