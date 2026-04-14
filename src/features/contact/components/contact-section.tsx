@@ -80,7 +80,7 @@ export function ContactSection() {
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-white hover:text-primary transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
               <Linkedin className="h-6 w-6" />
               <span className="sr-only">Linkedin</span>
@@ -89,7 +89,7 @@ export function ContactSection() {
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-white hover:text-primary transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
               <Instagram className="h-6 w-6" />
               <span className="sr-only">Instagram</span>
@@ -98,7 +98,7 @@ export function ContactSection() {
               href={siteConfig.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-white hover:text-primary transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
               <Youtube className="h-6 w-6" />
               <span className="sr-only">YouTube</span>
@@ -107,7 +107,7 @@ export function ContactSection() {
               href={siteConfig.social.twitch}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-white hover:text-primary transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
             >
               <Twitch className="h-6 w-6" />
               <span className="sr-only">Twitch</span>
