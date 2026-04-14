@@ -9,9 +9,6 @@ describe('env validation', () => {
     vi.stubEnv('SESSION_SECRET', '')
     vi.stubEnv('ADMIN_EMAIL', 'test@test.com')
     vi.stubEnv('ADMIN_PASSWORD_HASH', 'abc123')
-    vi.stubEnv('DATABASE_URL', 'postgresql://localhost/test')
-    vi.stubEnv('GITHUB_TOKEN', 'ghp_token')
-    vi.stubEnv('GITHUB_REPO', 'owner/repo')
 
     await expect(async () => {
       vi.resetModules()
@@ -23,9 +20,6 @@ describe('env validation', () => {
     vi.stubEnv('SESSION_SECRET', 'a-very-long-secret-key-that-is-at-least-32-chars')
     vi.stubEnv('ADMIN_EMAIL', 'admin@anageek.me')
     vi.stubEnv('ADMIN_PASSWORD_HASH', 'abc123hash')
-    vi.stubEnv('DATABASE_URL', 'postgresql://localhost/test')
-    vi.stubEnv('GITHUB_TOKEN', 'ghp_token')
-    vi.stubEnv('GITHUB_REPO', 'owner/repo')
 
     vi.resetModules()
     const { env } = await import('@/config/env')

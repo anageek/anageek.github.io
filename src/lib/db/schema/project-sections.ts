@@ -1,10 +1,10 @@
-import { pgTable, serial, integer, varchar, text } from 'drizzle-orm/pg-core'
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 import { projects } from './projects'
 
-export const projectSections = pgTable('project_sections', {
-  id: serial('id').primaryKey(),
+export const projectSections = sqliteTable('project_sections', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
   projectId: integer('project_id').references(() => projects.id, { onDelete: 'cascade' }).notNull(),
-  title: varchar('title', { length: 255 }).notNull(),
+  title: text('title').notNull(),
   image: text('image'),
   video: text('video'),
   sortOrder: integer('sort_order').default(0).notNull(),

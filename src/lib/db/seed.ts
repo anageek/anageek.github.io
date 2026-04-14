@@ -1,12 +1,18 @@
-import 'dotenv/config'
-import { drizzle } from 'drizzle-orm/neon-http'
-import { neon } from '@neondatabase/serverless'
+import { drizzle } from 'drizzle-orm/better-sqlite3'
+import Database from 'better-sqlite3'
 import * as schema from './schema'
-import { readFileSync } from 'fs'
+import { readFileSync, mkdirSync } from 'fs'
 import { join } from 'path'
 
-const sql = neon(process.env.DATABASE_URL!)
-const db = drizzle(sql, { schema })
+// Ensure data directory exists
+mkdirSync(join(process.cwd(), 'data'), { recursive: true })
+
+const dbPath = join(process.cwd(), 'data', 'portfolio.db')
+const sqlite = new Database(dbPath)
+sqlite.pragma('journal_mode = WAL')
+sqlite.pragma('foreign_keys = ON')
+
+const db = drizzle(sqlite, { schema })
 
 function slugify(text: string): string {
   return text
@@ -49,6 +55,7 @@ async function seed() {
   let totalProjects = 0
   let totalSections = 0
   let totalBlocks = 0
+  const usedSlugs = new Set<string>()
 
   for (const [categorySlug, projectsList] of Object.entries(projectsJson)) {
     const categoryId = insertedCategories[categorySlug]
@@ -58,8 +65,13 @@ async function seed() {
     }
 
     for (const [pIdx, project] of projectsList.entries()) {
-      let projectSlug = slugify(project.title)
-      projectSlug = `${projectSlug}-${categorySlug}`
+      let baseSlug = `${slugify(project.title)}-${categorySlug}`
+      let projectSlug = baseSlug
+      let counter = 1
+      while (usedSlugs.has(projectSlug)) {
+        projectSlug = `${baseSlug}-${counter++}`
+      }
+      usedSlugs.add(projectSlug)
 
       const [insertedProject] = await db.insert(schema.projects).values({
         slug: projectSlug,
@@ -134,10 +146,11 @@ async function seed() {
   console.log(`  - ${totalBlocks} blocks`)
   console.log(`  - ${Object.keys(siteJson).length} site config entries`)
 
-  process.exit(0)
+  sqlite.close()
 }
 
 seed().catch((err) => {
   console.error('Seed failed:', err)
+  sqlite.close()
   process.exit(1)
 })

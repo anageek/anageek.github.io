@@ -1,26 +1,26 @@
-import { pgTable, serial, varchar, text, boolean, integer, timestamp } from 'drizzle-orm/pg-core'
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 import { categories } from './categories'
 
-export const projects = pgTable('projects', {
-  id: serial('id').primaryKey(),
-  slug: varchar('slug', { length: 255 }).unique().notNull(),
+export const projects = sqliteTable('projects', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  slug: text('slug').unique().notNull(),
   categoryId: integer('category_id').references(() => categories.id).notNull(),
-  title: varchar('title', { length: 255 }).notNull(),
-  role: varchar('role', { length: 255 }),
-  company: varchar('company', { length: 255 }),
-  status: varchar('status', { length: 100 }),
-  subCategory: varchar('sub_category', { length: 100 }),
-  platform: text('platform').array(),
+  title: text('title').notNull(),
+  role: text('role'),
+  company: text('company'),
+  status: text('status'),
+  subCategory: text('sub_category'),
+  platform: text('platform', { mode: 'json' }).$type<string[]>(),
   description: text('description'),
-  tools: varchar('tools', { length: 500 }),
+  tools: text('tools'),
   coverImage: text('cover_image'),
   coverAnimated: text('cover_animated'),
   videoUrl: text('video_url'),
   designUrl: text('design_url'),
-  designBtnLabel: varchar('design_btn_label', { length: 100 }),
-  visible: boolean('visible').default(true).notNull(),
-  featured: boolean('featured').default(false).notNull(),
+  designBtnLabel: text('design_btn_label'),
+  visible: integer('visible', { mode: 'boolean' }).default(true).notNull(),
+  featured: integer('featured', { mode: 'boolean' }).default(false).notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  createdAt: text('created_at').default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: text('updated_at').default('CURRENT_TIMESTAMP').notNull(),
 })

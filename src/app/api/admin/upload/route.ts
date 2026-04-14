@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { uploadFile } from '@/lib/storage/github'
+import { uploadFile } from '@/lib/storage/local'
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     const result = await uploadFile(file)
 
-    return NextResponse.json({ url: result.url, path: result.path })
+    return NextResponse.json({ url: result.url })
   } catch (error) {
     console.error('Upload error:', error)
     return NextResponse.json(

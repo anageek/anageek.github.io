@@ -1,8 +1,8 @@
-import { pgTable, serial, varchar, text, timestamp } from 'drizzle-orm/pg-core'
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 
-export const siteConfig = pgTable('site_config', {
-  id: serial('id').primaryKey(),
-  key: varchar('key', { length: 100 }).unique().notNull(),
+export const siteConfig = sqliteTable('site_config', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  key: text('key').unique().notNull(),
   value: text('value').notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  updatedAt: text('updated_at').default('CURRENT_TIMESTAMP').notNull(),
 })

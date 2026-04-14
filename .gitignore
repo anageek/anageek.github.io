@@ -38,3 +38,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# SQLite database
+data/portfolio.db
+data/portfolio.db-wal
+data/portfolio.db-shm
+

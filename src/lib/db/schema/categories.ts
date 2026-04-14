@@ -1,12 +1,12 @@
-import { pgTable, serial, varchar, boolean, integer, timestamp } from 'drizzle-orm/pg-core'
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 
-export const categories = pgTable('categories', {
-  id: serial('id').primaryKey(),
-  slug: varchar('slug', { length: 100 }).unique().notNull(),
-  label: varchar('label', { length: 100 }).notNull(),
-  icon: varchar('icon', { length: 50 }).notNull(),
-  visible: boolean('visible').default(true).notNull(),
+export const categories = sqliteTable('categories', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  slug: text('slug').unique().notNull(),
+  label: text('label').notNull(),
+  icon: text('icon').notNull(),
+  visible: integer('visible', { mode: 'boolean' }).default(true).notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  createdAt: text('created_at').default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: text('updated_at').default('CURRENT_TIMESTAMP').notNull(),
 })

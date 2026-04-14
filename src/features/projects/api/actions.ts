@@ -91,7 +91,7 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
       designBtnLabel: parsed.designBtnLabel || null,
       visible: parsed.visible,
       featured: parsed.featured,
-      updatedAt: new Date(),
+      updatedAt: new Date().toISOString(),
     }).where(eq(projects.id, id))
 
     await tx.delete(projectImages).where(eq(projectImages.projectId, id))
@@ -138,7 +138,7 @@ export const deleteProject = withAuth(async (id: number) => {
 })
 
 export const toggleProjectField = withAuth(async (id: number, field: 'visible' | 'featured', value: boolean) => {
-  await db.update(projects).set({ [field]: value, updatedAt: new Date() }).where(eq(projects.id, id))
+  await db.update(projects).set({ [field]: value, updatedAt: new Date().toISOString() }).where(eq(projects.id, id))
   revalidateTag('projects')
   return { success: true as const }
 })

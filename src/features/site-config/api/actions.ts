@@ -12,7 +12,7 @@ export const updateSiteConfig = withAuth(async (key: string, value: string) => {
   })
 
   if (existing) {
-    await db.update(siteConfig).set({ value, updatedAt: new Date() }).where(eq(siteConfig.key, key))
+    await db.update(siteConfig).set({ value, updatedAt: new Date().toISOString() }).where(eq(siteConfig.key, key))
   } else {
     await db.insert(siteConfig).values({ key, value })
   }

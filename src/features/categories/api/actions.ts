@@ -26,7 +26,7 @@ export const updateCategory = withAuth(async (id: number, data: unknown) => {
     label: parsed.label,
     icon: parsed.icon,
     visible: parsed.visible,
-    updatedAt: new Date(),
+    updatedAt: new Date().toISOString(),
   }).where(eq(categories.id, id))
 
   revalidateTag('categories')
