@@ -76,7 +76,7 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
   // Reset scroll when category changes
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = 0
+      scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [activeCategory])
 
@@ -114,6 +114,8 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
         {/* Category Nav always on top */}
         <nav
           ref={navRef}
+          role="tablist"
+          aria-label="Project categories"
           className={cn(
             "relative flex",
             "md:flex-row flex-col",
@@ -143,6 +145,8 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
             <button
               key={category.slug}
               ref={el => { btnRefs.current[category.slug] = el; }}
+              role="tab"
+              aria-selected={activeCategory === category.slug}
               onClick={() => setActiveCategory(category.slug)}
               className={cn(
                 "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-normal",

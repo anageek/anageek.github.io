@@ -1,6 +1,5 @@
 import Link from "next/link"
 import Image from "next/image"
-import { StaggerReveal } from "@/components/common/scroll-reveal"
 import type { ProjectWithCategory } from "@/features/projects/types/project"
 
 interface FeaturedProjectsSectionProps {
@@ -16,7 +15,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
         <h2 className="text-2xl font-semibold tracking-tight mb-3">Featured Projects</h2>
         <div className="h-1 w-16 bg-primary rounded-full" />
       </div>
-      <StaggerReveal animation="scale-up" staggerDelay={150} duration={700} className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-8">
         {projects.map((project, idx) => (
           <Link
             key={`${project.category.slug}-${project.slug}-${idx}`}
@@ -26,7 +25,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
             <div
               className={
                 "rounded-lg group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 transform " +
-                "w-full h-[15vw] max-h-[320px] min-h-[500px] col-span-1 rounded-lg hover:-translate-y-2 hover:shadow-[0_4px_20px_rgba(0,153,255,0.3)]"
+                "w-full aspect-[3/4] md:aspect-[2/3] col-span-1 rounded-lg hover:-translate-y-2 hover:shadow-[0_4px_20px_rgba(0,153,255,0.3)]"
               }
             >
               {/* Static cover as background */}
@@ -57,7 +56,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
             </div>
           </Link>
         ))}
-      </StaggerReveal>
+      </div>
     </div>
   )
 }

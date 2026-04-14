@@ -40,6 +40,7 @@ export default function ProjectGallery({
               alt={`${projectTitle} - Image ${index + 1}`}
               width={800}
               height={600}
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
             />
           </div>

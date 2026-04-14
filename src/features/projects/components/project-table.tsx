@@ -219,7 +219,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                           {project.coverImage && (
                             <img
                               src={project.coverImage}
-                              alt=""
+                              alt={project.title}
                               className="w-full h-full object-cover rounded-[10px]"
                             />
                           )}

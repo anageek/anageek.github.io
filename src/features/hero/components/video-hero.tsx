@@ -45,7 +45,7 @@ export function VideoHero({ src }: { src?: string }) {
         tabIndex={-1}
         suppressHydrationWarning
       />
-      {/* Overlay blocks any mouse interaction with the iframe */}
+      {/* Overlay intentionally blocks all mouse interaction — the video is purely decorative */}
       <div className="absolute inset-0 z-10" />
     </div>
   )

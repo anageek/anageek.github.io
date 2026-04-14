@@ -17,9 +17,18 @@ export function PublicHeader() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10)
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (!showMobileMenu) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowMobileMenu(false)
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [showMobileMenu])
 
   const scrollToSection = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault()

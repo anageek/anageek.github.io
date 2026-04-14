@@ -70,6 +70,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
                     alt={`${projectTitle} - Section Image`}
                     width={800}
                     height={600}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
                   />
                 </div>
@@ -103,6 +104,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
               alt={`${projectTitle} - Section ${sectionIndex + 1}`}
               width={500}
               height={500}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/5 transition-colors pointer-events-none" />

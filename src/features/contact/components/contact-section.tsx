@@ -1,54 +1,8 @@
-'use client'
-
-import type React from 'react'
-import { Download, Instagram, Youtube, Twitch, Linkedin } from 'lucide-react'
-import { useState } from 'react'
+import { Instagram, Youtube, Twitch, Linkedin } from 'lucide-react'
 import { Mail } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { toast } from '@/components/ui/use-toast'
 import { siteConfig } from '@/config/site'
 
 export function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    // Here you would implement the actual email sending functionality
-    // For example, using a server action or API route
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitted(true)
-      toast({
-        title: 'Message sent!',
-        description: "Thank you for your message. I'll get back to you soon.",
-      })
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-      })
-    }, 1500)
-  }
-
   return (
     <section
       id="contact"
@@ -62,7 +16,7 @@ export function ContactSection() {
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center mb-12">
-          <h2 className="text-2xl font-semibold tracking-tight mb-3 text-zinc-900">Contact</h2>
+          <h2 className="text-2xl font-semibold tracking-tight mb-3 text-zinc-800">Contact</h2>
           <div className="h-1 w-16 bg-primary rounded-full" />
         </div>
 

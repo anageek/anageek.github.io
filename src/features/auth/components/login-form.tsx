@@ -73,7 +73,7 @@ export function LoginForm() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@anageek.me"
+                  placeholder="Email"
                   {...register('email')}
                   className={`pl-10 bg-zinc-950/50 border-zinc-800 text-white focus:ring-primary/20 focus:border-primary transition-all ${
                     errors.email ? 'border-red-500/50' : ''

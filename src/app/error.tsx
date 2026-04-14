@@ -9,7 +9,9 @@ interface Props {
 
 export default function ErrorPage({ error, reset }: Props) {
   useEffect(() => {
-    console.error(error)
+    if (process.env.NODE_ENV === 'development') {
+      console.error(error)
+    }
   }, [error])
 
   return (
