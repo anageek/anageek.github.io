@@ -217,7 +217,7 @@ export function AboutSection() {
                       <Link href={siteConfig.resumeUrl} target="_blank" download>
                         <Button
                           variant="outline"
-                          className="bg-primary text-white hover:bg-blue-600"
+                          className="bg-primary text-white hover:bg-primary"
                         >
                           <Download className="mr-2 h-4 w-4" />
                           Resume

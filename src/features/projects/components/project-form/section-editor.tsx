@@ -96,7 +96,7 @@ export function SectionEditor({
             <button
               type="button"
               onClick={() => onRemoveDescBlock(idx)}
-              className="absolute top-3 right-3 w-6 h-6 rounded-md flex items-center justify-center text-zinc-600 hover:text-red-400 hover:bg-red-500/10 transition-all z-10"
+              className="absolute top-3 right-3 w-6 h-6 rounded-xl flex items-center justify-center text-zinc-600 hover:text-red-400 hover:bg-red-500/10 transition-all z-10"
             >
               <X className="w-3 h-3" />
             </button>

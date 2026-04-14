@@ -32,12 +32,12 @@ export default async function NewProjectPage({ searchParams }: Props) {
         designBtnLabel: source.designBtnLabel ?? '',
         visible: source.visible,
         featured: false,
-        images: (source.images ?? []).map((img: any) => img.url),
-        sections: (source.sections ?? []).map((s: any) => ({
+        images: (source.images ?? []).map((img: { url: string }) => img.url),
+        sections: (source.sections ?? []).map((s: { title: string; image?: string | null; video?: string | null; blocks: Array<{ type: string; text?: string | null; image?: string | null; video?: string | null; items?: string[] | null }> }) => ({
           title: s.title,
           image: s.image ?? '',
           video: s.video ?? '',
-          blocks: (s.blocks ?? []).map((b: any) => ({
+          blocks: (s.blocks ?? []).map((b: { type: string; text?: string | null; image?: string | null; video?: string | null; items?: string[] | null }) => ({
             type: b.type,
             text: b.text ?? '',
             image: b.image ?? '',

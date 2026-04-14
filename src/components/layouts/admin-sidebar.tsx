@@ -47,7 +47,7 @@ export function AdminSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all',
                   isActive
-                    ? 'bg-blue-600/20 text-blue-400 border border-blue-600/30'
+                    ? 'bg-primary/20 text-primary border border-primary/30'
                     : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60 border border-transparent'
                 )}
               >
@@ -96,7 +96,7 @@ export function AdminSidebar() {
                 className={cn(
                   'p-2 rounded-lg transition-all',
                   isActive
-                    ? 'bg-blue-600/20 text-blue-400'
+                    ? 'bg-primary/20 text-primary'
                     : 'text-zinc-500 hover:text-zinc-100 hover:bg-zinc-800'
                 )}
                 aria-label={item.label}

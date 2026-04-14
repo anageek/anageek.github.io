@@ -130,7 +130,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
                   <span className="text-xs font-medium">No Video Configured</span>
                 </div>
               )}
-              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/80 pointer-events-none">
+              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-xl border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/80 pointer-events-none">
                 Preview
               </div>
             </div>

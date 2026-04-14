@@ -25,13 +25,13 @@ export default function ErrorPage({ error, reset }: Props) {
         <div className="flex gap-4 justify-center">
           <button
             onClick={reset}
-            className="px-6 py-3 border border-primary bg-primary text-white rounded-md hover:bg-opacity-10 hover:bg-primary transition-colors"
+            className="px-6 py-3 border border-primary bg-primary text-white rounded-xl hover:bg-opacity-10 hover:bg-primary transition-colors"
           >
             Try Again
           </button>
           <a
             href="/"
-            className="px-6 py-3 border border-white text-white rounded-md hover:bg-white hover:text-black transition-colors"
+            className="px-6 py-3 border border-white text-white rounded-xl hover:bg-white hover:text-black transition-colors"
           >
             Back to Home
           </a>
