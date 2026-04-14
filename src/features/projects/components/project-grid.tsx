@@ -107,7 +107,7 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
       className="bg-black"
     >
       <div className="container pt-20 pb-20">
-        <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-8">
+        <p className="text-sm uppercase tracking-[0.3em] text-primary text-center mb-8">
           Projects
         </p>
         {/* Category Nav always on top */}

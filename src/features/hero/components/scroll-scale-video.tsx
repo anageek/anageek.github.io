@@ -40,7 +40,7 @@ export function ScrollScaleVideo({ src }: ScrollScaleVideoProps) {
 
   return (
     <div ref={containerRef} className="max-w-7xl mx-auto px-4">
-      <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-8">
+      <p className="text-sm uppercase tracking-[0.3em] text-primary text-center mb-8">
         Demo Reel
       </p>
       <div

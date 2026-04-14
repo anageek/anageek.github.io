@@ -29,7 +29,7 @@ export default async function HomePage() {
         {/* Hero content — entrance animations */}
         <div className="relative z-10 flex flex-col items-center text-center px-4">
           <ScrollReveal animation="fade-down" duration={800} threshold={0}>
-            <p className="text-sm md:text-base uppercase tracking-[0.3em] text-zinc-500 mb-6">
+            <p className="text-sm md:text-base uppercase tracking-[0.3em] text-primary mb-6">
               Portfolio
             </p>
           </ScrollReveal>
