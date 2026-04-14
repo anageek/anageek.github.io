@@ -1,7 +1,53 @@
 import { getAdminCategories } from '@/features/categories'
+import { getAdminProjectById } from '@/features/projects'
 import { ProjectForm } from '@/features/projects'
 
-export default async function NewProjectPage() {
+interface Props {
+  searchParams: Promise<{ from?: string }>
+}
+
+export default async function NewProjectPage({ searchParams }: Props) {
+  const { from } = await searchParams
   const categories = await getAdminCategories()
-  return <ProjectForm categories={categories} />
+
+  let initialData = undefined
+  if (from) {
+    const source = await getAdminProjectById(Number(from))
+    if (source) {
+      // Strip id so it creates a new project, prefix title with "Copy of"
+      initialData = {
+        categoryId: source.categoryId,
+        title: `Copy of ${source.title}`,
+        role: source.role ?? '',
+        company: source.company ?? '',
+        status: source.status ?? '',
+        subCategory: source.subCategory ?? '',
+        platform: source.platform ?? [],
+        description: source.description ?? '',
+        tools: source.tools ?? '',
+        coverImage: source.coverImage ?? '',
+        coverAnimated: source.coverAnimated ?? '',
+        videoUrl: source.videoUrl ?? '',
+        designUrl: source.designUrl ?? '',
+        designBtnLabel: source.designBtnLabel ?? '',
+        visible: source.visible,
+        featured: false,
+        images: (source.images ?? []).map((img: any) => img.url),
+        sections: (source.sections ?? []).map((s: any) => ({
+          title: s.title,
+          image: s.image ?? '',
+          video: s.video ?? '',
+          blocks: (s.blocks ?? []).map((b: any) => ({
+            type: b.type,
+            text: b.text ?? '',
+            image: b.image ?? '',
+            video: b.video ?? '',
+            items: b.items ?? undefined,
+          })),
+        })),
+      }
+    }
+  }
+
+  return <ProjectForm project={initialData} categories={categories} />
 }

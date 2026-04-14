@@ -13,6 +13,7 @@ import {
   Eye,
   EyeOff,
   Star,
+  Copy,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -308,6 +309,14 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                             <Edit2 className="w-4 h-4" />
                           </Link>
                         </Button>
+                        {/* Duplicate */}
+                        <Link
+                          href={`/admin/projects/new?from=${project.id}`}
+                          className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-500 hover:text-white transition-all inline-flex items-center justify-center"
+                          title="Duplicar projeto"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </Link>
                         {/* Delete */}
                         <Button
                           onClick={() => openDeleteConfirm(project)}
