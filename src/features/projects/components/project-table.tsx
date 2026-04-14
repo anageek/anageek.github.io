@@ -1,0 +1,356 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import {
+  Search,
+  Edit2,
+  Trash2,
+  Calendar,
+  Layers,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  Star,
+  Copy,
+} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Badge } from '@/components/ui/badge'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import { StatCard } from '@/components/common/stat-card'
+import { ConfirmDialog } from '@/components/common/confirm-dialog'
+import { EmptyState } from '@/components/common/empty-state'
+import { toggleProjectField, deleteProject } from '@/features/projects'
+import { toast } from 'sonner'
+import type { Project } from '@/features/projects/types/project'
+import type { Category } from '@/features/projects/types/project'
+
+interface ProjectTableProps {
+  projects: Project[]
+  categories: Category[]
+  categorySlug?: string
+}
+
+export function ProjectTable({ projects, categories, categorySlug = 'all' }: ProjectTableProps) {
+  const router = useRouter()
+  const [search, setSearch] = useState('')
+  const [optimisticProjects, setOptimisticProjects] = useState<Project[]>(projects)
+
+  const lastUpdate = (() => {
+    if (projects.length === 0) return null
+    const timestamps = projects
+      .map(p => new Date(p.updatedAt ?? p.createdAt).getTime())
+      .filter(t => !isNaN(t))
+    if (timestamps.length === 0) return null
+    return new Date(Math.max(...timestamps))
+  })()
+
+  const formatDate = (date: Date) => {
+    if (isNaN(date.getTime())) return '—'
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+    if (diffDays === 0) return 'Hoje'
+    if (diffDays === 1) return 'Ontem'
+    if (diffDays < 7) return `${diffDays}d atrás`
+    return date.toLocaleDateString('pt-BR', { month: 'short', day: 'numeric' })
+  }
+  const [loadingToggles, setLoadingToggles] = useState<Record<number, boolean>>({})
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const filtered = optimisticProjects.filter((p) =>
+    p.title?.toLowerCase().includes(search.toLowerCase()),
+  )
+
+  const handleToggle = async (project: Project, field: 'visible' | 'featured') => {
+    const currentValue = field === 'visible' ? project.visible !== false : project.featured === true
+    const newValue = !currentValue
+
+    // Optimistic update
+    setOptimisticProjects((prev) =>
+      prev.map((p) => (p.id === project.id ? { ...p, [field]: newValue } : p)),
+    )
+    setLoadingToggles((prev) => ({ ...prev, [project.id]: true }))
+
+    try {
+      await toggleProjectField(project.id, field, newValue)
+    } catch {
+      toast.error('Erro ao atualizar projeto')
+      // Rollback
+      setOptimisticProjects((prev) =>
+        prev.map((p) => (p.id === project.id ? project : p)),
+      )
+    } finally {
+      setLoadingToggles((prev) => ({ ...prev, [project.id]: false }))
+    }
+  }
+
+  const openDeleteConfirm = (project: Project) => {
+    setProjectToDelete(project)
+    setDeleteOpen(true)
+  }
+
+  const handleDelete = async () => {
+    if (!projectToDelete) return
+    setIsDeleting(true)
+    try {
+      await deleteProject(projectToDelete.id)
+      toast.success('Projeto deletado')
+      setOptimisticProjects((prev) => prev.filter((p) => p.id !== projectToDelete.id))
+      setDeleteOpen(false)
+      router.refresh()
+    } catch {
+      toast.error('Erro ao deletar projeto')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  return (
+    <div className="space-y-8 pb-12 animate-in fade-in duration-500">
+
+      {/* ── Page Header ───────────────────────────────────────────────────── */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <Badge
+              variant="outline"
+              className="border-primary/20 text-primary bg-primary/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
+            >
+              Gerenciador de Conteúdo
+            </Badge>
+          </div>
+          <h1 className="text-2xl font-semibold text-white capitalize tracking-tighter">
+            {categorySlug}
+          </h1>
+          <p className="text-zinc-500 text-sm mt-1">
+            Gerencie seus projetos e detalhes.
+          </p>
+        </div>
+        <Button
+          asChild
+          className="bg-primary hover:bg-primary/90 text-white gap-2 font-medium shadow-lg shadow-primary/20 h-12 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+        >
+          <Link href="/admin/projects/new">+ Novo Projeto</Link>
+        </Button>
+      </div>
+
+      {/* ── Stats ─────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <StatCard
+          label="Total de Projetos"
+          value={optimisticProjects.length}
+          icon={<Layers />}
+          color="text-primary"
+        />
+        <StatCard
+          label="Páginas Ativas"
+          value={filtered.length}
+          icon={<CheckCircle2 />}
+          color="text-primary"
+        />
+        <StatCard
+          label="Última Atualização"
+          value={lastUpdate ? formatDate(lastUpdate) : '—'}
+          icon={<Calendar />}
+          color="text-primary"
+        />
+      </div>
+
+      {/* ── Projects Table ─────────────────────────────────────────────────── */}
+      <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl overflow-hidden backdrop-blur-3xl shadow-2xl">
+        <div className="p-6 border-b border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-950/40">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3.5 top-3 h-4 w-4 text-zinc-600" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar projetos..."
+              className="pl-11 h-11 bg-zinc-950/60 border-zinc-800 text-zinc-200 rounded-xl"
+            />
+          </div>
+        </div>
+
+        <div className="overflow-x-auto [scrollbar-width:thin] [scrollbar-color:theme(colors.zinc.700)_transparent]">
+          <Table>
+            <TableHeader className="bg-zinc-950/60 border-b border-zinc-900">
+              <TableRow className="hover:bg-transparent border-zinc-900">
+                <TableHead className="text-zinc-600 font-bold uppercase text-[10px] tracking-widest text-center py-5 w-16">
+                  ID
+                </TableHead>
+                <TableHead className="text-zinc-600 font-bold uppercase text-[10px] tracking-widest py-5">
+                  Project
+                </TableHead>
+                <TableHead className="text-zinc-600 font-bold uppercase text-[10px] tracking-widest py-5">
+                  Company / Role
+                </TableHead>
+                <TableHead className="text-zinc-600 font-bold uppercase text-[10px] tracking-widest py-5">
+                  Status
+                </TableHead>
+                <TableHead className="text-right text-zinc-600 font-bold uppercase text-[10px] tracking-widest py-5 pr-8">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <EmptyState title="Nenhum projeto encontrado." />
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filtered.map((project) => (
+                  <TableRow
+                    key={project.id}
+                    className="border-zinc-900 hover:bg-zinc-900/50 transition-colors group"
+                  >
+                    <TableCell className="text-center text-zinc-700 font-mono text-xs">
+                      {project.id}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-5">
+                        <div className="w-14 h-14 rounded-xl bg-zinc-900 overflow-hidden border border-zinc-800 group-hover:border-primary/30 p-1 transition-all">
+                          {project.coverImage && (
+                            <img
+                              src={project.coverImage}
+                              alt={project.title}
+                              className="w-full h-full object-cover rounded-[10px]"
+                            />
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-white font-bold text-base tracking-tight leading-none mb-1.5 truncate max-w-[200px] lg:max-w-xs" title={project.title}>
+                            {project.title}
+                          </p>
+                          <span className="text-zinc-500 text-[10px] uppercase font-bold">
+                            {project.tools?.split(',')[0]}
+                          </span>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <p className="text-xs text-zinc-300 font-bold">{project.company}</p>
+                      <p className="text-[10px] font-medium uppercase text-zinc-600">
+                        {project.role}
+                      </p>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`w-1.5 h-1.5 rounded-full ${
+                            project.status ? 'bg-primary' : 'bg-zinc-700'
+                          }`}
+                        />
+                        <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">
+                          {project.status || '—'}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right pr-8">
+                      <div className="flex items-center justify-end gap-2">
+                        {/* Visible toggle */}
+                        <Button
+                          onClick={() => handleToggle(project, 'visible')}
+                          variant="ghost"
+                          size="icon"
+                          disabled={loadingToggles[project.id]}
+                          title={
+                            project.visible !== false
+                              ? 'Visible — click to hide'
+                              : 'Hidden — click to show'
+                          }
+                          className={`w-9 h-9 rounded-lg border transition-all ${
+                            project.visible !== false
+                              ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800'
+                              : 'bg-zinc-950 border-zinc-800 text-zinc-700 hover:text-zinc-400'
+                          } ${loadingToggles[project.id] ? 'opacity-50' : ''}`}
+                        >
+                          {project.visible !== false ? (
+                            <Eye className="w-4 h-4" />
+                          ) : (
+                            <EyeOff className="w-4 h-4" />
+                          )}
+                        </Button>
+                        {/* Featured toggle */}
+                        <Button
+                          onClick={() => handleToggle(project, 'featured')}
+                          variant="ghost"
+                          size="icon"
+                          disabled={loadingToggles[project.id]}
+                          title={
+                            project.featured
+                              ? 'Featured — click to unfeature'
+                              : 'Not featured — click to feature'
+                          }
+                          className={`w-9 h-9 rounded-lg border transition-all ${
+                            project.featured
+                              ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20'
+                              : 'bg-zinc-900 border-zinc-800 text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'
+                          } ${loadingToggles[project.id] ? 'opacity-50' : ''}`}
+                        >
+                          <Star
+                            className={`w-4 h-4 ${project.featured ? 'fill-yellow-400' : ''}`}
+                          />
+                        </Button>
+                        {/* Edit */}
+                        <Button
+                          asChild
+                          variant="ghost"
+                          size="icon"
+                          className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-500 hover:text-white transition-all"
+                        >
+                          <Link href={`/admin/projects/${project.id}/edit`}>
+                            <Edit2 className="w-4 h-4" />
+                          </Link>
+                        </Button>
+                        {/* Duplicate */}
+                        <Link
+                          href={`/admin/projects/new?from=${project.id}`}
+                          className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-500 hover:text-white transition-all inline-flex items-center justify-center"
+                          title="Duplicar projeto"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </Link>
+                        {/* Delete */}
+                        <Button
+                          onClick={() => openDeleteConfirm(project)}
+                          variant="ghost"
+                          size="icon"
+                          className="w-9 h-9 rounded-lg bg-red-500/5 border border-red-500/10 hover:bg-red-500/20 text-red-500/50 hover:text-red-400 transition-all"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      {/* ── Delete Confirm ─────────────────────────────────────────────────── */}
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="Confirmar Exclusão"
+        description={`Tem certeza que deseja excluir "${projectToDelete?.title}"? Esta ação não pode ser desfeita.`}
+        onConfirm={handleDelete}
+        loading={isDeleting}
+      />
+    </div>
+  )
+}

@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.github
+docs
+data/portfolio.db
+data/portfolio.db-wal
+data/portfolio.db-shm
+*.md
+!README.md
