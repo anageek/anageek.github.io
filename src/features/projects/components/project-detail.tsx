@@ -75,7 +75,7 @@ export default function ProjectDetail({
       {/* Mobile: Fixed top bar for Back link & Navigation */}
       <div className="lg:hidden fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-xl border-b border-zinc-800/50 shadow-md flex items-center justify-between px-2">
         <Link
-          href="/#projects"
+          href="/"
           className="flex items-center text-zinc-400 hover:text-white px-2 py-3 font-medium transition-colors text-sm"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -120,7 +120,7 @@ export default function ProjectDetail({
           {/* Desktop: Back link and Navigation */}
           <div className="hidden lg:flex items-center justify-between mb-10 w-full">
             <Link
-              href="/#projects"
+              href="/"
               className="inline-flex items-center text-zinc-400 hover:text-white font-medium transition-colors group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
