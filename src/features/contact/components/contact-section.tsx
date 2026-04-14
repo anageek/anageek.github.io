@@ -80,7 +80,7 @@ export function ContactSection() {
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-zinc-700 hover:text-primary transition-colors"
             >
               <Linkedin className="h-6 w-6" />
               <span className="sr-only">Linkedin</span>
@@ -89,7 +89,7 @@ export function ContactSection() {
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-zinc-700 hover:text-primary transition-colors"
             >
               <Instagram className="h-6 w-6" />
               <span className="sr-only">Instagram</span>
@@ -98,7 +98,7 @@ export function ContactSection() {
               href={siteConfig.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-zinc-700 hover:text-primary transition-colors"
             >
               <Youtube className="h-6 w-6" />
               <span className="sr-only">YouTube</span>
@@ -107,7 +107,7 @@ export function ContactSection() {
               href={siteConfig.social.twitch}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-300 hover:text-primary transition-colors"
+              className="text-zinc-700 hover:text-primary transition-colors"
             >
               <Twitch className="h-6 w-6" />
               <span className="sr-only">Twitch</span>
@@ -116,7 +116,7 @@ export function ContactSection() {
         </div>
       </div>
       <div className="text-center mt-8">
-        <p className="inline-block rounded-full border mr-15 border-zinc-500 px-16 py-4 text-zinc-400 bg-zinc-900/60">
+        <p className="inline-block rounded-full border mr-15 border-zinc-500 px-16 py-4 text-white bg-zinc-900/60">
           Thank you for viewing my portfolio!
         </p>
       </div>
