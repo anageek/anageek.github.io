@@ -21,6 +21,6 @@ export const projects = sqliteTable('projects', {
   visible: integer('visible', { mode: 'boolean' }).default(true).notNull(),
   featured: integer('featured', { mode: 'boolean' }).default(false).notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
-  createdAt: text('created_at').default('CURRENT_TIMESTAMP').notNull(),
-  updatedAt: text('updated_at').default('CURRENT_TIMESTAMP').notNull(),
+  createdAt: text('created_at').$defaultFn(() => new Date().toISOString()).notNull(),
+  updatedAt: text('updated_at').$defaultFn(() => new Date().toISOString()).notNull(),
 })

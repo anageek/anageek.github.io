@@ -45,18 +45,24 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
   const [search, setSearch] = useState('')
   const [optimisticProjects, setOptimisticProjects] = useState<Project[]>(projects)
 
-  const lastUpdate = projects.length > 0
-    ? new Date(Math.max(...projects.map(p => new Date(p.updatedAt ?? p.createdAt).getTime())))
-    : null
+  const lastUpdate = (() => {
+    if (projects.length === 0) return null
+    const timestamps = projects
+      .map(p => new Date(p.updatedAt ?? p.createdAt).getTime())
+      .filter(t => !isNaN(t))
+    if (timestamps.length === 0) return null
+    return new Date(Math.max(...timestamps))
+  })()
 
   const formatDate = (date: Date) => {
+    if (isNaN(date.getTime())) return '—'
     const now = new Date()
     const diffMs = now.getTime() - date.getTime()
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-    if (diffDays === 0) return 'Today'
-    if (diffDays === 1) return 'Yesterday'
-    if (diffDays < 7) return `${diffDays}d ago`
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    if (diffDays === 0) return 'Hoje'
+    if (diffDays === 1) return 'Ontem'
+    if (diffDays < 7) return `${diffDays}d atrás`
+    return date.toLocaleDateString('pt-BR', { month: 'short', day: 'numeric' })
   }
   const [loadingToggles, setLoadingToggles] = useState<Record<number, boolean>>({})
   const [deleteOpen, setDeleteOpen] = useState(false)

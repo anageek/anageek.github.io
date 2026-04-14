@@ -4,5 +4,5 @@ export const siteConfig = sqliteTable('site_config', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   key: text('key').unique().notNull(),
   value: text('value').notNull(),
-  updatedAt: text('updated_at').default('CURRENT_TIMESTAMP').notNull(),
+  updatedAt: text('updated_at').$defaultFn(() => new Date().toISOString()).notNull(),
 })
