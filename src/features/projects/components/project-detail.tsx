@@ -117,6 +117,18 @@ export default function ProjectDetail({
         "
       >
         <div className="py-6 px-4 lg:sticky lg:top-0 lg:py-10">
+          {/* Desktop: Logo */}
+          <Link href="/" className="mb-4 hidden lg:inline-block">
+            <div className="relative h-8 w-8">
+              <Image
+                src="/images/logo/logo-small-white.png"
+                alt="Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+          </Link>
+
           {/* Desktop: Back link and Navigation */}
           <div className="hidden lg:flex items-center justify-between mb-10 w-full">
             <Link

@@ -57,6 +57,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
     if (diffDays < 7) return `${diffDays}d ago`
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   }
+  const [loadingToggles, setLoadingToggles] = useState<Record<number, boolean>>({})
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -73,6 +74,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
     setOptimisticProjects((prev) =>
       prev.map((p) => (p.id === project.id ? { ...p, [field]: newValue } : p)),
     )
+    setLoadingToggles((prev) => ({ ...prev, [project.id]: true }))
 
     try {
       await toggleProjectField(project.id, field, newValue)
@@ -82,6 +84,8 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
       setOptimisticProjects((prev) =>
         prev.map((p) => (p.id === project.id ? project : p)),
       )
+    } finally {
+      setLoadingToggles((prev) => ({ ...prev, [project.id]: false }))
     }
   }
 
@@ -254,6 +258,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                           onClick={() => handleToggle(project, 'visible')}
                           variant="ghost"
                           size="icon"
+                          disabled={loadingToggles[project.id]}
                           title={
                             project.visible !== false
                               ? 'Visible — click to hide'
@@ -263,7 +268,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                             project.visible !== false
                               ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800'
                               : 'bg-zinc-950 border-zinc-800 text-zinc-700 hover:text-zinc-400'
-                          }`}
+                          } ${loadingToggles[project.id] ? 'opacity-50' : ''}`}
                         >
                           {project.visible !== false ? (
                             <Eye className="w-4 h-4" />
@@ -276,6 +281,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                           onClick={() => handleToggle(project, 'featured')}
                           variant="ghost"
                           size="icon"
+                          disabled={loadingToggles[project.id]}
                           title={
                             project.featured
                               ? 'Featured — click to unfeature'
@@ -285,7 +291,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                             project.featured
                               ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20'
                               : 'bg-zinc-900 border-zinc-800 text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'
-                          }`}
+                          } ${loadingToggles[project.id] ? 'opacity-50' : ''}`}
                         >
                           <Star
                             className={`w-4 h-4 ${project.featured ? 'fill-yellow-400' : ''}`}

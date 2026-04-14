@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Edit2, Save, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ChevronTabs } from '@/components/ui/chevron-tabs'
@@ -64,6 +65,19 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-300 flex flex-col">
+
+      {/* ── Breadcrumb ──────────────────────────────────────────────────────── */}
+      <div className="px-8 pt-6">
+        <nav className="flex items-center gap-2 text-sm text-zinc-500">
+          <Link href="/admin/projects" className="hover:text-white transition-colors">
+            Projetos
+          </Link>
+          <span>/</span>
+          <span className="text-zinc-300">
+            {project?.id ? `Editar: ${project.title ?? ''}` : 'Novo Projeto'}
+          </span>
+        </nav>
+      </div>
 
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div className="p-8 pb-0 border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-xl shrink-0">
