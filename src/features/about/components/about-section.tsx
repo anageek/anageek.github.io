@@ -115,7 +115,7 @@ export function AboutSection() {
                         }
                       }}
                       className={cn(
-                        'relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-center font-normal text-md font-sans text-white',
+                        'relative z-10 px-4 md:px-6 lg:px-8 py-2 transition-colors text-xs md:text-sm uppercase tracking-wider text-center font-normal whitespace-nowrap',
                         'w-full md:w-auto',
                         activeCategory === category.id
                           ? 'font-semibold'
