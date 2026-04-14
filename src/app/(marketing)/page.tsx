@@ -7,7 +7,6 @@ import { AboutSection } from '@/features/about'
 import { ContactSection } from '@/features/contact'
 import { ScrollReveal } from '@/components/common/scroll-reveal'
 import { siteConfig } from '@/config/site'
-import Link from 'next/link'
 
 export default async function HomePage() {
   const [featured, projects, categories, heroVideoUrl] = await Promise.all([
@@ -40,20 +39,9 @@ export default async function HomePage() {
             </h1>
           </ScrollReveal>
           <ScrollReveal animation="fade-up" duration={800} delay={400} threshold={0}>
-            <p className="text-lg md:text-xl text-zinc-400 mb-12">
+            <p className="text-lg md:text-xl text-zinc-400">
               {siteConfig.title}
             </p>
-          </ScrollReveal>
-          <ScrollReveal animation="fade-up" duration={800} delay={600} threshold={0}>
-            <Link
-              href="#showreel"
-              className="group cursor-pointer px-8 py-3 border border-zinc-700 text-white rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-300 inline-flex items-center justify-center gap-2"
-            >
-              Watch Demo Reel
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-y-0.5 transition-transform">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </Link>
           </ScrollReveal>
         </div>
 
