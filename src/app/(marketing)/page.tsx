@@ -29,9 +29,10 @@ export default async function HomePage() {
         {/* Hero content — entrance animations */}
         <div className="relative z-10 flex flex-col items-center text-center px-4">
           <ScrollReveal animation="fade-down" duration={800} threshold={0}>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium mb-6">
-              Portfolio
-            </p>
+            <div className="flex flex-col items-center mb-6">
+              <h2 className="text-2xl font-semibold tracking-tight mb-3">Portfolio</h2>
+              <div className="h-1 w-16 bg-primary rounded-full" />
+            </div>
           </ScrollReveal>
           <ScrollReveal animation="blur-in" duration={1000} delay={200} threshold={0}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4">
