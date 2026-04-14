@@ -24,7 +24,7 @@ export default function ProjectCard({ title, role, tools, coverImage, coverAnima
         "rounded-lg group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 transform",
         "w-full h-[15vw] max-h-[320px] min-h-[180px]", // Responsive height
         columns === 3 ? "col-span-1" : "col-span-1 md:col-span-1",
-        "rounded-lg hover:-translate-y-2 hover:shadow-[2px_2px_5px_#0099ff]" // Added blue shadow on hover
+        "rounded-lg hover:-translate-y-2"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
