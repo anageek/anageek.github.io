@@ -1,7 +1,7 @@
 import { getFeaturedProjects, getPublicProjects } from '@/features/projects'
 import { getPublicCategories } from '@/features/categories'
 import { getSiteConfigValue } from '@/features/site-config'
-import { VideoHero } from '@/features/hero'
+import { ScrollScaleVideo } from '@/features/hero/components/scroll-scale-video'
 import { ProjectGrid, FeaturedProjectsSection } from '@/features/projects'
 import { AboutSection } from '@/features/about'
 import { ContactSection } from '@/features/contact'
@@ -58,16 +58,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Demo Reel — Video in its own section ──────────────────── */}
+      {/* ── Demo Reel — Video scales up on scroll ────────────────── */}
       <section id="showreel" className="relative bg-black py-20">
-        <div className="max-w-5xl mx-auto px-4">
-          <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-8">
-            Demo Reel
-          </p>
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl shadow-black/50">
-            <VideoHero src={heroVideoUrl || defaultVideo} />
-          </div>
-        </div>
+        <ScrollScaleVideo src={heroVideoUrl || defaultVideo} />
       </section>
 
       {/* ── Featured Projects ─────────────────────────────────────── */}
