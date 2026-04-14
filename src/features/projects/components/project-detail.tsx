@@ -11,18 +11,18 @@ import ProjectGallery from "@/features/projects/components/project-gallery"
 
 interface ProjectDetailProps {
   project: ProjectWithRelations
-  prevProjectSlug: string | null
-  nextProjectSlug: string | null
-  currentIndex: number
-  totalProjects: number
+  prevProjectSlug?: string | null
+  nextProjectSlug?: string | null
+  currentIndex?: number
+  totalProjects?: number
 }
 
 export default function ProjectDetail({
   project,
-  prevProjectSlug,
-  nextProjectSlug,
-  currentIndex,
-  totalProjects,
+  prevProjectSlug = null,
+  nextProjectSlug = null,
+  currentIndex = 0,
+  totalProjects = 0,
 }: ProjectDetailProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
 

@@ -23,7 +23,7 @@ export interface SectionDraft {
   blocks: DescBlock[]
 }
 
-export function useProjectForm(initialValues?: Partial<ProjectFormValues>) {
+export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id?: number }) {
   const [activeTab, setActiveTab] = useState<EditorTab>('overview')
   const [sectionDraft, setSectionDraft] = useState<SectionDraft>({
     title: '',

@@ -24,7 +24,10 @@ export const getFeaturedProjects = unstable_cache(
   async () => {
     return db.query.projects.findMany({
       where: and(eq(projects.visible, true), eq(projects.featured, true)),
-      with: { category: true },
+      with: {
+        category: true,
+        images: { orderBy: (images, { asc }) => [asc(images.sortOrder)] },
+      },
       orderBy: (projects, { asc }) => [asc(projects.sortOrder)],
     })
   },

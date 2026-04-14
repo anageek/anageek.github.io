@@ -36,10 +36,10 @@ import type { Category } from '@/features/projects/types/project'
 interface ProjectTableProps {
   projects: Project[]
   categories: Category[]
-  categorySlug: string
+  categorySlug?: string
 }
 
-export function ProjectTable({ projects, categories, categorySlug }: ProjectTableProps) {
+export function ProjectTable({ projects, categories, categorySlug = 'all' }: ProjectTableProps) {
   const router = useRouter()
   const [search, setSearch] = useState('')
   const [optimisticProjects, setOptimisticProjects] = useState<Project[]>(projects)

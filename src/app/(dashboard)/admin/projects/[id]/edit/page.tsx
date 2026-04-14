@@ -16,5 +16,10 @@ export default async function EditProjectPage({ params }: Props) {
 
   if (!project) notFound()
 
-  return <ProjectForm project={project} categories={categories} />
+  // Convert null fields from Drizzle to undefined for the form
+  const projectForForm = Object.fromEntries(
+    Object.entries(project).map(([k, v]) => [k, v === null ? undefined : v])
+  ) as Partial<Parameters<typeof ProjectForm>[0]['project']> & { id?: number }
+
+  return <ProjectForm project={projectForForm} categories={categories} />
 }
