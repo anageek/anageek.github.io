@@ -74,8 +74,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full pt-20 bg-cover bg-center transition-all duration-200 ease-in-out"
-      style={{ backgroundColor: '#00254a' }}
+      className="relative w-full pt-20 bg-cover bg-center transition-all duration-200 ease-in-out bg-zinc-950"
     >
       <div className="container mx-auto px-4">
         <div className="w-full items-center">
@@ -88,7 +87,7 @@ export function AboutSection() {
               <div className="relative flex justify-center pb-5">
                 <nav
                   className={cn(
-                    'relative w-full justify-center overflow-hidden border-b border-cyan-100/25',
+                    'relative w-full justify-center overflow-hidden border-b border-zinc-700',
                     'flex flex-col gap-2 md:flex-row md:gap-0',
                   )}
                 >
@@ -116,7 +115,7 @@ export function AboutSection() {
                         }
                       }}
                       className={cn(
-                        'relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-center font-regular text-md font-sans text-white',
+                        'relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-center font-normal text-md font-sans text-white',
                         'w-full md:w-auto',
                         activeCategory === category.id
                           ? 'font-semibold'
@@ -147,7 +146,7 @@ export function AboutSection() {
               {/* Content */}
               <div className="w-full text-lg text-justify">
                 {activeCategory === 'hello' && (
-                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
                     <div>
                       <p className="pb-5">
                         Hi! I&apos;m Ana, a Brazilian UI/UX designer with a background in Unreal development and over
@@ -164,9 +163,9 @@ export function AboutSection() {
                 )}
 
                 {activeCategory === 'workstuff' && (
-                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? 'fade-in' : ''}`}>
-                    <div className="w-full font-sans text-blue-100">
-                      <div className="bg-slate-900/40 px-10 py-2 grid grid-cols-2 gap-5 mb-2 font-semibold text-base text-blue-100 w-full rounded-sm uppercase">
+                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                    <div className="w-full font-sans text-zinc-300">
+                      <div className="bg-zinc-800 px-10 py-2 grid grid-cols-2 gap-5 mb-2 font-semibold text-base text-zinc-300 w-full rounded-lg uppercase">
                         <div>Tool</div>
                         <div>Level</div>
                       </div>
@@ -183,15 +182,15 @@ export function AboutSection() {
                           >
                             <div>{tool.name}</div>
                             <div className="w-full flex items-center">
-                              <div className="w-full bg-blue-900/40 rounded h-3 overflow-hidden">
+                              <div className="w-full bg-zinc-800 rounded h-3 overflow-hidden">
                                 <div
-                                  className="bg-blue-400 h-3 rounded transition-all duration-1000"
+                                  className="bg-primary h-3 rounded transition-all duration-1000"
                                   style={{
                                     width: animateBars ? `${tool.level}%` : '0%',
                                   }}
                                 />
                               </div>
-                              <span className="ml-4 text-sm text-blue-200 font-semibold whitespace-nowrap">
+                              <span className="ml-4 text-sm text-zinc-400 font-semibold whitespace-nowrap">
                                 {levelLabel}
                               </span>
                             </div>
@@ -200,7 +199,7 @@ export function AboutSection() {
                       })}
                     </div>
 
-                    <div className="border-l-2 border-blue-100/25 pl-5 ml-10 mt-10">
+                    <div className="border-l-2 border-zinc-700 pl-5 ml-10 mt-10">
                       <p className="font-sans font-semibold pb-4 uppercase">Leveling Up </p>
                       <ul className="list-disc list-inside">
                         <li>
@@ -215,7 +214,7 @@ export function AboutSection() {
                       <Link href={siteConfig.resumeUrl} target="_blank" download>
                         <Button
                           variant="outline"
-                          className="bg-blue-400 text-slate-900 hover:bg-blue-500"
+                          className="bg-primary text-white hover:bg-blue-600"
                         >
                           <Download className="mr-2 h-4 w-4" />
                           Resume
@@ -226,7 +225,7 @@ export function AboutSection() {
                 )}
 
                 {activeCategory === 'sidequests' && (
-                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
                     <p className="pb-4">When I&apos;m not designing, I&apos;m probably:</p>
                     <ul className="space-y-2 pb-4">
                       <li>
@@ -260,7 +259,7 @@ export function AboutSection() {
                 )}
 
                 {activeCategory === 'dream' && (
-                  <div className={`font-light font-sans text-blue-100 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
                     <p>
                       I&apos;d love to work on stylized or cartoon-inspired games that put creativity and charm at the
                       heart of the experience. I&apos;m especially drawn to technically challenging projects where the UI

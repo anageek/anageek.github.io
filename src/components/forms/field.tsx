@@ -14,7 +14,7 @@ export function Field({ label, children, error }: FieldProps) {
     <div className="space-y-1.5">
       {children}
       {label && (
-        <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+        <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
           {label}
         </Label>
       )}

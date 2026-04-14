@@ -17,13 +17,13 @@ export default function ErrorPage({ error, reset }: Props) {
       <div className="text-center space-y-6">
         <h1 className="text-8xl font-bold text-red-500">500</h1>
         <h2 className="text-2xl font-semibold text-white">Something went wrong</h2>
-        <p className="text-gray-400 max-w-md mx-auto">
+        <p className="text-zinc-500 max-w-md mx-auto">
           An unexpected error occurred. Please try again.
         </p>
         <div className="flex gap-4 justify-center">
           <button
             onClick={reset}
-            className="px-6 py-3 border border-[#0099ff] bg-[#0099ff] text-white rounded-md hover:bg-opacity-10 hover:bg-[#0099ff] transition-colors"
+            className="px-6 py-3 border border-primary bg-primary text-white rounded-md hover:bg-opacity-10 hover:bg-primary transition-colors"
           >
             Try Again
           </button>

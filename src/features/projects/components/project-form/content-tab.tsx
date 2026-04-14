@@ -60,13 +60,13 @@ export function ContentTab({
       {/* Sections table */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
             Sections
           </Label>
           <Button
             type="button"
             onClick={() => onSectionOpen(null)}
-            className="h-9 px-5 text-[10px] font-black uppercase tracking-widest bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2"
+            className="h-9 px-5 text-[10px] font-bold uppercase tracking-widest bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2"
           >
             <Plus className="w-3.5 h-3.5" />
             + Add Section
@@ -77,13 +77,13 @@ export function ContentTab({
           <Table>
             <TableHeader className="bg-zinc-950/80">
               <TableRow className="hover:bg-transparent border-zinc-800">
-                <TableHead className="text-zinc-600 text-[10px] uppercase font-black tracking-widest py-4 w-16 text-center">
+                <TableHead className="text-zinc-600 text-[10px] uppercase font-bold tracking-widest py-4 w-16 text-center">
                   ID
                 </TableHead>
-                <TableHead className="text-zinc-600 text-[10px] uppercase font-black tracking-widest py-4">
+                <TableHead className="text-zinc-600 text-[10px] uppercase font-bold tracking-widest py-4">
                   Section
                 </TableHead>
-                <TableHead className="text-zinc-600 text-[10px] uppercase font-black tracking-widest py-4 text-right pr-6">
+                <TableHead className="text-zinc-600 text-[10px] uppercase font-bold tracking-widest py-4 text-right pr-6">
                   Actions
                 </TableHead>
               </TableRow>
@@ -107,7 +107,7 @@ export function ContentTab({
                     <TableCell className="text-center text-zinc-700 font-mono text-xs">
                       {idx + 1}
                     </TableCell>
-                    <TableCell className="text-zinc-300 text-[11px] font-black uppercase tracking-widest">
+                    <TableCell className="text-zinc-300 text-xs font-bold uppercase tracking-widest">
                       {String(field.title ?? '')}
                     </TableCell>
                     <TableCell className="text-right pr-6">
@@ -143,14 +143,14 @@ export function ContentTab({
       {/* Gallery */}
       <div className="space-y-4 pt-4 border-t border-zinc-900">
         <div className="flex items-center justify-between">
-          <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
             Image Gallery
           </Label>
           <Button
             type="button"
             onClick={() => appendImage('')}
             variant="ghost"
-            className="h-8 px-4 text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white"
+            className="h-8 px-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white"
           >
             <Plus className="w-3 h-3 mr-1.5" />
             Add Image

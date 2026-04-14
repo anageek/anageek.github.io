@@ -101,12 +101,12 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
           <div className="flex items-center gap-2 mb-1">
             <Badge
               variant="outline"
-              className="border-blue-500/20 text-blue-500 bg-blue-500/5 text-[9px] uppercase tracking-widest font-black px-2 py-0.5"
+              className="border-blue-500/20 text-blue-500 bg-blue-500/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
             >
               Content Manager
             </Badge>
           </div>
-          <h1 className="text-4xl font-black text-white capitalize tracking-tighter">
+          <h1 className="text-4xl font-bold text-white capitalize tracking-tighter">
             {categorySlug}
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
@@ -144,7 +144,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
       </div>
 
       {/* ── Projects Table ─────────────────────────────────────────────────── */}
-      <div className="bg-zinc-900/30 border border-zinc-900 rounded-3xl overflow-hidden backdrop-blur-3xl shadow-2xl">
+      <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl overflow-hidden backdrop-blur-3xl shadow-2xl">
         <div className="p-6 border-b border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-950/40">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3.5 top-3 h-4 w-4 text-zinc-600" />
@@ -206,7 +206,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                           )}
                         </div>
                         <div>
-                          <p className="text-white font-black text-base tracking-tight leading-none mb-1.5">
+                          <p className="text-white font-bold text-base tracking-tight leading-none mb-1.5">
                             {project.title}
                           </p>
                           <span className="text-zinc-500 text-[10px] uppercase font-bold">
@@ -228,7 +228,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                             project.status ? 'bg-blue-500' : 'bg-zinc-700'
                           }`}
                         />
-                        <span className="text-[10px] text-zinc-400 font-black uppercase tracking-widest">
+                        <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">
                           {project.status || '—'}
                         </span>
                       </div>

@@ -26,7 +26,7 @@ export function ChevronTabs({ active, tabs, onChange }: ChevronTabsProps) {
             onClick={() => onChange(tab.toLowerCase())}
             style={{ clipPath: clip }}
             className={[
-              'px-8 py-3 text-[11px] font-black uppercase tracking-widest transition-all select-none',
+              'px-8 py-3 text-xs font-bold uppercase tracking-widest transition-all select-none',
               i > 0 ? '-ml-2' : '',
               isActive
                 ? 'bg-white text-black z-10 relative'

@@ -102,15 +102,15 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="bg-zinc-950 border-zinc-900 text-zinc-300 p-8 shadow-2xl rounded-3xl">
+      <DialogContent className="bg-zinc-950 border-zinc-900 text-zinc-300 p-8 shadow-2xl rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-black text-white tracking-tighter">
+          <DialogTitle className="text-2xl font-bold text-white tracking-tighter">
             {isEdit ? 'Edit Category' : 'New Category'}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSave} className="space-y-6 mt-4">
           <div className="space-y-2">
-            <Label className="text-xs uppercase font-black text-zinc-500">Category Name</Label>
+            <Label className="text-xs uppercase font-bold text-zinc-500">Category Name</Label>
             <Input
               value={form.label}
               onChange={(e) => setForm({ ...form, label: e.target.value })}
@@ -119,7 +119,7 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
             />
           </div>
           <div className="space-y-2">
-            <Label className="text-xs uppercase font-black text-zinc-500">Slug (Unique ID)</Label>
+            <Label className="text-xs uppercase font-bold text-zinc-500">Slug (Unique ID)</Label>
             <Input
               value={form.slug}
               onChange={(e) =>
@@ -134,7 +134,7 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
             )}
           </div>
           <div className="space-y-2">
-            <Label className="text-xs uppercase font-black text-zinc-500">Icon</Label>
+            <Label className="text-xs uppercase font-bold text-zinc-500">Icon</Label>
             <Select
               value={form.icon}
               onValueChange={(val) => setForm({ ...form, icon: val })}

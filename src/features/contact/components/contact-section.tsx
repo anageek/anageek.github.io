@@ -57,19 +57,19 @@ export function ContactSection() {
         background: "url('/images/profile/bg06.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        backgroundColor: '#00254a',
+        backgroundColor: '#0a0a0a',
       }}
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-black">Contact Me</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Contact Me</h2>
 
         <div className="max-w-2xl mx-auto ">
           <div className="flex justify-center">
-            <div className="inline-flex items-center mb-8 bg-blue-600/40 rounded-full">
-              <div className="p-3 border rounded-full border-[#ffffff] mr-4">
-                <Mail className="h-6 w-6 text-[#ffffff]" />
+            <div className="inline-flex items-center mb-8 bg-primary/20 rounded-full">
+              <div className="p-3 border rounded-full border-white mr-4">
+                <Mail className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl mr-4 font-sans font-semibold text-gray-700">
+              <h3 className="text-xl mr-4 font-sans font-semibold text-zinc-300">
                 {siteConfig.email}
               </h3>
             </div>
@@ -80,7 +80,7 @@ export function ContactSection() {
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-950 hover:text-[#2a4d99] transition-colors "
+              className="text-zinc-400 hover:text-primary transition-colors "
             >
               <Linkedin className="h-5 w-5" />
               <span className="sr-only">Linkedin</span>
@@ -89,7 +89,7 @@ export function ContactSection() {
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-950 hover:text-[#2a4d99] transition-colors "
+              className="text-zinc-400 hover:text-primary transition-colors "
             >
               <Instagram className="h-5 w-5" />
               <span className="sr-only">Instagram</span>
@@ -98,7 +98,7 @@ export function ContactSection() {
               href={siteConfig.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-950 hover:text-[#2a4d99] transition-colors "
+              className="text-zinc-400 hover:text-primary transition-colors "
             >
               <Youtube className="h-5 w-5" />
               <span className="sr-only">YouTube</span>
@@ -107,7 +107,7 @@ export function ContactSection() {
               href={siteConfig.social.twitch}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-950 hover:text-[#2a4d99] transition-colors "
+              className="text-zinc-400 hover:text-primary transition-colors "
             >
               <Twitch className="h-5 w-5" />
               <span className="sr-only">Twitch</span>
@@ -116,11 +116,11 @@ export function ContactSection() {
         </div>
       </div>
       <div className="text-center mt-8">
-        <p className="inline-block rounded-full border  mr-15 border-zinc-500 px-16 py-4 text-gray-800 bg-black/20  bg-blend-">
+        <p className="inline-block rounded-full border mr-15 border-zinc-500 px-16 py-4 text-zinc-400 bg-zinc-900/60">
           Thank you for viewing my portfolio!
         </p>
       </div>
-      <footer className=" py-6 text-center text-gray-900 font-sans font-extralight">
+      <footer className="py-6 text-center text-zinc-500 font-sans font-normal">
         <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
       </footer>
     </section>

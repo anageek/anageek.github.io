@@ -11,7 +11,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
 
   return (
     <div className="relative z-10 mt-12 max-w-5xl mx-auto px-4">
-      <h2 className="text-3xl font-bold text-[#0099ff] mb-8 text-center">Featured Projects</h2>
+      <h2 className="text-3xl font-bold text-primary mb-8 text-center">Featured Projects</h2>
       <div className="grid md:grid-cols-3 gap-8">
         {projects.map((project, idx) => (
           <Link
@@ -21,8 +21,8 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
           >
             <div
               className={
-                "rounded-sm group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 transform " +
-                "w-full h-[15vw] max-h-[320px] min-h-[500px] col-span-1 rounded-sm hover:-translate-y-2 hover:shadow-[2px_2px_5px_#0099ff]"
+                "rounded-lg group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 transform " +
+                "w-full h-[15vw] max-h-[320px] min-h-[500px] col-span-1 rounded-lg hover:-translate-y-2 hover:shadow-[2px_2px_5px_#0099ff]"
               }
             >
               {/* Static cover as background */}

@@ -153,7 +153,7 @@ export default function ProjectDetail({
           </div>
 
           <div className="flex items-center space-x-6 my-2">
-            <h1 className="text-4xl font-black tracking-tighter">{project.title}</h1>
+            <h1 className="text-4xl font-bold tracking-tighter">{project.title}</h1>
             {project.platform && project.platform.length > 0 && (
               <div className="my-2 space-x-2 flex items-center">
                 {project.platform.map((platform, idx) => (
@@ -169,31 +169,31 @@ export default function ProjectDetail({
           <div className="space-y-4 mt-8">
             {project.category?.label && (
               <div className="flex items-start gap-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mt-1">Genre</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Genre</p>
                 <p className="text-zinc-300 font-medium">{project.category.label}</p>
               </div>
             )}
             {project.role && (
               <div className="flex items-start gap-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mt-1">Role</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Role</p>
                 <p className="text-zinc-300 font-medium">{project.role}</p>
               </div>
             )}
             {project.company && (
               <div className="flex items-start gap-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mt-1">Author</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Author</p>
                 <p className="text-zinc-300 font-medium">{project.company}</p>
               </div>
             )}
             {project.status && (
               <div className="flex items-start gap-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mt-1">Status</p>
-                <p className="text-blue-500 font-black uppercase text-[10px] tracking-tighter bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">{project.status}</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Status</p>
+                <p className="text-blue-500 font-bold uppercase text-[10px] tracking-tighter bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">{project.status}</p>
               </div>
             )}
             {project.tools && (
               <div className="flex items-start gap-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mt-1">Tools</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Tools</p>
                 <p className="text-zinc-300 font-light text-sm">{project.tools}</p>
               </div>
             )}
@@ -222,7 +222,7 @@ export default function ProjectDetail({
       <div className="col-span-2 container py-10 lg:px-12">
         {/* Video URL */}
         {project.videoUrl && (
-          <div className="mb-12 w-full aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-zinc-800/50">
+          <div className="mb-12 w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-zinc-800/50">
             <iframe
               src={project.videoUrl}
               title="YouTube video player"
@@ -293,7 +293,7 @@ export default function ProjectDetail({
             <ChevronRight className="w-12 h-12" />
           </button>
 
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 px-6 py-2 bg-zinc-900/80 backdrop-blur-xl border border-zinc-700/50 rounded-full text-[10px] font-black uppercase tracking-widest text-zinc-400">
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 px-6 py-2 bg-zinc-900/80 backdrop-blur-xl border border-zinc-700/50 rounded-full text-[10px] font-bold uppercase tracking-widest text-zinc-400">
             {selectedImageIndex + 1} <span className="text-zinc-600 mx-1">/</span> {lightboxImages.length}
           </div>
         </div>

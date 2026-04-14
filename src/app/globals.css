@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
- }
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
 
 .gradient-bg {
   height: 200px;
@@ -123,33 +123,25 @@ body {
 }
 
 .scrollbar-custom {
-  /* For Firefox */
-     scrollbar-color: #202438 transparent; /* Thumb and track colors */
+  scrollbar-color: #333 transparent;
 }
 
 .scrollbar-custom::-webkit-scrollbar {
-  /* For WebKit-based browsers */
-  width: 100px; /* Width of the scrollbar */
-  height: 8px; /* Height of the scrollbar (for horizontal scrollbars) */
+  width: 8px;
+  height: 8px;
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #444; /* Thumb color */
-  border-radius: 4px; /* Rounded corners for the thumb */
-  border: 10px solid rgb(29, 240, 81); /* Adds spacing around the thumb */
-  background-clip: padding-box; /* Ensures the border doesn't overlap */
+  background-color: #444;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {
-  background-color: #8fa3b4; /* Track color */
+  background-color: transparent;
 }
 
 .scrollbar-custom::-webkit-scrollbar-corner {
-  /* For the corner where horizontal and vertical scrollbars meet */
-  background-color: #a0a0a0;
-}
-
-/* Fallback for older browsers */
-.scrollbar-custom {
-  overflow-y: scroll; /* Ensures scrollbars are visible when needed */
+  background-color: transparent;
 }

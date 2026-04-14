@@ -130,7 +130,7 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-black text-white tracking-tighter">Categories</h1>
+          <h1 className="text-4xl font-bold text-white tracking-tighter">Categories</h1>
           <p className="text-zinc-500 text-sm mt-1">
             Manage the types of projects displayed on your portfolio.
           </p>
@@ -153,7 +153,7 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
         />
       </div>
 
-      <div className="bg-zinc-900/30 border border-zinc-900 rounded-3xl overflow-hidden backdrop-blur-3xl shadow-2xl">
+      <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl overflow-hidden backdrop-blur-3xl shadow-2xl">
         <Table>
           <TableHeader className="bg-zinc-950/60 border-b border-zinc-900">
             <TableRow className="hover:bg-transparent border-zinc-900">

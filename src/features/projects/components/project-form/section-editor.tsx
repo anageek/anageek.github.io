@@ -78,7 +78,7 @@ export function SectionEditor({
 
       {/* Description blocks */}
       <div className="space-y-4">
-        <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+        <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
           Description
         </Label>
 
@@ -171,7 +171,7 @@ export function SectionEditor({
           type="button"
           onClick={onAddDescBlock}
           variant="ghost"
-          className="h-10 w-full text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white border border-zinc-800 rounded-xl hover:bg-zinc-900 flex items-center gap-2"
+          className="h-10 w-full text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white border border-zinc-800 rounded-xl hover:bg-zinc-900 flex items-center gap-2"
         >
           <Plus className="w-3.5 h-3.5" />
           + Add description

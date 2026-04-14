@@ -56,7 +56,7 @@ export function PublicHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-white hover:text-[#0099ff] transition-colors text-sm uppercase tracking-wider"
+                  className="text-white hover:text-primary transition-colors text-sm uppercase tracking-wider"
                   onClick={scrollToSection(sectionId)}
                 >
                   {item.label}

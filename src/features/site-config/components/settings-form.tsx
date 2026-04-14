@@ -43,19 +43,19 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
           <div className="flex items-center gap-2 mb-1">
             <Badge
               variant="outline"
-              className="border-blue-500/20 text-blue-500 bg-blue-500/5 text-[9px] uppercase tracking-widest font-black px-2 py-0.5"
+              className="border-blue-500/20 text-blue-500 bg-blue-500/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
             >
               Site Settings
             </Badge>
           </div>
-          <h1 className="text-4xl font-black text-white tracking-tighter">General Configuration</h1>
+          <h1 className="text-4xl font-bold text-white tracking-tighter">General Configuration</h1>
           <p className="text-zinc-500 text-sm mt-1">
             Manage core settings and global sections of your portfolio.
           </p>
         </div>
       </div>
 
-      <div className="bg-zinc-900/30 border border-zinc-900 rounded-3xl p-8 backdrop-blur-3xl shadow-2xl">
+      <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-8 backdrop-blur-3xl shadow-2xl">
         <h2 className="text-xl font-bold flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4 text-zinc-100">
           <PlaySquare className="w-5 h-5 text-blue-500" />
           Landing Page Hero
@@ -65,7 +65,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
           <div>
             <div className="space-y-4">
               <div className="space-y-1.5">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
                   YouTube Embed URL
                 </Label>
                 <div className="flex items-center h-12 bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden focus-within:border-blue-500/50 transition-colors">
@@ -92,7 +92,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
                 <Button
                   onClick={handleSave}
                   disabled={saving}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest px-8 h-12 rounded-xl shadow-xl shadow-blue-600/20"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest px-8 h-12 rounded-xl shadow-xl shadow-blue-600/20"
                 >
                   {saving ? (
                     <>
@@ -111,7 +111,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
           </div>
 
           <div>
-            <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2 block">
+            <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
               Live Preview
             </Label>
             <div className="w-full aspect-video bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden shadow-black/50 shadow-xl relative">
@@ -130,7 +130,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
                   <span className="text-xs font-medium">No Video Configured</span>
                 </div>
               )}
-              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[9px] font-bold uppercase tracking-widest text-white/80 pointer-events-none">
+              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2 py-1 rounded-md border border-white/10 text-[10px] font-bold uppercase tracking-widest text-white/80 pointer-events-none">
                 Preview
               </div>
             </div>

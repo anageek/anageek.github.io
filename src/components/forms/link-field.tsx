@@ -22,7 +22,7 @@ export function LinkField({ value, onChange, placeholder, onUpload, uploading }:
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="flex-1 bg-transparent text-[11px] font-mono text-zinc-300 px-3 focus:outline-none placeholder:text-zinc-700 h-full"
+        className="flex-1 bg-transparent text-xs font-mono text-zinc-300 px-3 focus:outline-none placeholder:text-zinc-700 h-full"
       />
       {onUpload && (
         <label className="px-3 border-l border-zinc-800 text-zinc-600 hover:text-zinc-300 cursor-pointer transition-colors flex items-center h-full">

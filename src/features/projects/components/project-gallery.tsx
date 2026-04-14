@@ -19,7 +19,7 @@ export default function ProjectGallery({
     <>
       {/* Main Images Gallery */}
       <div className="relative mb-8 mt-16 pt-16 border-t border-zinc-800/50">
-        <h1 className="text-3xl font-black tracking-tight mb-2">Project Gallery</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Project Gallery</h1>
         <div className="h-1 w-20 bg-blue-600 rounded-full" />
       </div>
 
@@ -32,7 +32,7 @@ export default function ProjectGallery({
         {images.map((image, index) => (
           <div
             key={index}
-            className="rounded-3xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl shadow-black/20"
+            className="rounded-2xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl shadow-black/20"
             onClick={() => onImageClick(image)}
           >
             <Image

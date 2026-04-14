@@ -19,13 +19,13 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
   return (
     <div className="flex flex-col mb-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="relative mb-8">
-        <h1 className="text-3xl font-black tracking-tight mb-2">{section.title}</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">{section.title}</h1>
         <div className="h-1 w-20 bg-blue-600 rounded-full" />
       </div>
 
       {/* Per-section video */}
       {section.video && (
-        <div className="mb-8 w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-800/50">
+        <div className="mb-8 w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-zinc-800/50">
           <iframe
             src={section.video}
             title={`${section.title} video`}
@@ -62,7 +62,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
               return (
                 <div
                   key={idx}
-                  className="my-8 rounded-3xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
+                  className="my-8 rounded-2xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
                   onClick={() => onImageClick(block.image!)}
                 >
                   <Image
@@ -77,7 +77,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
             }
             if (block.type === "video" && block.video) {
               return (
-                <div key={idx} className="my-8 w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-zinc-800/50">
+                <div key={idx} className="my-8 w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-zinc-800/50">
                   <iframe
                     src={block.video}
                     title={`${projectTitle} block video`}
@@ -95,7 +95,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
 
         {section.image && (
           <div
-            className="relative group cursor-zoom-in rounded-3xl overflow-hidden border border-zinc-800/50 shadow-xl"
+            className="relative group cursor-zoom-in rounded-2xl overflow-hidden border border-zinc-800/50 shadow-xl"
             onClick={() => onImageClick(section.image!)}
           >
             <Image

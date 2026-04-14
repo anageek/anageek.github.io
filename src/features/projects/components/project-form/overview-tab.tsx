@@ -34,7 +34,7 @@ export function OverviewTab({ form, isUploading, onFieldUpload }: OverviewTabPro
 
         {/* Left: Cover previews + URLs */}
         <div className="space-y-4">
-          <Label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+          <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
             Preview
           </Label>
 
@@ -54,7 +54,7 @@ export function OverviewTab({ form, isUploading, onFieldUpload }: OverviewTabPro
                 <ImageIcon className="w-8 h-8 text-zinc-800" />
               </div>
             )}
-            <span className="absolute bottom-2 right-2 text-[9px] font-black text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded">
+            <span className="absolute bottom-2 right-2 text-[10px] font-bold text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded">
               4:3
             </span>
           </div>
@@ -75,7 +75,7 @@ export function OverviewTab({ form, isUploading, onFieldUpload }: OverviewTabPro
                 <ImageIcon className="w-6 h-6 text-zinc-800" />
               </div>
             )}
-            <span className="absolute bottom-2 right-2 text-[9px] font-black text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded">
+            <span className="absolute bottom-2 right-2 text-[10px] font-bold text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded">
               4:6
             </span>
           </div>

@@ -104,7 +104,7 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
     <section
       id="projects"
       ref={sectionRef}
-      className="gradient-bg-top bg-slate-900 "
+      className="gradient-bg-top bg-zinc-900 "
     >
       <div className="container pt-20 pb-20">
         <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Projects</h2>
@@ -126,7 +126,7 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
           {/* Sliding indicator */}
           <span
             className={cn(
-              "absolute bg-[#0099ff] transition-all duration-300 pointer-events-none",
+              "absolute bg-primary transition-all duration-300 pointer-events-none",
               isMobile
                 ? "left-0 top-0 w-[4px]"
                 : "bottom-0 left-0 h-[4px]"
@@ -143,12 +143,12 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
               ref={el => { btnRefs.current[category.slug] = el; }}
               onClick={() => setActiveCategory(category.slug)}
               className={cn(
-                "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-regular text-md font-sans text-white",
+                "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-normal text-md font-sans text-white",
                 isMobile
                   ? "border-b border-zinc-700 last:border-b-0"
                   : "",
                 activeCategory === category.slug
-                  ? "text-[#ffffff] font-bold"
+                  ? "text-white font-bold"
                   : "text-zinc-400 hover:text-white",
               )}
             >

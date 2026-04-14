@@ -24,13 +24,13 @@ export default async function HomePage() {
           <div className="w-full flex flex-col items-center mb-5">
             <Link
               href="#projects"
-              className="cursor-pointer z-50 px-6 py-3 border border-[#0099ff] bg-[#0099ff] text-white rounded-md hover:bg-[#0099ff] hover:bg-opacity-10 transition-colors inline-flex items-center justify-center"
+              className="cursor-pointer z-50 px-6 py-3 border border-primary bg-primary text-white rounded-md hover:bg-primary hover:bg-opacity-10 transition-colors inline-flex items-center justify-center"
             >
               View Projects
             </Link>
             <div className="items-center justify-center flex flex-col mt-4">
               <span className="animate-bounce">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-[#0099ff]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-primary">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
