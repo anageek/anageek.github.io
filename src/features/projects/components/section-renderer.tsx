@@ -19,8 +19,8 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
   return (
     <div className="flex flex-col mb-16">
       <div className="relative mb-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Section</p>
-        <h2 className="text-2xl font-semibold tracking-tight">{section.title}</h2>
+        <h2 className="text-2xl font-semibold tracking-tight mb-3">{section.title}</h2>
+        <div className="h-1 w-16 bg-primary rounded-full" />
       </div>
 
       {/* Per-section video */}

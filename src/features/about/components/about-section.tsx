@@ -78,7 +78,10 @@ export function AboutSection() {
     >
       <div className="container mx-auto px-4">
         <div className="w-full items-center">
-          <p className="text-lg uppercase tracking-[0.3em] text-primary font-medium text-center mb-8">About Me</p>
+          <div className="flex flex-col items-center mb-10">
+            <h2 className="text-2xl font-semibold tracking-tight mb-3">About Me</h2>
+            <div className="h-1 w-16 bg-primary rounded-full" />
+          </div>
 
           {/* Responsive: stack vertically on mobile, side-by-side on desktop */}
           <div className="flex flex-col md:grid md:grid-cols-2 gap-4 pt-10">

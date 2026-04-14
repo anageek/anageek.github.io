@@ -61,7 +61,10 @@ export function ContactSection() {
       }}
     >
       <div className="container mx-auto px-4">
-        <p className="text-lg uppercase tracking-[0.3em] text-primary font-medium text-center mb-12">Contact</p>
+        <div className="flex flex-col items-center mb-12">
+          <h2 className="text-2xl font-semibold tracking-tight mb-3">Contact</h2>
+          <div className="h-1 w-16 bg-primary rounded-full" />
+        </div>
 
         <div className="max-w-2xl mx-auto ">
           <div className="flex justify-center">

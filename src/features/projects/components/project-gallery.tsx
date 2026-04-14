@@ -19,8 +19,8 @@ export default function ProjectGallery({
     <>
       {/* Main Images Gallery */}
       <div className="relative mb-8 mt-16 pt-16 border-t border-zinc-800/50">
-        <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Gallery</p>
-        <h2 className="text-2xl font-semibold tracking-tight">Project Gallery</h2>
+        <h2 className="text-2xl font-semibold tracking-tight mb-3">Project Gallery</h2>
+        <div className="h-1 w-16 bg-primary rounded-full" />
       </div>
 
       <div

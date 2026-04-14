@@ -12,9 +12,10 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
 
   return (
     <div className="relative z-10 py-20 max-w-5xl mx-auto px-4">
-      <p className="text-lg uppercase tracking-[0.3em] text-primary font-medium text-center mb-8">
-        Featured Projects
-      </p>
+      <div className="flex flex-col items-center mb-10">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3">Featured Projects</h2>
+        <div className="h-1 w-16 bg-primary rounded-full" />
+      </div>
       <StaggerReveal animation="scale-up" staggerDelay={150} duration={700} className="grid md:grid-cols-3 gap-8">
         {projects.map((project, idx) => (
           <Link
