@@ -15,25 +15,25 @@ export function ScrollScaleVideo({ src }: ScrollScaleVideoProps) {
     const container = containerRef.current
     if (!container) return
 
+    let ticking = false
+
     const handleScroll = () => {
-      const rect = container.getBoundingClientRect()
-      const windowHeight = window.innerHeight
+      if (ticking) return
+      ticking = true
 
-      // Calculate how far the element is through the viewport
-      // 0 = just entering from bottom, 1 = fully past top
-      const progress = 1 - rect.top / windowHeight
-
-      // Clamp between 0 and 1
-      const clamped = Math.min(Math.max(progress, 0), 1)
-
-      // Scale from 0.45 to 1.15 — very dramatic expansion
-      const newScale = 0.45 + clamped * 0.7
-
-      setScale(newScale)
+      requestAnimationFrame(() => {
+        const rect = container.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        const progress = 1 - rect.top / windowHeight
+        const clamped = Math.min(Math.max(progress, 0), 1)
+        const newScale = 0.45 + clamped * 0.7
+        setScale(newScale)
+        ticking = false
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Initial check
+    handleScroll()
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])

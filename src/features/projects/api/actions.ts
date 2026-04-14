@@ -17,10 +17,9 @@ export const createProject = withAuth(async (data: unknown) => {
 
   let baseSlug = slugify(parsed.title)
   let slug = baseSlug
-  let counter = 1
-  while (db.select().from(projects).where(eq(projects.slug, slug)).get()) {
-    slug = `${baseSlug}-${counter}`
-    counter++
+  const existingSlug = db.select().from(projects).where(eq(projects.slug, slug)).get()
+  if (existingSlug) {
+    slug = `${baseSlug}-${Date.now()}`
   }
 
   const newProject = db.insert(projects).values({
@@ -87,12 +86,9 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
 
   let baseSlug = slugify(parsed.title)
   let slug = baseSlug
-  let counter = 1
-  while (true) {
-    const existing = db.select().from(projects).where(eq(projects.slug, slug)).get()
-    if (!existing || existing.id === id) break
-    slug = `${baseSlug}-${counter}`
-    counter++
+  const existingSlug = db.select().from(projects).where(eq(projects.slug, slug)).get()
+  if (existingSlug && existingSlug.id !== id) {
+    slug = `${baseSlug}-${Date.now()}`
   }
 
   db.update(projects).set({

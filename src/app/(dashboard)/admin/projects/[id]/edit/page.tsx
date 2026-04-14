@@ -9,8 +9,12 @@ interface Props {
 
 export default async function EditProjectPage({ params }: Props) {
   const { id } = await params
+  const numericId = parseInt(id, 10)
+
+  if (isNaN(numericId)) notFound()
+
   const [project, categories] = await Promise.all([
-    getAdminProjectById(Number(id)),
+    getAdminProjectById(numericId),
     getAdminCategories(),
   ])
 

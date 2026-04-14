@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select'
 import { Field } from '@/components/forms/field'
 import { LinkField } from '@/components/forms/link-field'
+import { cn } from '@/lib/utils'
 import type { UseFormReturn } from 'react-hook-form'
 import type { ChangeEvent } from 'react'
 import type { ProjectFormValues } from '@/features/projects/types/project'
@@ -177,27 +178,34 @@ export function OverviewTab({ form, categories, isUploading, onFieldUpload }: Ov
               />
             </Field>
             <Field label="Platform">
-              <Controller
-                name="platform"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    value={field.value?.[0] ?? ''}
-                    onValueChange={(v) => field.onChange([v])}
-                  >
-                    <SelectTrigger className="bg-zinc-900 border-zinc-800 h-10 rounded-lg">
-                      <SelectValue placeholder="Select platform..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-zinc-950 border-zinc-900 text-zinc-300">
-                      {['PC', 'Mobile', 'VR', 'Console'].map((p) => (
-                        <SelectItem key={p} value={p}>
-                          {p}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
-              />
+              <div className="flex flex-wrap gap-3">
+                {['PC', 'Mobile', 'VR', 'Console'].map((p) => {
+                  const platforms = form.watch('platform') || []
+                  const isSelected = platforms.includes(p)
+                  return (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => {
+                        const current = form.getValues('platform') || []
+                        if (current.includes(p)) {
+                          form.setValue('platform', current.filter((x: string) => x !== p))
+                        } else {
+                          form.setValue('platform', [...current, p])
+                        }
+                      }}
+                      className={cn(
+                        'px-4 py-2 rounded-lg text-sm font-medium border transition-all',
+                        isSelected
+                          ? 'bg-primary/20 border-primary/30 text-primary'
+                          : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:text-white hover:border-zinc-700'
+                      )}
+                    >
+                      {p}
+                    </button>
+                  )
+                })}
+              </div>
             </Field>
           </div>
 

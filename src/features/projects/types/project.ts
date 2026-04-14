@@ -34,6 +34,11 @@ const sectionFormSchema = z.object({
   blocks: z.array(sectionBlockFormSchema).default([]),
 })
 
+const optionalUrl = z.string().refine(
+  (val) => val === '' || val.startsWith('/') || val.startsWith('http://') || val.startsWith('https://'),
+  { message: 'Must be a valid URL or path' }
+).optional().default('')
+
 export const projectFormSchema = z.object({
   categoryId: z.number({ required_error: 'Category is required' }),
   title: z.string().min(1, 'Title is required'),
@@ -44,10 +49,10 @@ export const projectFormSchema = z.object({
   platform: z.array(z.string()).optional().default([]),
   description: z.string().optional().default(''),
   tools: z.string().optional().default(''),
-  coverImage: z.string().optional().default(''),
-  coverAnimated: z.string().optional().default(''),
-  videoUrl: z.string().optional().default(''),
-  designUrl: z.string().optional().default(''),
+  coverImage: optionalUrl,
+  coverAnimated: optionalUrl,
+  videoUrl: optionalUrl,
+  designUrl: optionalUrl,
   designBtnLabel: z.string().optional().default(''),
   visible: z.boolean().optional().default(true),
   featured: z.boolean().optional().default(false),

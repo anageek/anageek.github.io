@@ -28,6 +28,7 @@ export function AboutSection() {
   const [activeCategory, setActiveCategory] = useState<Category>('hello')
   const [animateBars, setAnimateBars] = useState(false)
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const animateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [sliderStyle, setSliderStyle] = useState({ left: 0, width: 0, color: '#602bfc' })
   const [fadeIn, setFadeIn] = useState(false)
   const [windowWidth, setWindowWidth] = useState<number>(0)
@@ -70,6 +71,12 @@ export function AboutSection() {
       setAnimateBars(false)
     }
   }, [activeCategory])
+
+  useEffect(() => {
+    return () => {
+      if (animateTimeoutRef.current) clearTimeout(animateTimeoutRef.current)
+    }
+  }, [])
 
   return (
     <section
@@ -114,7 +121,8 @@ export function AboutSection() {
                         setActiveCategory(category.id as Category)
                         if (category.id === 'workstuff') {
                           setAnimateBars(false)
-                          setTimeout(() => setAnimateBars(true), 100)
+                          if (animateTimeoutRef.current) clearTimeout(animateTimeoutRef.current)
+                          animateTimeoutRef.current = setTimeout(() => setAnimateBars(true), 100)
                         }
                       }}
                       className={cn(
