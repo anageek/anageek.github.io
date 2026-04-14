@@ -65,11 +65,11 @@ export function ContactSection() {
 
         <div className="max-w-2xl mx-auto ">
           <div className="flex justify-center">
-            <div className="inline-flex items-center mb-8 bg-primary/20 rounded-full">
-              <div className="p-3 border rounded-full border-white mr-4">
+            <div className="inline-flex items-center mb-8 bg-primary rounded-full">
+              <div className="p-3 border rounded-full border-white/20 mr-4">
                 <Mail className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl mr-4 font-sans font-semibold text-zinc-300">
+              <h3 className="text-xl mr-4 font-sans font-semibold text-white">
                 {siteConfig.email}
               </h3>
             </div>
