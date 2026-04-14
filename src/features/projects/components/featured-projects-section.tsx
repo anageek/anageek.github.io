@@ -10,8 +10,10 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
   if (projects.length === 0) return null
 
   return (
-    <div className="relative z-10 mt-12 max-w-5xl mx-auto px-4">
-      <h2 className="text-3xl font-bold text-primary mb-8 text-center">Featured Projects</h2>
+    <div className="relative z-10 py-20 max-w-5xl mx-auto px-4">
+      <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-8">
+        Featured Projects
+      </p>
       <div className="grid md:grid-cols-3 gap-8">
         {projects.map((project, idx) => (
           <Link
@@ -22,7 +24,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
             <div
               className={
                 "rounded-lg group relative overflow-hidden shadow-[2px_2px_5px_black] transition-all duration-300 transform " +
-                "w-full h-[15vw] max-h-[320px] min-h-[500px] col-span-1 rounded-lg hover:-translate-y-2 hover:shadow-[2px_2px_5px_#0099ff]"
+                "w-full h-[15vw] max-h-[320px] min-h-[500px] col-span-1 rounded-lg hover:-translate-y-2 hover:shadow-[0_4px_20px_rgba(0,153,255,0.3)]"
               }
             >
               {/* Static cover as background */}
@@ -48,7 +50,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
               {/* Card content */}
               <div className="absolute bottom-0 left-0 right-0 p-4 z-40 transition-opacity duration-100 opacity-100 group-hover:opacity-0">
                 <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                <p className="text-sm text-blue">{project.role}</p>
+                <p className="text-sm text-zinc-400">{project.role}</p>
               </div>
             </div>
           </Link>
