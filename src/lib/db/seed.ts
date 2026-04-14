@@ -1,10 +1,11 @@
 import 'dotenv/config'
-import { drizzle } from 'drizzle-orm/vercel-postgres'
-import { sql } from '@vercel/postgres'
+import { drizzle } from 'drizzle-orm/neon-http'
+import { neon } from '@neondatabase/serverless'
 import * as schema from './schema'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
+const sql = neon(process.env.DATABASE_URL!)
 const db = drizzle(sql, { schema })
 
 function slugify(text: string): string {
