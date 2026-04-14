@@ -28,15 +28,15 @@ function ensureCleanEmbed(src: string): string {
 }
 
 export function VideoHero({ src }: { src?: string }) {
-  if (!src) return <div className="w-screen h-screen bg-black" />
+  if (!src) return <div className="w-full aspect-video bg-black" />
 
   const cleanSrc = ensureCleanEmbed(src)
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden">
-      {/* Scale up the iframe to crop YouTube's bottom bar */}
+    <div className="relative w-full h-full overflow-hidden">
+      {/* Scale up slightly to crop YouTube's residual bottom bar */}
       <iframe
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110vw] h-[110vh] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[105%] h-[105%] min-w-full min-h-full pointer-events-none"
         src={cleanSrc}
         title="Demo Reel"
         frameBorder="0"
