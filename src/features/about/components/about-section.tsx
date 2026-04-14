@@ -146,7 +146,7 @@ export function AboutSection() {
               {/* Content */}
               <div className="w-full text-lg text-justify">
                 {activeCategory === 'hello' && (
-                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                  <div className={`font-light text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
                     <div>
                       <p className="pb-5">
                         Hi! I&apos;m Ana, a Brazilian UI/UX designer with a background in Unreal development and over
@@ -163,8 +163,8 @@ export function AboutSection() {
                 )}
 
                 {activeCategory === 'workstuff' && (
-                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
-                    <div className="w-full font-sans text-zinc-300">
+                  <div className={`font-light text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                    <div className="w-full text-zinc-300">
                       <div className="bg-zinc-800 px-10 py-2 grid grid-cols-2 gap-5 mb-2 font-semibold text-base text-zinc-300 w-full rounded-lg uppercase">
                         <div>Tool</div>
                         <div>Level</div>
@@ -200,7 +200,7 @@ export function AboutSection() {
                     </div>
 
                     <div className="border-l-2 border-zinc-700 pl-5 ml-10 mt-10">
-                      <p className="font-sans font-semibold pb-4 uppercase">Leveling Up </p>
+                      <p className="font-semibold pb-4 uppercase">Leveling Up </p>
                       <ul className="list-disc list-inside">
                         <li>
                           UI Materials - Learning to create stylized and reusable UI elements using materials
@@ -225,7 +225,7 @@ export function AboutSection() {
                 )}
 
                 {activeCategory === 'sidequests' && (
-                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                  <div className={`font-light text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
                     <p className="pb-4">When I&apos;m not designing, I&apos;m probably:</p>
                     <ul className="space-y-2 pb-4">
                       <li>
@@ -259,7 +259,7 @@ export function AboutSection() {
                 )}
 
                 {activeCategory === 'dream' && (
-                  <div className={`font-light font-sans text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
+                  <div className={`font-light text-zinc-300 px-10 ${fadeIn ? 'fade-in' : ''}`}>
                     <p>
                       I&apos;d love to work on stylized or cartoon-inspired games that put creativity and charm at the
                       heart of the experience. I&apos;m especially drawn to technically challenging projects where the UI

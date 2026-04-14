@@ -46,7 +46,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-zinc-950 font-sans p-4 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/10 via-zinc-950 to-zinc-950">
+    <div className="min-h-screen w-full flex items-center justify-center bg-zinc-950 p-4 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/10 via-zinc-950 to-zinc-950">
       <Card className="w-full max-w-md bg-zinc-900/50 border-zinc-800 backdrop-blur-xl shadow-2xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-bold text-center text-white tracking-tight">

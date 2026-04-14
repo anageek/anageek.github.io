@@ -69,7 +69,7 @@ export function ContactSection() {
               <div className="p-3 border rounded-full border-white/20 mr-4">
                 <Mail className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl mr-4 font-sans font-semibold text-white">
+              <h3 className="text-xl mr-4 font-semibold text-white">
                 {siteConfig.email}
               </h3>
             </div>
@@ -120,7 +120,7 @@ export function ContactSection() {
           Thank you for viewing my portfolio!
         </p>
       </div>
-      <footer className="py-6 text-center text-zinc-500 font-sans font-normal">
+      <footer className="py-6 text-center text-zinc-500 font-normal">
         <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
       </footer>
     </section>

@@ -91,7 +91,7 @@ export default function ProjectDetail({
             </Link>
           )}
 
-          <div className="text-xs font-bold font-sans flex items-center">
+          <div className="text-xs font-bold flex items-center">
             <span className="text-blue-500">{currentIndex + 1}</span>
             <span className="text-zinc-500">/{totalProjects}</span>
           </div>
@@ -137,7 +137,7 @@ export default function ProjectDetail({
                 </Link>
               )}
 
-              <div className="text-xs font-bold font-sans flex items-center">
+              <div className="text-xs font-bold flex items-center">
                 <span className="text-blue-500">{currentIndex + 1}</span>
                 <span className="text-zinc-500">/{totalProjects}</span>
               </div>
