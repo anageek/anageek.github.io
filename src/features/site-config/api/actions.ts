@@ -3,7 +3,6 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { siteConfig } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
-import { revalidateTag } from 'next/cache'
 import { withAuth } from '@/lib/auth/guards'
 
 export const updateSiteConfig = withAuth(async (key: string, value: string) => {
@@ -15,6 +14,5 @@ export const updateSiteConfig = withAuth(async (key: string, value: string) => {
     db.insert(siteConfig).values({ key, value }).run()
   }
 
-  revalidateTag('site-config')
   return { success: true as const }
 })

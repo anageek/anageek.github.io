@@ -1,9 +1,8 @@
 'use server'
 import 'server-only'
 import { db } from '@/lib/db'
-import { projects, projectImages, projectSections, sectionBlocks } from '@/lib/db/schema'
+import { projects, projectImages, projectSections, sectionBlocks, categories } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
-import { revalidateTag } from 'next/cache'
 import { withAuth } from '@/lib/auth/guards'
 import { projectFormSchema } from '../types/project'
 import { slugify } from '@/lib/utils'
@@ -11,8 +10,21 @@ import { slugify } from '@/lib/utils'
 export const createProject = withAuth(async (data: unknown) => {
   const parsed = projectFormSchema.parse(data)
 
+  const categoryExists = db.select().from(categories).where(eq(categories.id, parsed.categoryId)).get()
+  if (!categoryExists) {
+    return { success: false as const, error: 'Categoria não encontrada' }
+  }
+
+  let baseSlug = slugify(parsed.title)
+  let slug = baseSlug
+  let counter = 1
+  while (db.select().from(projects).where(eq(projects.slug, slug)).get()) {
+    slug = `${baseSlug}-${counter}`
+    counter++
+  }
+
   const newProject = db.insert(projects).values({
-    slug: slugify(parsed.title),
+    slug,
     categoryId: parsed.categoryId,
     title: parsed.title,
     role: parsed.role || null,
@@ -61,17 +73,32 @@ export const createProject = withAuth(async (data: unknown) => {
     }
   }
 
-  revalidateTag('projects')
+  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const, data: newProject }
 })
 
 export const updateProject = withAuth(async (id: number, data: unknown) => {
   const parsed = projectFormSchema.parse(data)
 
+  const categoryExists = db.select().from(categories).where(eq(categories.id, parsed.categoryId)).get()
+  if (!categoryExists) {
+    return { success: false as const, error: 'Categoria não encontrada' }
+  }
+
+  let baseSlug = slugify(parsed.title)
+  let slug = baseSlug
+  let counter = 1
+  while (true) {
+    const existing = db.select().from(projects).where(eq(projects.slug, slug)).get()
+    if (!existing || existing.id === id) break
+    slug = `${baseSlug}-${counter}`
+    counter++
+  }
+
   db.update(projects).set({
     categoryId: parsed.categoryId,
     title: parsed.title,
-    slug: slugify(parsed.title),
+    slug,
     role: parsed.role || null,
     company: parsed.company || null,
     status: parsed.status || null,
@@ -129,7 +156,7 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
     }
   }
 
-  revalidateTag('projects')
+  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const }
 })
 
@@ -142,12 +169,12 @@ export const deleteProject = withAuth(async (id: number) => {
   db.delete(projectSections).where(eq(projectSections.projectId, id)).run()
   db.delete(projectImages).where(eq(projectImages.projectId, id)).run()
   db.delete(projects).where(eq(projects.id, id)).run()
-  revalidateTag('projects')
+  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const }
 })
 
 export const toggleProjectField = withAuth(async (id: number, field: 'visible' | 'featured', value: boolean) => {
   db.update(projects).set({ [field]: value, updatedAt: new Date().toISOString() }).where(eq(projects.id, id)).run()
-  revalidateTag('projects')
+  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const }
 })

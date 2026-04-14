@@ -3,12 +3,17 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { categories, projects } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
-import { revalidateTag } from 'next/cache'
 import { withAuth } from '@/lib/auth/guards'
 import { categoryFormSchema } from '../types/category'
 
 export const createCategory = withAuth(async (data: unknown) => {
   const parsed = categoryFormSchema.parse(data)
+
+  const existing = db.select().from(categories).where(eq(categories.slug, parsed.slug)).get()
+  if (existing) {
+    return { success: false as const, error: 'Slug já existe' }
+  }
+
   const category = db.insert(categories).values({
     slug: parsed.slug,
     label: parsed.label,
@@ -16,7 +21,6 @@ export const createCategory = withAuth(async (data: unknown) => {
     visible: parsed.visible,
   }).returning().get()
 
-  revalidateTag('categories')
   return { success: true as const, data: category }
 })
 
@@ -29,8 +33,6 @@ export const updateCategory = withAuth(async (id: number, data: unknown) => {
     updatedAt: new Date().toISOString(),
   }).where(eq(categories.id, id)).run()
 
-  revalidateTag('categories')
-  revalidateTag('projects')
   return { success: true as const }
 })
 
@@ -42,6 +44,5 @@ export const deleteCategory = withAuth(async (id: number) => {
   }
 
   db.delete(categories).where(eq(categories.id, id)).run()
-  revalidateTag('categories')
   return { success: true as const }
 })

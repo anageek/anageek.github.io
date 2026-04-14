@@ -54,13 +54,23 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
   // ── Upload ────────────────────────────────────────────────────────────────
 
   const uploadFile = async (file: File): Promise<string | null> => {
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Arquivo muito grande. Máximo 10MB.')
+      return null
+    }
     const formData = new FormData()
     formData.append('file', file)
     try {
       const res = await fetch('/api/admin/upload', { method: 'POST', body: formData })
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({ error: 'Upload failed' }))
+        toast.error(error.error || 'Falha no upload')
+        return null
+      }
       const data = await res.json()
       return (data.url as string) ?? null
     } catch {
+      toast.error('Erro de conexão durante upload')
       return null
     }
   }
@@ -78,8 +88,6 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     if (url) {
       setValue(key as Parameters<typeof setValue>[0], url)
       toast.success('Upload concluído!')
-    } else {
-      toast.error('Falha no upload')
     }
     setIsUploading(null)
   }
@@ -177,8 +185,6 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     if (url) {
       setSectionDraft((p) => ({ ...p, image: url }))
       toast.success('Upload concluído!')
-    } else {
-      toast.error('Falha no upload')
     }
     setIsUploading(null)
     e.target.value = ''
@@ -195,8 +201,6 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     if (url) {
       updateDescBlock(idx, 'image', url)
       toast.success('Upload concluído!')
-    } else {
-      toast.error('Falha no upload')
     }
     setIsUploading(null)
     e.target.value = ''
