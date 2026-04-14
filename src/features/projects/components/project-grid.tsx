@@ -104,18 +104,19 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
     <section
       id="projects"
       ref={sectionRef}
-      className="gradient-bg-top bg-zinc-900 "
+      className="bg-black"
     >
       <div className="container pt-20 pb-20">
-        <h2 className="text-3xl md:text-4xl font-bold mb-5 text-center">Projects</h2>
+        <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-8">
+          Projects
+        </p>
         {/* Category Nav always on top */}
         <nav
           ref={navRef}
           className={cn(
             "relative flex",
             "md:flex-row flex-col",
-            "md:border-b border-zinc-700 md:w-full md:justify-center md:mb-8",
-            ""
+            "md:border-b border-zinc-800 md:w-full md:justify-center md:mb-8"
           )}
           style={{
             minWidth: "max-content",
@@ -143,13 +144,13 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
               ref={el => { btnRefs.current[category.slug] = el; }}
               onClick={() => setActiveCategory(category.slug)}
               className={cn(
-                "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-normal text-md font-sans text-white",
+                "relative z-10 px-8 py-2 transition-colors text-sm uppercase tracking-wider text-left font-normal",
                 isMobile
-                  ? "border-b border-zinc-700 last:border-b-0"
+                  ? "border-b border-zinc-800 last:border-b-0"
                   : "",
                 activeCategory === category.slug
-                  ? "text-white font-bold"
-                  : "text-zinc-400 hover:text-white",
+                  ? "text-white font-medium"
+                  : "text-zinc-500 hover:text-white",
               )}
             >
               {category.label}
@@ -160,7 +161,7 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
         <div
           ref={scrollRef}
           className={cn(
-            "p-4 overflow-y-auto scrollbar-custom bg-black/20 rounded-b-lg",
+            "p-4 overflow-y-auto scrollbar-custom rounded-lg",
             "md:ml-0 md:mr-0 flex-1"
           )}
           style={{
