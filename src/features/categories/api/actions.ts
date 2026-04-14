@@ -9,12 +9,12 @@ import { categoryFormSchema } from '../types/category'
 
 export const createCategory = withAuth(async (data: unknown) => {
   const parsed = categoryFormSchema.parse(data)
-  const [category] = await db.insert(categories).values({
+  const category = db.insert(categories).values({
     slug: parsed.slug,
     label: parsed.label,
     icon: parsed.icon,
     visible: parsed.visible,
-  }).returning()
+  }).returning().get()
 
   revalidateTag('categories')
   return { success: true as const, data: category }
@@ -22,12 +22,12 @@ export const createCategory = withAuth(async (data: unknown) => {
 
 export const updateCategory = withAuth(async (id: number, data: unknown) => {
   const parsed = categoryFormSchema.parse(data)
-  await db.update(categories).set({
+  db.update(categories).set({
     label: parsed.label,
     icon: parsed.icon,
     visible: parsed.visible,
     updatedAt: new Date().toISOString(),
-  }).where(eq(categories.id, id))
+  }).where(eq(categories.id, id)).run()
 
   revalidateTag('categories')
   revalidateTag('projects')
@@ -35,15 +35,13 @@ export const updateCategory = withAuth(async (id: number, data: unknown) => {
 })
 
 export const deleteCategory = withAuth(async (id: number) => {
-  const categoryProjects = await db.query.projects.findMany({
-    where: eq(projects.categoryId, id),
-  })
+  const categoryProjects = db.select().from(projects).where(eq(projects.categoryId, id)).all()
 
   if (categoryProjects.length > 0) {
     return { success: false as const, error: 'Category has associated projects. Remove them first.' }
   }
 
-  await db.delete(categories).where(eq(categories.id, id))
+  db.delete(categories).where(eq(categories.id, id)).run()
   revalidateTag('categories')
   return { success: true as const }
 })

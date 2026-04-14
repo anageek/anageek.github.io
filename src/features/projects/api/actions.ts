@@ -11,134 +11,143 @@ import { slugify } from '@/lib/utils'
 export const createProject = withAuth(async (data: unknown) => {
   const parsed = projectFormSchema.parse(data)
 
-  const project = await db.transaction(async (tx) => {
-    const [newProject] = await tx.insert(projects).values({
-      slug: slugify(parsed.title),
-      categoryId: parsed.categoryId,
-      title: parsed.title,
-      role: parsed.role || null,
-      company: parsed.company || null,
-      status: parsed.status || null,
-      subCategory: parsed.subCategory || null,
-      platform: parsed.platform,
-      description: parsed.description || null,
-      tools: parsed.tools || null,
-      coverImage: parsed.coverImage || null,
-      coverAnimated: parsed.coverAnimated || null,
-      videoUrl: parsed.videoUrl || null,
-      designUrl: parsed.designUrl || null,
-      designBtnLabel: parsed.designBtnLabel || null,
-      visible: parsed.visible,
-      featured: parsed.featured,
-    }).returning()
+  const newProject = db.insert(projects).values({
+    slug: slugify(parsed.title),
+    categoryId: parsed.categoryId,
+    title: parsed.title,
+    role: parsed.role || null,
+    company: parsed.company || null,
+    status: parsed.status || null,
+    subCategory: parsed.subCategory || null,
+    platform: parsed.platform,
+    description: parsed.description || null,
+    tools: parsed.tools || null,
+    coverImage: parsed.coverImage || null,
+    coverAnimated: parsed.coverAnimated || null,
+    videoUrl: parsed.videoUrl || null,
+    designUrl: parsed.designUrl || null,
+    designBtnLabel: parsed.designBtnLabel || null,
+    visible: parsed.visible,
+    featured: parsed.featured,
+  }).returning().get()
 
-    if (parsed.images?.length) {
-      await tx.insert(projectImages).values(
-        parsed.images.map((url, i) => ({ projectId: newProject.id, url, sortOrder: i }))
-      )
+  if (parsed.images?.length) {
+    db.insert(projectImages).values(
+      parsed.images.map((url, i) => ({ projectId: newProject.id, url, sortOrder: i }))
+    ).run()
+  }
+
+  for (const [sIdx, section] of parsed.sections.entries()) {
+    const newSection = db.insert(projectSections).values({
+      projectId: newProject.id,
+      title: section.title,
+      image: section.image || null,
+      video: section.video || null,
+      sortOrder: sIdx,
+    }).returning().get()
+
+    if (section.blocks?.length) {
+      db.insert(sectionBlocks).values(
+        section.blocks.map((block, bIdx) => ({
+          sectionId: newSection.id,
+          type: block.type,
+          text: block.text || null,
+          image: block.image || null,
+          video: block.video || null,
+          items: block.items || null,
+          sortOrder: bIdx,
+        }))
+      ).run()
     }
-
-    for (const [sIdx, section] of parsed.sections.entries()) {
-      const [newSection] = await tx.insert(projectSections).values({
-        projectId: newProject.id,
-        title: section.title,
-        image: section.image || null,
-        video: section.video || null,
-        sortOrder: sIdx,
-      }).returning()
-
-      if (section.blocks?.length) {
-        await tx.insert(sectionBlocks).values(
-          section.blocks.map((block, bIdx) => ({
-            sectionId: newSection.id,
-            type: block.type,
-            text: block.text || null,
-            image: block.image || null,
-            video: block.video || null,
-            items: block.items || null,
-            sortOrder: bIdx,
-          }))
-        )
-      }
-    }
-
-    return newProject
-  })
+  }
 
   revalidateTag('projects')
-  return { success: true as const, data: project }
+  return { success: true as const, data: newProject }
 })
 
 export const updateProject = withAuth(async (id: number, data: unknown) => {
   const parsed = projectFormSchema.parse(data)
 
-  await db.transaction(async (tx) => {
-    await tx.update(projects).set({
-      categoryId: parsed.categoryId,
-      title: parsed.title,
-      slug: slugify(parsed.title),
-      role: parsed.role || null,
-      company: parsed.company || null,
-      status: parsed.status || null,
-      subCategory: parsed.subCategory || null,
-      platform: parsed.platform,
-      description: parsed.description || null,
-      tools: parsed.tools || null,
-      coverImage: parsed.coverImage || null,
-      coverAnimated: parsed.coverAnimated || null,
-      videoUrl: parsed.videoUrl || null,
-      designUrl: parsed.designUrl || null,
-      designBtnLabel: parsed.designBtnLabel || null,
-      visible: parsed.visible,
-      featured: parsed.featured,
-      updatedAt: new Date().toISOString(),
-    }).where(eq(projects.id, id))
+  db.update(projects).set({
+    categoryId: parsed.categoryId,
+    title: parsed.title,
+    slug: slugify(parsed.title),
+    role: parsed.role || null,
+    company: parsed.company || null,
+    status: parsed.status || null,
+    subCategory: parsed.subCategory || null,
+    platform: parsed.platform,
+    description: parsed.description || null,
+    tools: parsed.tools || null,
+    coverImage: parsed.coverImage || null,
+    coverAnimated: parsed.coverAnimated || null,
+    videoUrl: parsed.videoUrl || null,
+    designUrl: parsed.designUrl || null,
+    designBtnLabel: parsed.designBtnLabel || null,
+    visible: parsed.visible,
+    featured: parsed.featured,
+    updatedAt: new Date().toISOString(),
+  }).where(eq(projects.id, id)).run()
 
-    await tx.delete(projectImages).where(eq(projectImages.projectId, id))
-    if (parsed.images?.length) {
-      await tx.insert(projectImages).values(
-        parsed.images.map((url, i) => ({ projectId: id, url, sortOrder: i }))
-      )
+  // Replace images
+  db.delete(projectImages).where(eq(projectImages.projectId, id)).run()
+  if (parsed.images?.length) {
+    db.insert(projectImages).values(
+      parsed.images.map((url, i) => ({ projectId: id, url, sortOrder: i }))
+    ).run()
+  }
+
+  // Replace sections + blocks
+  // First get existing section IDs to delete their blocks
+  const existingSections = db.select().from(projectSections).where(eq(projectSections.projectId, id)).all()
+  for (const sec of existingSections) {
+    db.delete(sectionBlocks).where(eq(sectionBlocks.sectionId, sec.id)).run()
+  }
+  db.delete(projectSections).where(eq(projectSections.projectId, id)).run()
+
+  for (const [sIdx, section] of parsed.sections.entries()) {
+    const newSection = db.insert(projectSections).values({
+      projectId: id,
+      title: section.title,
+      image: section.image || null,
+      video: section.video || null,
+      sortOrder: sIdx,
+    }).returning().get()
+
+    if (section.blocks?.length) {
+      db.insert(sectionBlocks).values(
+        section.blocks.map((block, bIdx) => ({
+          sectionId: newSection.id,
+          type: block.type,
+          text: block.text || null,
+          image: block.image || null,
+          video: block.video || null,
+          items: block.items || null,
+          sortOrder: bIdx,
+        }))
+      ).run()
     }
-
-    await tx.delete(projectSections).where(eq(projectSections.projectId, id))
-    for (const [sIdx, section] of parsed.sections.entries()) {
-      const [newSection] = await tx.insert(projectSections).values({
-        projectId: id,
-        title: section.title,
-        image: section.image || null,
-        video: section.video || null,
-        sortOrder: sIdx,
-      }).returning()
-
-      if (section.blocks?.length) {
-        await tx.insert(sectionBlocks).values(
-          section.blocks.map((block, bIdx) => ({
-            sectionId: newSection.id,
-            type: block.type,
-            text: block.text || null,
-            image: block.image || null,
-            video: block.video || null,
-            items: block.items || null,
-            sortOrder: bIdx,
-          }))
-        )
-      }
-    }
-  })
+  }
 
   revalidateTag('projects')
   return { success: true as const }
 })
 
 export const deleteProject = withAuth(async (id: number) => {
-  await db.delete(projects).where(eq(projects.id, id))
+  // Delete blocks for each section first
+  const sections = db.select().from(projectSections).where(eq(projectSections.projectId, id)).all()
+  for (const sec of sections) {
+    db.delete(sectionBlocks).where(eq(sectionBlocks.sectionId, sec.id)).run()
+  }
+  db.delete(projectSections).where(eq(projectSections.projectId, id)).run()
+  db.delete(projectImages).where(eq(projectImages.projectId, id)).run()
+  db.delete(projects).where(eq(projects.id, id)).run()
   revalidateTag('projects')
   return { success: true as const }
 })
 
 export const toggleProjectField = withAuth(async (id: number, field: 'visible' | 'featured', value: boolean) => {
-  await db.update(projects).set({ [field]: value, updatedAt: new Date().toISOString() }).where(eq(projects.id, id))
+  db.update(projects).set({ [field]: value, updatedAt: new Date().toISOString() }).where(eq(projects.id, id)).run()
   revalidateTag('projects')
   return { success: true as const }
 })

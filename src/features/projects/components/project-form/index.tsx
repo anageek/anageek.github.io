@@ -139,6 +139,7 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
         {activeTab === 'overview' && (
           <OverviewTab
             form={form}
+            categories={categories}
             isUploading={isUploading}
             onFieldUpload={handleFieldUpload}
           />

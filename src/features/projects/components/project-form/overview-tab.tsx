@@ -18,13 +18,20 @@ import type { UseFormReturn } from 'react-hook-form'
 import type { ChangeEvent } from 'react'
 import type { ProjectFormValues } from '@/features/projects/types/project'
 
+interface CategoryOption {
+  id: number
+  slug: string
+  label: string
+}
+
 interface OverviewTabProps {
   form: UseFormReturn<ProjectFormValues>
+  categories: CategoryOption[]
   isUploading: string | null
   onFieldUpload: (e: ChangeEvent<HTMLInputElement>, fieldName: string) => void
 }
 
-export function OverviewTab({ form, isUploading, onFieldUpload }: OverviewTabProps) {
+export function OverviewTab({ form, categories, isUploading, onFieldUpload }: OverviewTabProps) {
   const { register, control, setValue, watch, formState: { errors } } = form
   const watchedProject = watch()
 
@@ -101,6 +108,30 @@ export function OverviewTab({ form, isUploading, onFieldUpload }: OverviewTabPro
 
         {/* Right: Metadata fields */}
         <div className="space-y-4">
+          <Field label="Category" error={errors.categoryId?.message}>
+            <Controller
+              name="categoryId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  value={field.value ? String(field.value) : ''}
+                  onValueChange={(v) => field.onChange(Number(v))}
+                >
+                  <SelectTrigger className="bg-zinc-900 border-zinc-800 h-10 rounded-lg">
+                    <SelectValue placeholder="Select category..." />
+                  </SelectTrigger>
+                  <SelectContent className="bg-zinc-950 border-zinc-900 text-zinc-300">
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.id} value={String(cat.id)}>
+                        {cat.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </Field>
+
           <Field label="Project Name" error={errors.title?.message}>
             <Input
               {...register('title')}

@@ -7,14 +7,12 @@ import { revalidateTag } from 'next/cache'
 import { withAuth } from '@/lib/auth/guards'
 
 export const updateSiteConfig = withAuth(async (key: string, value: string) => {
-  const existing = await db.query.siteConfig.findFirst({
-    where: eq(siteConfig.key, key),
-  })
+  const existing = db.select().from(siteConfig).where(eq(siteConfig.key, key)).get()
 
   if (existing) {
-    await db.update(siteConfig).set({ value, updatedAt: new Date().toISOString() }).where(eq(siteConfig.key, key))
+    db.update(siteConfig).set({ value, updatedAt: new Date().toISOString() }).where(eq(siteConfig.key, key)).run()
   } else {
-    await db.insert(siteConfig).values({ key, value })
+    db.insert(siteConfig).values({ key, value }).run()
   }
 
   revalidateTag('site-config')
