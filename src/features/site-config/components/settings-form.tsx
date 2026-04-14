@@ -24,13 +24,13 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
     try {
       const result = await updateSiteConfig('heroVideoUrl', heroVideoUrl)
       if (result && result.success) {
-        toast.success('Settings saved successfully!')
+        toast.success('Configurações salvas!')
         router.refresh()
       } else {
-        toast.error('Failed to save settings')
+        toast.error('Erro ao salvar configurações')
       }
     } catch {
-      toast.error('Error occurred while saving')
+      toast.error('Erro ao salvar')
     } finally {
       setSaving(false)
     }
@@ -102,7 +102,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
                   ) : (
                     <>
                       <Save className="w-4 h-4 mr-2" />
-                      Save Changes
+                      Salvar Alterações
                     </>
                   )}
                 </Button>

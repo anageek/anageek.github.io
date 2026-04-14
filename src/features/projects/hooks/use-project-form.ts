@@ -77,9 +77,9 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     const url = await uploadFile(file)
     if (url) {
       setValue(key as Parameters<typeof setValue>[0], url)
-      toast.success('Uploaded!')
+      toast.success('Upload concluído!')
     } else {
-      toast.error('Upload failed')
+      toast.error('Falha no upload')
     }
     setIsUploading(null)
   }
@@ -111,7 +111,7 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
 
   const saveSection = () => {
     if (!sectionDraft.title.trim()) {
-      toast.error('Section title is required')
+      toast.error('Título da seção é obrigatório')
       return
     }
     const sectionValue: ProjectFormValues['sections'][number] = {

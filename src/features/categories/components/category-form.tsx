@@ -74,10 +74,10 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
           visible: category.visible ?? true,
         })
         if (result && !result.success) {
-          toast.error('Error updating category')
+          toast.error('Erro ao salvar categoria')
           return
         }
-        toast.success('Category updated successfully!')
+        toast.success('Categoria atualizada!')
       } else {
         const result = await createCategory({
           label: form.label,
@@ -86,15 +86,15 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
           visible: true,
         })
         if (result && !result.success) {
-          toast.error('Error creating category')
+          toast.error('Erro ao salvar categoria')
           return
         }
-        toast.success('Category created successfully!')
+        toast.success('Categoria criada!')
       }
       onOpenChange(false)
       onSave?.()
     } catch {
-      toast.error('Error communicating with server')
+      toast.error('Erro de comunicação com o servidor')
     } finally {
       setSaving(false)
     }
@@ -173,14 +173,14 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
               onClick={() => onOpenChange(false)}
               className="h-12 rounded-lg px-6"
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               type="submit"
               disabled={saving}
               className="bg-primary hover:bg-primary/90 text-white font-bold h-12 px-10 rounded-lg flex-1"
             >
-              {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save Category'}
+              {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Salvar Categoria'}
             </Button>
           </DialogFooter>
         </form>

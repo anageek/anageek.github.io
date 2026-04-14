@@ -27,9 +27,9 @@ export function ConfirmDialog({ open, onOpenChange, title, description, onConfir
           </div>
         </div>
         <DialogFooter className="flex items-center gap-3 mt-8">
-          <Button variant="ghost" onClick={() => onOpenChange(false)} className="flex-1 h-12 rounded-xl">Cancel</Button>
+          <Button variant="ghost" onClick={() => onOpenChange(false)} className="flex-1 h-12 rounded-xl">Cancelar</Button>
           <Button onClick={onConfirm} disabled={loading} className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold h-12 rounded-xl">
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Confirm Delete'}
+            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Confirmar Exclusão'}
           </Button>
         </DialogFooter>
       </DialogContent>

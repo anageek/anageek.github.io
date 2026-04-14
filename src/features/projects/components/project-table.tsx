@@ -43,6 +43,20 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
   const router = useRouter()
   const [search, setSearch] = useState('')
   const [optimisticProjects, setOptimisticProjects] = useState<Project[]>(projects)
+
+  const lastUpdate = projects.length > 0
+    ? new Date(Math.max(...projects.map(p => new Date(p.updatedAt ?? p.createdAt).getTime())))
+    : null
+
+  const formatDate = (date: Date) => {
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+    if (diffDays === 0) return 'Today'
+    if (diffDays === 1) return 'Yesterday'
+    if (diffDays < 7) return `${diffDays}d ago`
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  }
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -63,7 +77,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
     try {
       await toggleProjectField(project.id, field, newValue)
     } catch {
-      toast.error('Error updating project')
+      toast.error('Erro ao atualizar projeto')
       // Rollback
       setOptimisticProjects((prev) =>
         prev.map((p) => (p.id === project.id ? project : p)),
@@ -81,12 +95,12 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
     setIsDeleting(true)
     try {
       await deleteProject(projectToDelete.id)
-      toast.success('Project deleted')
+      toast.success('Projeto deletado')
       setOptimisticProjects((prev) => prev.filter((p) => p.id !== projectToDelete.id))
       setDeleteOpen(false)
       router.refresh()
     } catch {
-      toast.error('Error deleting project')
+      toast.error('Erro ao deletar projeto')
     } finally {
       setIsDeleting(false)
     }
@@ -103,41 +117,41 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
               variant="outline"
               className="border-primary/20 text-primary bg-primary/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
             >
-              Content Manager
+              Gerenciador de Conteúdo
             </Badge>
           </div>
           <h1 className="text-2xl font-semibold text-white capitalize tracking-tighter">
             {categorySlug}
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
-            Manage your {categorySlug} projects and details.
+            Gerencie seus projetos e detalhes.
           </p>
         </div>
         <Button
           asChild
           className="bg-primary hover:bg-primary/90 text-white gap-2 font-medium shadow-lg shadow-primary/20 h-12 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
         >
-          <Link href="/admin/projects/new">+ New Project</Link>
+          <Link href="/admin/projects/new">+ Novo Projeto</Link>
         </Button>
       </div>
 
       {/* ── Stats ─────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
-          label="Total Projects"
+          label="Total de Projetos"
           value={optimisticProjects.length}
           icon={<Layers />}
           color="text-primary"
         />
         <StatCard
-          label="Active Pages"
+          label="Páginas Ativas"
           value={filtered.length}
           icon={<CheckCircle2 />}
           color="text-primary"
         />
         <StatCard
-          label="Last Update"
-          value="Today"
+          label="Última Atualização"
+          value={lastUpdate ? formatDate(lastUpdate) : '—'}
           icon={<Calendar />}
           color="text-primary"
         />
@@ -151,7 +165,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search projects..."
+              placeholder="Buscar projetos..."
               className="pl-11 h-11 bg-zinc-950/60 border-zinc-800 text-zinc-200 rounded-xl"
             />
           </div>
@@ -182,7 +196,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
               {filtered.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={5}>
-                    <EmptyState title="No projects found in this category." />
+                    <EmptyState title="Nenhum projeto encontrado." />
                   </TableCell>
                 </TableRow>
               ) : (
@@ -311,8 +325,8 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
       <ConfirmDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
-        title="Confirm Delete"
-        description={`Are you sure you want to delete "${projectToDelete?.title}"? This action cannot be undone.`}
+        title="Confirmar Exclusão"
+        description={`Tem certeza que deseja excluir "${projectToDelete?.title}"? Esta ação não pode ser desfeita.`}
         onConfirm={handleDelete}
         loading={isDeleting}
       />

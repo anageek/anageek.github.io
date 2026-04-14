@@ -78,12 +78,12 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
         visible: updated.visible,
       })
       if (result && !result.success) {
-        toast.error('Error updating category')
+        toast.error('Erro ao salvar categoria')
         setCategories((prev) => prev.map((c) => (c.id === category.id ? category : c)))
       }
       router.refresh()
     } catch {
-      toast.error('Error communicating with server')
+      toast.error('Erro de comunicação com o servidor')
       setCategories((prev) => prev.map((c) => (c.id === category.id ? category : c)))
     }
   }
@@ -109,14 +109,14 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
     try {
       const result = await deleteCategory(deletingCategory.id)
       if (result && !result.success) {
-        toast.error(result.error ?? 'Error deleting category')
+        toast.error(result.error ?? 'Erro ao deletar categoria')
         return
       }
-      toast.success('Category deleted successfully')
+      toast.success('Categoria deletada')
       setDeleteOpen(false)
       router.refresh()
     } catch {
-      toast.error('Error communicating with server')
+      toast.error('Erro de comunicação com o servidor')
     } finally {
       setIsDeleting(false)
     }
@@ -130,9 +130,9 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-white tracking-tighter">Categories</h1>
+          <h1 className="text-2xl font-semibold text-white tracking-tighter">Categorias</h1>
           <p className="text-zinc-500 text-sm mt-1">
-            Manage the types of projects displayed on your portfolio.
+            Gerencie os tipos de projetos exibidos no seu portfólio.
           </p>
         </div>
         <Button
@@ -140,13 +140,13 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
           className="bg-primary hover:bg-primary/90 text-white gap-2 font-medium shadow-lg shadow-primary/20 h-12 px-8 rounded-xl transition-all hover:scale-[1.02]"
         >
           <Plus className="w-5 h-5" />
-          New Category
+          Nova Categoria
         </Button>
       </div>
 
       <div className="flex items-center gap-3">
         <Input
-          placeholder="Search categories..."
+          placeholder="Buscar categorias..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="max-w-xs bg-zinc-900/60 border-zinc-800 rounded-lg h-10"
@@ -176,7 +176,7 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
               <TableRow className="border-zinc-900">
                 <TableCell colSpan={4} className="text-center py-12 text-zinc-600">
                   <Loader2 className="w-5 h-5 animate-spin mx-auto mb-2 opacity-30" />
-                  No categories found.
+                  Nenhuma categoria encontrada.
                 </TableCell>
               </TableRow>
             )}
@@ -249,8 +249,8 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
       <ConfirmDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
-        title="Delete Category?"
-        description={`This will remove the category "${deletingCategory?.label}" from the sidebar. Projects saved under the slug "${deletingCategory?.slug}" will not be deleted, but may become inaccessible in the dashboard.`}
+        title="Confirmar Exclusão"
+        description={`Tem certeza que deseja excluir "${deletingCategory?.label}"? Esta ação não pode ser desfeita.`}
         onConfirm={handleDelete}
         loading={isDeleting}
       />

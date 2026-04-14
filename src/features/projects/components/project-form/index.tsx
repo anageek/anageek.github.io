@@ -50,11 +50,11 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
       } else {
         await createProject(data)
       }
-      toast.success(project?.id ? 'Project updated!' : 'Project created!')
+      toast.success(project?.id ? 'Projeto atualizado!' : 'Projeto criado!')
       router.push('/admin/projects')
       router.refresh()
     } catch {
-      toast.error('Error saving project')
+      toast.error('Erro ao salvar projeto')
     }
   }
 
