@@ -71,12 +71,12 @@ export default function ProjectDetail({
   const galleryImages = project.images.map((img) => img.url).filter(Boolean) as string[]
 
   return (
-    <main className="min-h-screen bg-zinc-900 text-white grid grid-cols-1 lg:grid-cols-3">
+    <main className="min-h-screen bg-black text-white grid grid-cols-1 lg:grid-cols-3">
       {/* Mobile: Fixed top bar for Back link & Navigation */}
-      <div className="lg:hidden fixed top-0 left-0 w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/50 shadow-md flex items-center justify-between px-2">
+      <div className="lg:hidden fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-xl border-b border-zinc-800/50 shadow-md flex items-center justify-between px-2">
         <Link
           href="/#projects"
-          className="flex items-center text-zinc-500 hover:text-white px-2 py-3 font-medium transition-colors text-sm"
+          className="flex items-center text-zinc-400 hover:text-white px-2 py-3 font-medium transition-colors text-sm"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Projects
@@ -92,7 +92,7 @@ export default function ProjectDetail({
           )}
 
           <div className="text-xs font-bold flex items-center">
-            <span className="text-blue-500">{currentIndex + 1}</span>
+            <span className="text-primary">{currentIndex + 1}</span>
             <span className="text-zinc-500">/{totalProjects}</span>
           </div>
 
@@ -111,17 +111,17 @@ export default function ProjectDetail({
       <div
         id="FixedInfo"
         className="
-          bg-zinc-950/30 col-span-1 container border-r border-zinc-800/50
+          bg-zinc-950 col-span-1 container border-r border-zinc-800/50
           pt-16 lg:pt-0
           lg:static lg:w-auto
         "
       >
-        <div className="py-6 px-2 lg:sticky lg:top-0 lg:py-10">
+        <div className="py-6 px-4 lg:sticky lg:top-0 lg:py-10">
           {/* Desktop: Back link and Navigation */}
           <div className="hidden lg:flex items-center justify-between mb-10 w-full">
             <Link
               href="/#projects"
-              className="inline-flex items-center text-zinc-500 hover:text-white font-medium transition-colors group"
+              className="inline-flex items-center text-zinc-400 hover:text-white font-medium transition-colors group"
             >
               <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
               Back to Projects
@@ -138,7 +138,7 @@ export default function ProjectDetail({
               )}
 
               <div className="text-xs font-bold flex items-center">
-                <span className="text-blue-500">{currentIndex + 1}</span>
+                <span className="text-primary">{currentIndex + 1}</span>
                 <span className="text-zinc-500">/{totalProjects}</span>
               </div>
 
@@ -170,33 +170,33 @@ export default function ProjectDetail({
 
           <div className="space-y-4 mt-8">
             {project.category?.label && (
-              <div className="flex items-start gap-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Genre</p>
+              <div className="flex items-start gap-4">
+                <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Genre</p>
                 <p className="text-zinc-300 font-medium">{project.category.label}</p>
               </div>
             )}
             {project.role && (
-              <div className="flex items-start gap-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Role</p>
+              <div className="flex items-start gap-4">
+                <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Role</p>
                 <p className="text-zinc-300 font-medium">{project.role}</p>
               </div>
             )}
             {project.company && (
-              <div className="flex items-start gap-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Author</p>
+              <div className="flex items-start gap-4">
+                <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Author</p>
                 <p className="text-zinc-300 font-medium">{project.company}</p>
               </div>
             )}
             {project.status && (
-              <div className="flex items-start gap-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Status</p>
-                <p className="text-blue-500 font-bold uppercase text-[10px] tracking-tighter bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">{project.status}</p>
+              <div className="flex items-start gap-4">
+                <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Status</p>
+                <p className="text-primary font-semibold uppercase text-xs tracking-wide bg-primary/10 px-3 py-1 rounded-full border border-primary/20">{project.status}</p>
               </div>
             )}
             {project.tools && (
-              <div className="flex items-start gap-3">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mt-1">Tools</p>
-                <p className="text-zinc-300 font-light text-sm">{project.tools}</p>
+              <div className="flex items-start gap-4">
+                <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Tools</p>
+                <p className="text-zinc-400 text-sm">{project.tools}</p>
               </div>
             )}
           </div>
@@ -211,7 +211,7 @@ export default function ProjectDetail({
 
           {project.designUrl && project.designBtnLabel && (
             <Button
-              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl py-6 mt-8 shadow-lg shadow-blue-900/20 border-0 transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl py-6 mt-8 shadow-lg shadow-primary/20 border-0 transition-all hover:scale-[1.02] active:scale-[0.98]"
               asChild
             >
               <a href={project.designUrl}>{project.designBtnLabel}</a>

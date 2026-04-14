@@ -17,10 +17,10 @@ interface SectionRendererProps {
 
 export default function SectionRenderer({ section, projectTitle, sectionIndex, onImageClick }: SectionRendererProps) {
   return (
-    <div className="flex flex-col mb-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="flex flex-col mb-16">
       <div className="relative mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">{section.title}</h1>
-        <div className="h-1 w-20 bg-blue-600 rounded-full" />
+        <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Section</p>
+        <h2 className="text-2xl font-semibold tracking-tight">{section.title}</h2>
       </div>
 
       {/* Per-section video */}
@@ -41,7 +41,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
         <div className="space-y-6">
           {section.blocks.map((block, idx) => {
             if (block.type === "heading" && block.text) {
-              return <h3 key={idx} className="text-xl font-bold text-white">{block.text}</h3>
+              return <h3 key={idx} className="text-lg font-semibold text-white">{block.text}</h3>
             }
             if (block.type === "paragraph" && block.text) {
               return <p key={idx} className="text-zinc-400 font-light leading-relaxed text-justify">{block.text}</p>
@@ -51,7 +51,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
                 <ul key={idx} className="space-y-3">
                   {block.items.map((point: string, i: number) => (
                     <li key={i} className="flex items-start gap-2 text-zinc-400 font-light text-sm">
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-2 shrink-0" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
                       {point}
                     </li>
                   ))}
