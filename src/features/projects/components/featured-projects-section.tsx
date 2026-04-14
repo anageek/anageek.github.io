@@ -12,7 +12,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
 
   return (
     <div className="relative z-10 py-20 max-w-5xl mx-auto px-4">
-      <p className="text-sm uppercase tracking-[0.3em] text-primary text-center mb-8">
+      <p className="text-lg uppercase tracking-[0.3em] text-primary font-medium text-center mb-8">
         Featured Projects
       </p>
       <StaggerReveal animation="scale-up" staggerDelay={150} duration={700} className="grid md:grid-cols-3 gap-8">
