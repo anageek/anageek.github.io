@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { StaggerReveal } from "@/components/common/scroll-reveal"
 import type { ProjectWithCategory } from "@/features/projects/types/project"
 
 interface FeaturedProjectsSectionProps {
@@ -14,7 +15,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
       <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-8">
         Featured Projects
       </p>
-      <div className="grid md:grid-cols-3 gap-8">
+      <StaggerReveal animation="scale-up" staggerDelay={150} duration={700} className="grid md:grid-cols-3 gap-8">
         {projects.map((project, idx) => (
           <Link
             key={`${project.category.slug}-${project.slug}-${idx}`}
@@ -55,7 +56,7 @@ export default function FeaturedProjectsSection({ projects }: FeaturedProjectsSe
             </div>
           </Link>
         ))}
-      </div>
+      </StaggerReveal>
     </div>
   )
 }

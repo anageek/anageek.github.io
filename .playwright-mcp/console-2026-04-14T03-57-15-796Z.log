@@ -1,0 +1,4 @@
+[     112ms] [WARNING] Unrecognized feature: 'web-share'. @ http://localhost:3000/project/naufrago-games:0
+[     300ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:24914
+[    4789ms] [WARNING] Image with src "/images/projects/games/Naufrago/Overview.png" was detected as the Largest Contentful Paint (LCP). Please add the "priority" property if this image is above the fold.
+Read more: https://nextjs.org/docs/api-reference/next/image#priority @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/utils/warn-once.js:15

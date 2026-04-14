@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Monitor, Smartphone, X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ScrollReveal } from "@/components/common/scroll-reveal"
 import type { ProjectWithRelations } from "@/features/projects/types/project"
 import SectionRenderer from "@/features/projects/components/section-renderer"
 import ProjectGallery from "@/features/projects/components/project-gallery"
@@ -152,6 +153,7 @@ export default function ProjectDetail({
             </div>
           </div>
 
+          <ScrollReveal animation="fade-right" duration={600} threshold={0}>
           <div className="flex items-center space-x-6 my-2">
             <h1 className="text-4xl font-bold tracking-tighter">{project.title}</h1>
             {project.platform && project.platform.length > 0 && (
@@ -215,6 +217,7 @@ export default function ProjectDetail({
               <a href={project.designUrl}>{project.designBtnLabel}</a>
             </Button>
           )}
+          </ScrollReveal>
         </div>
       </div>
 
@@ -222,6 +225,7 @@ export default function ProjectDetail({
       <div className="col-span-2 container py-10 lg:px-12">
         {/* Video URL */}
         {project.videoUrl && (
+          <ScrollReveal animation="scale-up" duration={700}>
           <div className="mb-12 w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-zinc-800/50">
             <iframe
               src={project.videoUrl}
@@ -233,25 +237,29 @@ export default function ProjectDetail({
               className="w-full h-full"
             ></iframe>
           </div>
+          </ScrollReveal>
         )}
 
         {/* Sections */}
         {project.sections?.map((section, index) => (
-          <SectionRenderer
-            key={section.id}
-            section={section}
-            projectTitle={project.title}
-            sectionIndex={index}
-            onImageClick={handleImageClick}
-          />
+          <ScrollReveal key={section.id} animation="fade-up" duration={700} delay={index * 100}>
+            <SectionRenderer
+              section={section}
+              projectTitle={project.title}
+              sectionIndex={index}
+              onImageClick={handleImageClick}
+            />
+          </ScrollReveal>
         ))}
 
         {/* Project Gallery */}
+        <ScrollReveal animation="fade-up" duration={700}>
         <ProjectGallery
           images={galleryImages}
           projectTitle={project.title}
           onImageClick={handleImageClick}
         />
+        </ScrollReveal>
       </div>
 
       {/* Unified Lightbox Modal */}

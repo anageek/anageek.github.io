@@ -5,6 +5,7 @@ import { ScrollScaleVideo } from '@/features/hero/components/scroll-scale-video'
 import { ProjectGrid, FeaturedProjectsSection } from '@/features/projects'
 import { AboutSection } from '@/features/about'
 import { ContactSection } from '@/features/contact'
+import { ScrollReveal } from '@/components/common/scroll-reveal'
 import { siteConfig } from '@/config/site'
 import Link from 'next/link'
 
@@ -26,26 +27,34 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-black to-zinc-950" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,153,255,0.06)_0%,_transparent_70%)]" />
 
-        {/* Hero content */}
+        {/* Hero content — entrance animations */}
         <div className="relative z-10 flex flex-col items-center text-center px-4">
-          <p className="text-sm md:text-base uppercase tracking-[0.3em] text-zinc-500 mb-6">
-            Portfolio
-          </p>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4">
-            {siteConfig.name}
-          </h1>
-          <p className="text-lg md:text-xl text-zinc-400 mb-12">
-            {siteConfig.title}
-          </p>
-          <Link
-            href="#showreel"
-            className="group cursor-pointer px-8 py-3 border border-zinc-700 text-white rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-300 inline-flex items-center justify-center gap-2"
-          >
-            Watch Demo Reel
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-y-0.5 transition-transform">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </Link>
+          <ScrollReveal animation="fade-down" duration={800} threshold={0}>
+            <p className="text-sm md:text-base uppercase tracking-[0.3em] text-zinc-500 mb-6">
+              Portfolio
+            </p>
+          </ScrollReveal>
+          <ScrollReveal animation="blur-in" duration={1000} delay={200} threshold={0}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4">
+              {siteConfig.name}
+            </h1>
+          </ScrollReveal>
+          <ScrollReveal animation="fade-up" duration={800} delay={400} threshold={0}>
+            <p className="text-lg md:text-xl text-zinc-400 mb-12">
+              {siteConfig.title}
+            </p>
+          </ScrollReveal>
+          <ScrollReveal animation="fade-up" duration={800} delay={600} threshold={0}>
+            <Link
+              href="#showreel"
+              className="group cursor-pointer px-8 py-3 border border-zinc-700 text-white rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-300 inline-flex items-center justify-center gap-2"
+            >
+              Watch Demo Reel
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 group-hover:translate-y-0.5 transition-transform">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </Link>
+          </ScrollReveal>
         </div>
 
         {/* Bottom scroll indicator */}
@@ -64,11 +73,23 @@ export default async function HomePage() {
       </section>
 
       {/* ── Featured Projects ─────────────────────────────────────── */}
-      {featured.length > 0 && <FeaturedProjectsSection projects={featured} />}
+      {featured.length > 0 && (
+        <ScrollReveal animation="fade-up" duration={800}>
+          <FeaturedProjectsSection projects={featured} />
+        </ScrollReveal>
+      )}
 
-      <ProjectGrid projects={projects} categories={categories} />
-      <AboutSection />
-      <ContactSection />
+      <ScrollReveal animation="fade-up" duration={800}>
+        <ProjectGrid projects={projects} categories={categories} />
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" duration={800}>
+        <AboutSection />
+      </ScrollReveal>
+
+      <ScrollReveal animation="fade-up" duration={800}>
+        <ContactSection />
+      </ScrollReveal>
     </main>
   )
 }

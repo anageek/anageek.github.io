@@ -1,0 +1,138 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Logo Ana Neiva Tech UI Designer" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Logo" [ref=e6]
+        - generic [ref=e7]:
+          - text: Ana Neiva
+          - paragraph [ref=e8]: Tech UI Designer
+      - navigation [ref=e9]:
+        - link "Projects" [ref=e10] [cursor=pointer]:
+          - /url: "#projects"
+        - link "About" [ref=e11] [cursor=pointer]:
+          - /url: "#about"
+        - link "Contact" [ref=e12] [cursor=pointer]:
+          - /url: "#contact"
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e16]:
+        - link "View Projects" [ref=e17] [cursor=pointer]:
+          - /url: "#projects"
+        - img [ref=e20]
+      - iframe [ref=e22]:
+        - generic "Player de vídeo do YouTube" [ref=f11e3]
+    - generic [ref=e23]:
+      - heading "Featured Projects" [level=2] [ref=e24]
+      - generic [ref=e25]:
+        - link "Naufrago Naufrago Naufrago Unreal Developer" [ref=e26] [cursor=pointer]:
+          - /url: /project/naufrago-games
+          - generic [ref=e27]:
+            - img "Naufrago" [ref=e28]
+            - img "Naufrago" [ref=e29]
+            - generic [ref=e31]:
+              - heading "Naufrago" [level=3] [ref=e32]
+              - paragraph [ref=e33]: Unreal Developer
+        - link "Pixel Escape Pixel Escape Pixel Escape Unreal Developer" [ref=e34] [cursor=pointer]:
+          - /url: /project/pixel-escape-games
+          - generic [ref=e35]:
+            - img "Pixel Escape" [ref=e36]
+            - img "Pixel Escape" [ref=e37]
+            - generic [ref=e39]:
+              - heading "Pixel Escape" [level=3] [ref=e40]
+              - paragraph [ref=e41]: Unreal Developer
+        - link "Pirate's Attack Pirate's Attack Pirate's Attack Unreal Developer" [ref=e42] [cursor=pointer]:
+          - /url: /project/pirate-s-attack-games
+          - generic [ref=e43]:
+            - img "Pirate's Attack" [ref=e44]
+            - img "Pirate's Attack" [ref=e45]
+            - generic [ref=e47]:
+              - heading "Pirate's Attack" [level=3] [ref=e48]
+              - paragraph [ref=e49]: Unreal Developer
+        - link "Joe's Christmas Joe's Christmas Joe's Christmas Unreal Developer" [ref=e50] [cursor=pointer]:
+          - /url: /project/joe-s-christmas-games
+          - generic [ref=e51]:
+            - img "Joe's Christmas" [ref=e52]
+            - img "Joe's Christmas" [ref=e53]
+            - generic [ref=e55]:
+              - heading "Joe's Christmas" [level=3] [ref=e56]
+              - paragraph [ref=e57]: Unreal Developer
+    - generic [ref=e59]:
+      - heading "Projects" [level=2] [ref=e60]
+      - navigation [ref=e61]:
+        - button "Games" [ref=e62] [cursor=pointer]
+        - button "UI/UX" [ref=e63] [cursor=pointer]
+        - button "Modeling" [ref=e64] [cursor=pointer]
+        - button "Design" [ref=e65] [cursor=pointer]
+      - generic [ref=e67]:
+        - link "Naufrago Naufrago Unreal Developer" [ref=e68] [cursor=pointer]:
+          - /url: /project/naufrago-games
+          - generic [ref=e69]:
+            - img "Naufrago" [ref=e72]
+            - generic [ref=e73]:
+              - heading "Naufrago" [level=3] [ref=e74]
+              - paragraph [ref=e75]: Unreal Developer
+        - link "Pixel Escape Pixel Escape Unreal Developer" [ref=e76] [cursor=pointer]:
+          - /url: /project/pixel-escape-games
+          - generic [ref=e77]:
+            - img "Pixel Escape" [ref=e80]
+            - generic [ref=e81]:
+              - heading "Pixel Escape" [level=3] [ref=e82]
+              - paragraph [ref=e83]: Unreal Developer
+        - link "Pirate's Attack Pirate's Attack Unreal Developer" [ref=e84] [cursor=pointer]:
+          - /url: /project/pirate-s-attack-games
+          - generic [ref=e85]:
+            - img "Pirate's Attack" [ref=e88]
+            - generic [ref=e89]:
+              - heading "Pirate's Attack" [level=3] [ref=e90]
+              - paragraph [ref=e91]: Unreal Developer
+        - link "Joe's Christmas Joe's Christmas Unreal Developer" [ref=e92] [cursor=pointer]:
+          - /url: /project/joe-s-christmas-games
+          - generic [ref=e93]:
+            - img "Joe's Christmas" [ref=e96]
+            - generic [ref=e97]:
+              - heading "Joe's Christmas" [level=3] [ref=e98]
+              - paragraph [ref=e99]: Unreal Developer
+    - generic [ref=e102]:
+      - heading "About Me" [level=2] [ref=e103]
+      - generic [ref=e104]:
+        - generic [ref=e105]:
+          - navigation [ref=e107]:
+            - button "Hello!" [ref=e109] [cursor=pointer]
+            - button "Work Stuff" [ref=e110] [cursor=pointer]
+            - button "Side Quests" [ref=e111] [cursor=pointer]
+            - button "Dream Collab" [ref=e112] [cursor=pointer]
+          - paragraph [ref=e116]:
+            - text: Hi! I'm Ana, a Brazilian UI/UX designer with a background in Unreal development and over five years of experience creating engaging, user-centered experiences for PC, mobile, and VR.
+            - text: I began my career as a graphic designer and later moved into Unreal development, which helped me develop a strong foundation in logic and technical thinking. But it was UI/UX that truly brought together my passion for problem-solving and visual design. Since then, I've worked on a range of interactive projects, focusing on interfaces that are both functional and visually appealing.
+        - img "Ana's Profile Picture" [ref=e118]
+    - generic [ref=e119]:
+      - generic [ref=e120]:
+        - heading "Contact Me" [level=2] [ref=e121]
+        - generic [ref=e122]:
+          - generic [ref=e124]:
+            - img [ref=e126]
+            - heading "alcneiva@gmail.com" [level=3] [ref=e129]
+          - generic [ref=e130]:
+            - link "Linkedin" [ref=e131] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/anageek/
+              - img [ref=e132]
+              - generic [ref=e136]: Linkedin
+            - link "Instagram" [ref=e137] [cursor=pointer]:
+              - /url: https://www.instagram.com/ana.geek
+              - img [ref=e138]
+              - generic [ref=e141]: Instagram
+            - link "YouTube" [ref=e142] [cursor=pointer]:
+              - /url: https://www.youtube.com/AnaGeek
+              - img [ref=e143]
+              - generic [ref=e146]: YouTube
+            - link "Twitch" [ref=e147] [cursor=pointer]:
+              - /url: https://www.twitch.tv/ana_geek
+              - img [ref=e148]
+              - generic [ref=e150]: Twitch
+      - paragraph [ref=e152]: Thank you for viewing my portfolio!
+      - paragraph [ref=e154]: © 2026 by Ana Neiva. All rights reserved.
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e160] [cursor=pointer]:
+    - img [ref=e161]
+  - alert [ref=e164]
