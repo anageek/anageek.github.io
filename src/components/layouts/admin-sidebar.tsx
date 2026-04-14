@@ -24,18 +24,14 @@ export function AdminSidebar() {
       <aside className="hidden md:flex flex-col w-60 shrink-0 min-h-screen bg-zinc-950 border-r border-zinc-800 py-6">
         {/* Logo */}
         <div className="px-5 mb-8">
-          <Link href="/admin" className="flex items-center gap-3 group">
-            <div className="relative h-8 w-8 shrink-0">
+          <Link href="/admin" className="flex items-center">
+            <div className="relative h-9 w-9">
               <Image
-                src="/images/logo/logo-small-white.png?height=32&width=32"
+                src="/images/logo/logo-small-white.png?height=36&width=36"
                 alt="Logo"
                 fill
                 className="object-contain"
               />
-            </div>
-            <div className="leading-tight">
-              <p className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">Ana Neiva</p>
-              <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest">Admin</p>
             </div>
           </Link>
         </div>
