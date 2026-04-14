@@ -283,7 +283,9 @@ export function AboutSection() {
                 alt="Ana's Profile Picture"
                 width={500}
                 height={500}
-                className=""
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 500px"
+                className="w-full"
               />
             </div>
           </div>

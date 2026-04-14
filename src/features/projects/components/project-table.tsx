@@ -182,7 +182,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto [scrollbar-width:thin] [scrollbar-color:theme(colors.zinc.700)_transparent]">
           <Table>
             <TableHeader className="bg-zinc-950/60 border-b border-zinc-900">
               <TableRow className="hover:bg-transparent border-zinc-900">
@@ -231,7 +231,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                           )}
                         </div>
                         <div>
-                          <p className="text-white font-bold text-base tracking-tight leading-none mb-1.5">
+                          <p className="text-white font-bold text-base tracking-tight leading-none mb-1.5 truncate max-w-[200px] lg:max-w-xs" title={project.title}>
                             {project.title}
                           </p>
                           <span className="text-zinc-500 text-[10px] uppercase font-bold">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -16,6 +16,14 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ title, role, tools, coverImage, coverAnimated, columns }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+
+  // Preload animated cover for smooth hover
+  useEffect(() => {
+    if (coverAnimated) {
+      const img = new window.Image()
+      img.src = coverAnimated
+    }
+  }, [coverAnimated])
 
   return (
     <div

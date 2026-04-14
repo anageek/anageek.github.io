@@ -174,8 +174,14 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     if (!file) return
     setIsUploading('section.image')
     const url = await uploadFile(file)
-    if (url) setSectionDraft((p) => ({ ...p, image: url }))
+    if (url) {
+      setSectionDraft((p) => ({ ...p, image: url }))
+      toast.success('Upload concluído!')
+    } else {
+      toast.error('Falha no upload')
+    }
     setIsUploading(null)
+    e.target.value = ''
   }
 
   const uploadDescBlockImage = async (
@@ -186,8 +192,14 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     if (!file) return
     setIsUploading(`desc.image.${idx}`)
     const url = await uploadFile(file)
-    if (url) updateDescBlock(idx, 'image', url)
+    if (url) {
+      updateDescBlock(idx, 'image', url)
+      toast.success('Upload concluído!')
+    } else {
+      toast.error('Falha no upload')
+    }
     setIsUploading(null)
+    e.target.value = ''
   }
 
   return {

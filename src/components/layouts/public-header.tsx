@@ -30,6 +30,15 @@ export function PublicHeader() {
     return () => window.removeEventListener('keydown', handleKey)
   }, [showMobileMenu])
 
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = ''
+      }
+    }
+  }, [showMobileMenu])
+
   const scrollToSection = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault()
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })

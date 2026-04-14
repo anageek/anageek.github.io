@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { Edit2, Save, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -43,6 +44,18 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
   } = useProjectForm(project)
 
   const { handleSubmit, formState: { isSubmitting } } = form
+
+  const { isDirty } = form.formState
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isDirty) {
+        e.preventDefault()
+      }
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [isDirty])
 
   const handleSave = async (data: ProjectFormValues) => {
     try {

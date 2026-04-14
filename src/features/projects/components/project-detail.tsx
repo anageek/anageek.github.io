@@ -68,6 +68,15 @@ export default function ProjectDetail({
     return () => window.removeEventListener("keydown", handleKey)
   }, [selectedImageIndex])
 
+  useEffect(() => {
+    if (selectedImageIndex !== null) {
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = ''
+      }
+    }
+  }, [selectedImageIndex])
+
   const galleryImages = project.images.map((img) => img.url).filter(Boolean) as string[]
 
   return (
@@ -315,6 +324,7 @@ export default function ProjectDetail({
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 px-6 py-2 bg-zinc-900/80 backdrop-blur-xl border border-zinc-700/50 rounded-full text-[10px] font-bold uppercase tracking-widest text-zinc-400">
             {selectedImageIndex + 1} <span className="text-zinc-600 mx-1">/</span> {lightboxImages.length}
+            <span className="text-zinc-600 ml-3">ESC</span>
           </div>
         </div>
       )}
