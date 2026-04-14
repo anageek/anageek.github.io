@@ -114,7 +114,7 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
             <Input
               value={form.label}
               onChange={(e) => setForm({ ...form, label: e.target.value })}
-              className="bg-zinc-900/60 border-zinc-800 h-11 rounded-xl"
+              className="bg-zinc-900/60 border-zinc-800 h-11 rounded-lg"
               required
             />
           </div>
@@ -125,7 +125,7 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
               onChange={(e) =>
                 setForm({ ...form, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })
               }
-              className="bg-zinc-900/60 border-zinc-800 h-11 rounded-xl font-mono text-sm"
+              className="bg-zinc-900/60 border-zinc-800 h-11 rounded-lg font-mono text-sm"
               disabled={isEdit}
               required
             />
@@ -139,28 +139,28 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
               value={form.icon}
               onValueChange={(val) => setForm({ ...form, icon: val })}
             >
-              <SelectTrigger className="bg-zinc-900/60 border-zinc-800 h-11 rounded-xl">
+              <SelectTrigger className="bg-zinc-900/60 border-zinc-800 h-11 rounded-lg">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-zinc-950 border-zinc-900 text-zinc-300">
                 <SelectItem value="Gamepad2">
                   <span className="flex items-center gap-2">
-                    <Gamepad2 className="w-4 h-4 text-blue-400" /> Games
+                    <Gamepad2 className="w-4 h-4 text-primary" /> Games
                   </span>
                 </SelectItem>
                 <SelectItem value="Palette">
                   <span className="flex items-center gap-2">
-                    <Palette className="w-4 h-4 text-pink-400" /> Design / UI
+                    <Palette className="w-4 h-4 text-primary" /> Design / UI
                   </span>
                 </SelectItem>
                 <SelectItem value="Boxes">
                   <span className="flex items-center gap-2">
-                    <Boxes className="w-4 h-4 text-orange-400" /> 3D / Modeling
+                    <Boxes className="w-4 h-4 text-primary" /> 3D / Modeling
                   </span>
                 </SelectItem>
                 <SelectItem value="Grid">
                   <span className="flex items-center gap-2">
-                    <Grid className="w-4 h-4 text-zinc-400" /> Others
+                    <Grid className="w-4 h-4 text-primary" /> Others
                   </span>
                 </SelectItem>
               </SelectContent>
@@ -171,14 +171,14 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
               type="button"
               variant="ghost"
               onClick={() => onOpenChange(false)}
-              className="h-12 rounded-xl px-6"
+              className="h-12 rounded-lg px-6"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={saving}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-12 px-10 rounded-xl flex-1"
+              className="bg-primary hover:bg-primary/90 text-white font-bold h-12 px-10 rounded-lg flex-1"
             >
               {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save Category'}
             </Button>

@@ -101,12 +101,12 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
           <div className="flex items-center gap-2 mb-1">
             <Badge
               variant="outline"
-              className="border-blue-500/20 text-blue-500 bg-blue-500/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
+              className="border-primary/20 text-primary bg-primary/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
             >
               Content Manager
             </Badge>
           </div>
-          <h1 className="text-4xl font-bold text-white capitalize tracking-tighter">
+          <h1 className="text-2xl font-semibold text-white capitalize tracking-tighter">
             {categorySlug}
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
@@ -115,7 +115,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
         </div>
         <Button
           asChild
-          className="bg-blue-600 hover:bg-blue-700 text-white gap-2 font-bold shadow-lg shadow-blue-600/20 h-12 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="bg-primary hover:bg-primary/90 text-white gap-2 font-medium shadow-lg shadow-primary/20 h-12 px-8 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
         >
           <Link href="/admin/projects/new">+ New Project</Link>
         </Button>
@@ -127,19 +127,19 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
           label="Total Projects"
           value={optimisticProjects.length}
           icon={<Layers />}
-          color="text-blue-400"
+          color="text-primary"
         />
         <StatCard
           label="Active Pages"
           value={filtered.length}
           icon={<CheckCircle2 />}
-          color="text-emerald-400"
+          color="text-primary"
         />
         <StatCard
           label="Last Update"
           value="Today"
           icon={<Calendar />}
-          color="text-blue-400"
+          color="text-primary"
         />
       </div>
 
@@ -196,7 +196,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-5">
-                        <div className="w-14 h-14 rounded-xl bg-zinc-900 overflow-hidden border border-zinc-800 group-hover:border-blue-500/30 p-1 transition-all">
+                        <div className="w-14 h-14 rounded-xl bg-zinc-900 overflow-hidden border border-zinc-800 group-hover:border-primary/30 p-1 transition-all">
                           {project.coverImage && (
                             <img
                               src={project.coverImage}
@@ -225,7 +225,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                       <div className="flex items-center gap-2">
                         <div
                           className={`w-1.5 h-1.5 rounded-full ${
-                            project.status ? 'bg-blue-500' : 'bg-zinc-700'
+                            project.status ? 'bg-primary' : 'bg-zinc-700'
                           }`}
                         />
                         <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">

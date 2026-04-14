@@ -66,7 +66,7 @@ export function ContentTab({
           <Button
             type="button"
             onClick={() => onSectionOpen(null)}
-            className="h-9 px-5 text-[10px] font-bold uppercase tracking-widest bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center gap-2"
+            className="h-9 px-5 text-[10px] font-bold uppercase tracking-widest bg-primary hover:bg-primary/90 text-white rounded-lg flex items-center gap-2"
           >
             <Plus className="w-3.5 h-3.5" />
             + Add Section

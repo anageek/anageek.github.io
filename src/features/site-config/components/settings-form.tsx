@@ -43,12 +43,12 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
           <div className="flex items-center gap-2 mb-1">
             <Badge
               variant="outline"
-              className="border-blue-500/20 text-blue-500 bg-blue-500/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
+              className="border-primary/20 text-primary bg-primary/5 text-[10px] uppercase tracking-widest font-bold px-2 py-0.5"
             >
               Site Settings
             </Badge>
           </div>
-          <h1 className="text-4xl font-bold text-white tracking-tighter">General Configuration</h1>
+          <h1 className="text-2xl font-semibold text-white tracking-tighter">General Configuration</h1>
           <p className="text-zinc-500 text-sm mt-1">
             Manage core settings and global sections of your portfolio.
           </p>
@@ -57,7 +57,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
 
       <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-8 backdrop-blur-3xl shadow-2xl">
         <h2 className="text-xl font-bold flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4 text-zinc-100">
-          <PlaySquare className="w-5 h-5 text-blue-500" />
+          <PlaySquare className="w-5 h-5 text-primary" />
           Landing Page Hero
         </h2>
 
@@ -68,7 +68,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
                 <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
                   YouTube Embed URL
                 </Label>
-                <div className="flex items-center h-12 bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden focus-within:border-blue-500/50 transition-colors">
+                <div className="flex items-center h-12 bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden focus-within:border-primary/50 transition-colors">
                   <div className="px-4 border-r border-zinc-800 text-zinc-600">
                     <LinkIcon className="w-4 h-4" />
                   </div>
@@ -92,7 +92,7 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
                 <Button
                   onClick={handleSave}
                   disabled={saving}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest px-8 h-12 rounded-xl shadow-xl shadow-blue-600/20"
+                  className="bg-primary hover:bg-primary/90 text-white font-medium text-xs uppercase tracking-widest px-8 h-12 rounded-xl shadow-lg shadow-primary/20"
                 >
                   {saving ? (
                     <>

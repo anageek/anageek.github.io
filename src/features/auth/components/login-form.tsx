@@ -46,7 +46,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-zinc-950 p-4 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/10 via-zinc-950 to-zinc-950">
+    <div className="min-h-screen w-full flex items-center justify-center bg-zinc-950 p-4">
       <Card className="w-full max-w-md bg-zinc-900/50 border-zinc-800 backdrop-blur-xl shadow-2xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-bold text-center text-white tracking-tight">
@@ -69,13 +69,13 @@ export function LoginForm() {
                 Email
               </Label>
               <div className="relative group">
-                <Mail className="absolute left-3 top-3 w-4 h-4 text-zinc-500 group-focus-within:text-blue-500 transition-colors" />
+                <Mail className="absolute left-3 top-3 w-4 h-4 text-zinc-500 group-focus-within:text-primary transition-colors" />
                 <Input
                   id="email"
                   type="email"
                   placeholder="admin@anageek.me"
                   {...register('email')}
-                  className={`pl-10 bg-zinc-950/50 border-zinc-800 text-white focus:ring-blue-500/20 focus:border-blue-500 transition-all ${
+                  className={`pl-10 bg-zinc-950/50 border-zinc-800 text-white focus:ring-primary/20 focus:border-primary transition-all ${
                     errors.email ? 'border-red-500/50' : ''
                   }`}
                 />
@@ -95,12 +95,12 @@ export function LoginForm() {
                 Senha
               </Label>
               <div className="relative group">
-                <Lock className="absolute left-3 top-3 w-4 h-4 text-zinc-500 group-focus-within:text-blue-500 transition-colors" />
+                <Lock className="absolute left-3 top-3 w-4 h-4 text-zinc-500 group-focus-within:text-primary transition-colors" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   {...register('password')}
-                  className={`pl-10 pr-10 bg-zinc-950/50 border-zinc-800 text-white focus:ring-blue-500/20 focus:border-blue-500 transition-all ${
+                  className={`pl-10 pr-10 bg-zinc-950/50 border-zinc-800 text-white focus:ring-primary/20 focus:border-primary transition-all ${
                     errors.password ? 'border-red-500/50' : ''
                   }`}
                 />
@@ -121,7 +121,7 @@ export function LoginForm() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium h-11 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+              className="w-full bg-primary hover:bg-primary/90 text-white font-medium shadow-lg shadow-primary/20 h-11 rounded-xl transition-all active:scale-[0.98] flex items-center justify-center gap-2"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Entrar'}
             </Button>

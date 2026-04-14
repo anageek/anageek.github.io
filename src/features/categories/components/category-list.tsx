@@ -130,14 +130,14 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold text-white tracking-tighter">Categories</h1>
+          <h1 className="text-2xl font-semibold text-white tracking-tighter">Categories</h1>
           <p className="text-zinc-500 text-sm mt-1">
             Manage the types of projects displayed on your portfolio.
           </p>
         </div>
         <Button
           onClick={openNew}
-          className="bg-blue-600 hover:bg-blue-700 text-white gap-2 font-bold h-12 px-8 rounded-xl transition-all hover:scale-[1.02]"
+          className="bg-primary hover:bg-primary/90 text-white gap-2 font-medium shadow-lg shadow-primary/20 h-12 px-8 rounded-xl transition-all hover:scale-[1.02]"
         >
           <Plus className="w-5 h-5" />
           New Category
@@ -149,7 +149,7 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
           placeholder="Search categories..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="max-w-xs bg-zinc-900/60 border-zinc-800 rounded-xl h-10"
+          className="max-w-xs bg-zinc-900/60 border-zinc-800 rounded-lg h-10"
         />
       </div>
 
@@ -186,7 +186,7 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
                 className="border-zinc-900 hover:bg-zinc-900/50 transition-colors group"
               >
                 <TableCell className="px-8">
-                  <div className="w-10 h-10 rounded-lg bg-zinc-900 flex items-center justify-center text-blue-500 border border-zinc-800 group-hover:border-blue-500/30 transition-all">
+                  <div className="w-10 h-10 rounded-lg bg-zinc-900 flex items-center justify-center text-primary border border-zinc-800 group-hover:border-primary/30 transition-all">
                     {getIcon(category.icon)}
                   </div>
                 </TableCell>
