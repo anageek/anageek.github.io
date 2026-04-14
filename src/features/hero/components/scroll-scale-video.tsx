@@ -9,7 +9,7 @@ interface ScrollScaleVideoProps {
 
 export function ScrollScaleVideo({ src }: ScrollScaleVideoProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [scale, setScale] = useState(0.85)
+  const [scale, setScale] = useState(0.65)
 
   useEffect(() => {
     const container = containerRef.current
@@ -26,8 +26,8 @@ export function ScrollScaleVideo({ src }: ScrollScaleVideoProps) {
       // Clamp between 0 and 1
       const clamped = Math.min(Math.max(progress, 0), 1)
 
-      // Scale from 0.85 to 1.0
-      const newScale = 0.85 + clamped * 0.15
+      // Scale from 0.65 to 1.05 — more dramatic expansion
+      const newScale = 0.65 + clamped * 0.4
 
       setScale(newScale)
     }
