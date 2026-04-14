@@ -1,66 +1,127 @@
-import { Instagram, Youtube, Twitch, Linkedin, Mail } from 'lucide-react'
+'use client'
+
+import type React from 'react'
+import { Download, Instagram, Youtube, Twitch, Linkedin } from 'lucide-react'
+import { useState } from 'react'
+import { Mail } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { toast } from '@/components/ui/use-toast'
 import { siteConfig } from '@/config/site'
 
-const socialLinks = [
-  { href: siteConfig.social.linkedin, icon: Linkedin, label: 'LinkedIn' },
-  { href: siteConfig.social.instagram, icon: Instagram, label: 'Instagram' },
-  { href: siteConfig.social.youtube, icon: Youtube, label: 'YouTube' },
-  { href: siteConfig.social.twitch, icon: Twitch, label: 'Twitch' },
-]
-
 export function ContactSection() {
-  return (
-    <section id="contact" className="relative bg-black w-full">
-      {/* Contact content */}
-      <div className="py-24 border-t border-zinc-900">
-        <div className="container mx-auto px-4">
-          <p className="text-sm uppercase tracking-[0.3em] text-zinc-500 text-center mb-12">
-            Contact
-          </p>
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
-          {/* Email */}
-          <div className="flex justify-center mb-10">
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="group inline-flex items-center gap-4 px-6 py-3 rounded-xl border border-zinc-800 hover:border-primary/50 bg-zinc-900/50 hover:bg-zinc-900 transition-all duration-300"
-            >
-              <div className="p-2.5 rounded-lg bg-zinc-800 group-hover:bg-primary/20 transition-colors">
-                <Mail className="h-5 w-5 text-zinc-400 group-hover:text-primary transition-colors" />
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    // Here you would implement the actual email sending functionality
+    // For example, using a server action or API route
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setSubmitted(true)
+      toast({
+        title: 'Message sent!',
+        description: "Thank you for your message. I'll get back to you soon.",
+      })
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      })
+    }, 1500)
+  }
+
+  return (
+    <section
+      id="contact"
+      className="relative bg-cover bg-center  w-full pt-40"
+      style={{
+        background: "url('/images/profile/bg06.png')",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundColor: '#0a0a0a',
+      }}
+    >
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Contact Me</h2>
+
+        <div className="max-w-2xl mx-auto ">
+          <div className="flex justify-center">
+            <div className="inline-flex items-center mb-8 bg-primary/20 rounded-full">
+              <div className="p-3 border rounded-full border-white mr-4">
+                <Mail className="h-6 w-6 text-white" />
               </div>
-              <span className="text-lg font-medium text-zinc-300 group-hover:text-white transition-colors">
+              <h3 className="text-xl mr-4 font-sans font-semibold text-zinc-300">
                 {siteConfig.email}
-              </span>
-            </a>
+              </h3>
+            </div>
           </div>
 
-          {/* Social links */}
-          <div className="flex justify-center gap-4">
-            {socialLinks.map(({ href, icon: Icon, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
-              >
-                <Icon className="h-4 w-4" />
-                <span className="sr-only">{label}</span>
-              </a>
-            ))}
+          <div className="flex justify-center space-x-6 ">
+            <a
+              href={siteConfig.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-primary transition-colors "
+            >
+              <Linkedin className="h-5 w-5" />
+              <span className="sr-only">Linkedin</span>
+            </a>
+            <a
+              href={siteConfig.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-primary transition-colors "
+            >
+              <Instagram className="h-5 w-5" />
+              <span className="sr-only">Instagram</span>
+            </a>
+            <a
+              href={siteConfig.social.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-primary transition-colors "
+            >
+              <Youtube className="h-5 w-5" />
+              <span className="sr-only">YouTube</span>
+            </a>
+            <a
+              href={siteConfig.social.twitch}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-primary transition-colors "
+            >
+              <Twitch className="h-5 w-5" />
+              <span className="sr-only">Twitch</span>
+            </a>
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="border-t border-zinc-900 py-8">
-        <div className="container mx-auto px-4 flex flex-col items-center gap-4">
-          <p className="text-xs text-zinc-600 tracking-wider">
-            Thank you for viewing my portfolio
-          </p>
-          <p className="text-xs text-zinc-700">
-            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-          </p>
-        </div>
+      <div className="text-center mt-8">
+        <p className="inline-block rounded-full border mr-15 border-zinc-500 px-16 py-4 text-zinc-400 bg-zinc-900/60">
+          Thank you for viewing my portfolio!
+        </p>
+      </div>
+      <footer className="py-6 text-center text-zinc-500 font-sans font-normal">
+        <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
       </footer>
     </section>
   )
