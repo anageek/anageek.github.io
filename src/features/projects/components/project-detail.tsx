@@ -7,6 +7,7 @@ import { ArrowLeft, Monitor, Smartphone, X, ChevronLeft, ChevronRight } from "lu
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/common/scroll-reveal"
 import type { ProjectWithRelations } from "@/features/projects/types/project"
+import { toYouTubeEmbedUrl } from "@/lib/utils"
 import SectionRenderer from "@/features/projects/components/section-renderer"
 import ProjectGallery from "@/features/projects/components/project-gallery"
 
@@ -249,7 +250,7 @@ export default function ProjectDetail({
           <ScrollReveal animation="scale-up" duration={700}>
           <div className="mb-12 w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-black/50 border border-zinc-800/50">
             <iframe
-              src={project.videoUrl}
+              src={toYouTubeEmbedUrl(project.videoUrl)}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

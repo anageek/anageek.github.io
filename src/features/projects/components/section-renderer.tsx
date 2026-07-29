@@ -1,5 +1,6 @@
 import Image from "next/image"
 import type { SectionBlock } from "@/features/projects/types/project"
+import { toYouTubeEmbedUrl } from "@/lib/utils"
 
 interface Section {
   title: string
@@ -27,7 +28,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
       {section.video && (
         <div className="mb-8 w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-zinc-800/50">
           <iframe
-            src={section.video}
+            src={toYouTubeEmbedUrl(section.video)}
             title={`${section.title} video`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -80,7 +81,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
               return (
                 <div key={idx} className="my-8 w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-zinc-800/50">
                   <iframe
-                    src={block.video}
+                    src={toYouTubeEmbedUrl(block.video)}
                     title={`${projectTitle} block video`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
