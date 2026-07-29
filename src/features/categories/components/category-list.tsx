@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Plus,
@@ -49,6 +49,7 @@ function getIcon(iconName: string) {
 
 export function CategoryList({ categories: initialCategories }: CategoryListProps) {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
   const [search, setSearch] = useState('')
   const [categories, setCategories] = useState<Category[]>(initialCategories)
 
@@ -73,6 +74,7 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
 
     try {
       const result = await updateCategory(category.id, {
+        slug: category.slug,
         label: category.label,
         icon: category.icon,
         visible: updated.visible,
@@ -122,15 +124,26 @@ export function CategoryList({ categories: initialCategories }: CategoryListProp
     }
   }
 
-  const handleSave = () => {
-    router.refresh()
+  const handleSave = (saved: Category) => {
+    setCategories((prev) => {
+      const exists = prev.some((c) => c.id === saved.id)
+      return exists
+        ? prev.map((c) => (c.id === saved.id ? saved : c))
+        : [...prev, saved]
+    })
+    startTransition(() => {
+      router.refresh()
+    })
   }
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-white tracking-tighter">Categorias</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-semibold text-white tracking-tighter">Categorias</h1>
+            {isPending && <Loader2 className="w-4 h-4 animate-spin text-zinc-500" />}
+          </div>
           <p className="text-zinc-500 text-sm mt-1">
             Gerencie os tipos de projetos exibidos no seu portfólio.
           </p>

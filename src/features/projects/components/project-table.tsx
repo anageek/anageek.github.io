@@ -14,6 +14,7 @@ import {
   EyeOff,
   Star,
   Copy,
+  Loader2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -65,6 +66,7 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
     return date.toLocaleDateString('pt-BR', { month: 'short', day: 'numeric' })
   }
   const [loadingToggles, setLoadingToggles] = useState<Record<number, boolean>>({})
+  const [loadingEdit, setLoadingEdit] = useState<number | null>(null)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -306,14 +308,20 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
                         </Button>
                         {/* Edit */}
                         <Button
-                          asChild
                           variant="ghost"
                           size="icon"
+                          disabled={loadingEdit === project.id}
+                          onClick={() => {
+                            setLoadingEdit(project.id)
+                            router.push(`/admin/projects/${project.id}/edit`)
+                          }}
                           className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-500 hover:text-white transition-all"
                         >
-                          <Link href={`/admin/projects/${project.id}/edit`}>
+                          {loadingEdit === project.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
                             <Edit2 className="w-4 h-4" />
-                          </Link>
+                          )}
                         </Button>
                         {/* Duplicate */}
                         <Link

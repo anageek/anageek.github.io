@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Edit2, Save, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,7 @@ import { toast } from 'sonner'
 import { OverviewTab } from './overview-tab'
 import { ContentTab } from './content-tab'
 import { SectionEditor } from './section-editor'
+import { projectFormSchema } from '@/features/projects/types/project'
 import type { ProjectFormValues } from '@/features/projects/types/project'
 import type { Category } from '@/features/projects/types/project'
 
@@ -43,9 +44,8 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
     uploadDescBlockImage,
   } = useProjectForm(project)
 
-  const { handleSubmit, formState: { isSubmitting } } = form
-
   const { isDirty } = form.formState
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -58,6 +58,7 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
   }, [isDirty])
 
   const handleSave = async (data: ProjectFormValues) => {
+    setIsSaving(true)
     try {
       if (project?.id) {
         await updateProject(project.id, data)
@@ -66,10 +67,36 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
       }
       toast.success(project?.id ? 'Projeto atualizado!' : 'Projeto criado!')
       router.push('/admin/projects')
-      router.refresh()
     } catch {
       toast.error('Erro ao salvar projeto')
+    } finally {
+      setIsSaving(false)
     }
+  }
+
+  const handleClickSave = async () => {
+    const rawData = form.getValues()
+
+    // Garante que blocos sem type não quebram a validação
+    if (rawData.sections) {
+      rawData.sections = rawData.sections.map((s) => ({
+        ...s,
+        blocks: (s.blocks ?? []).map((b) => ({
+          ...b,
+          type: b.type || 'paragraph',
+        })),
+      }))
+    }
+
+    const result = projectFormSchema.safeParse(rawData)
+    if (!result.success) {
+      const firstError = result.error.errors[0]
+      const path = firstError.path.filter((p) => typeof p === 'string').join(' → ')
+      toast.error(path ? `${path}: ${firstError.message}` : firstError.message)
+      console.error('[ProjectForm] Zod errors:', result.error.flatten())
+      return
+    }
+    await handleSave(result.data)
   }
 
   const handleDiscard = () => {
@@ -130,11 +157,11 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
             ) : (
               <Button
                 type="button"
-                disabled={isSubmitting}
-                onClick={handleSubmit(handleSave)}
+                disabled={isSaving}
+                onClick={handleClickSave}
                 className="bg-primary hover:bg-primary/90 text-white font-bold text-xs uppercase tracking-widest px-8 h-10 rounded-xl shadow-lg shadow-primary/20 flex items-center gap-2"
               >
-                {isSubmitting ? (
+                {isSaving ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <>
