@@ -38,7 +38,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
         </div>
       )}
 
-      <div className={`grid gap-12 ${section.image ? "lg:grid-cols-2" : "grid-cols-1"}`}>
+      <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${section.image ? "lg:grid-cols-2" : ""}`}>
         <div className="space-y-6">
           {section.blocks.map((block, idx) => {
             if (block.type === "heading" && block.text) {
