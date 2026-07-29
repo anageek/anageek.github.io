@@ -127,7 +127,7 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
       image: sectionDraft.image,
       video: sectionDraft.video,
       blocks: sectionDraft.blocks.map((b) => ({
-        type: b.type ?? 'paragraph',
+        type: b.type || 'paragraph',
         text: b.text ?? '',
         image: b.image ?? '',
         video: b.video ?? '',

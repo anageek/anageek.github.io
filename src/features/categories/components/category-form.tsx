@@ -33,7 +33,7 @@ interface CategoryFormProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   category?: Category
-  onSave?: () => void
+  onSave?: (saved: Category) => void
 }
 
 interface FormState {
@@ -69,15 +69,18 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
     try {
       if (isEdit && category) {
         const result = await updateCategory(category.id, {
+          slug: category.slug,
           label: form.label,
           icon: form.icon,
           visible: category.visible ?? true,
         })
-        if (result && !result.success) {
+        if (!result?.success) {
           toast.error('Erro ao salvar categoria')
           return
         }
         toast.success('Categoria atualizada!')
+        onOpenChange(false)
+        onSave?.({ ...category, label: form.label, icon: form.icon, updatedAt: new Date().toISOString() })
       } else {
         const result = await createCategory({
           label: form.label,
@@ -85,14 +88,14 @@ export function CategoryForm({ open, onOpenChange, category, onSave }: CategoryF
           icon: form.icon,
           visible: true,
         })
-        if (result && !result.success) {
+        if (!result?.success) {
           toast.error('Erro ao salvar categoria')
           return
         }
         toast.success('Categoria criada!')
+        onOpenChange(false)
+        onSave?.(result.data)
       }
-      onOpenChange(false)
-      onSave?.()
     } catch {
       toast.error('Erro de comunicação com o servidor')
     } finally {
