@@ -29,6 +29,9 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Install native build dependencies
+        run: sudo apt-get install -y python3-setuptools build-essential
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
@@ -51,7 +54,7 @@ jobs:
         run: yarn next build
         env:
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
