@@ -1,21 +1,29 @@
 'use client'
 
-import { Plus, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
+import type { ChangeEvent } from 'react'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  arrayMove,
+} from '@dnd-kit/sortable'
+import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers'
+import { Input } from '@/components/ui/input'
 import { Field } from '@/components/forms/field'
 import { LinkField } from '@/components/forms/link-field'
-import type { SectionDraft } from '@/features/projects/hooks/use-project-form'
-import type { ChangeEvent } from 'react'
+import { SortableBlock } from './sortable-block'
+import { AddBlockMenu, AddBlockButton } from './add-block-menu'
+import type { SectionDraft, DescBlock } from '@/features/projects/hooks/use-project-form'
+import { Layers } from 'lucide-react'
 
 interface SectionEditorProps {
   sectionDraft: SectionDraft
@@ -23,16 +31,13 @@ interface SectionEditorProps {
   onTitleChange: (title: string) => void
   onImageChange: (image: string) => void
   onVideoChange: (video: string) => void
-  onAddDescBlock: () => void
+  onAddDescBlock: (type: string, atIndex?: number) => void
   onRemoveDescBlock: (index: number) => void
-  onUpdateDescBlock: (
-    index: number,
-    field: 'type' | 'text' | 'image' | 'video',
-    val: string,
-  ) => void
-  onUpdateDescListItems: (index: number, itemsStr: string) => void
+  onUpdateDescBlock: (index: number, field: 'type' | 'text' | 'image' | 'video', val: string) => void
+  onUpdateDescListItems: (index: number, items: string[]) => void
   onUploadSectionImage: (e: ChangeEvent<HTMLInputElement>) => void
   onUploadDescBlockImage: (e: ChangeEvent<HTMLInputElement>, idx: number) => void
+  onReorderBlocks: (blocks: DescBlock[]) => void
 }
 
 export function SectionEditor({
@@ -47,136 +52,141 @@ export function SectionEditor({
   onUpdateDescListItems,
   onUploadSectionImage,
   onUploadDescBlockImage,
+  onReorderBlocks,
 }: SectionEditorProps) {
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  )
+
+  // index-based IDs for DnD – stable enough since blocks sync via useEffect in SortableBlock
+  const blockIds = sectionDraft.blocks.map((_, i) => `block-${i}`)
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+    const oldIndex = blockIds.indexOf(active.id as string)
+    const newIndex = blockIds.indexOf(over.id as string)
+    onReorderBlocks(arrayMove(sectionDraft.blocks, oldIndex, newIndex))
+  }
+
   return (
-    <div className="p-8 space-y-6">
+    <div className="flex flex-col lg:flex-row h-full min-h-0">
 
-      <Field label="Header">
-        <Input
-          value={sectionDraft.title}
-          onChange={(e) => onTitleChange(e.target.value)}
-          className="bg-zinc-900 border-zinc-800 h-10 text-white font-bold rounded-lg"
-        />
-      </Field>
+      {/* ── Left: canvas ─────────────────────────────────────────────────── */}
+      <div className="flex-1 overflow-y-auto p-6 lg:p-10 space-y-2">
 
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Image (Change Layout)">
-          <LinkField
-            value={sectionDraft.image}
-            onChange={onImageChange}
-            onUpload={onUploadSectionImage}
-            uploading={isUploading === 'section.image'}
-          />
-        </Field>
-        <Field label="Video">
-          <LinkField
-            value={sectionDraft.video}
-            onChange={onVideoChange}
-          />
-        </Field>
-      </div>
-
-      {/* Description blocks */}
-      <div className="space-y-4">
-        <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-          Description
-        </Label>
-
+        {/* Empty state */}
         {sectionDraft.blocks.length === 0 && (
-          <p className="text-zinc-700 text-sm py-4 text-center border border-dashed border-zinc-800 rounded-xl">
-            No description blocks yet.
-          </p>
+          <div className="flex flex-col items-center justify-center py-20 text-zinc-700 border-2 border-dashed border-zinc-800 rounded-2xl gap-3">
+            <Layers className="w-10 h-10" />
+            <p className="text-sm font-medium">No blocks yet</p>
+            <p className="text-xs">Use the button below to add your first block</p>
+          </div>
         )}
 
-        {sectionDraft.blocks.map((block, idx) => (
-          <div
-            key={idx}
-            className="relative border border-zinc-800 rounded-xl p-5 space-y-4 bg-zinc-950/30"
-          >
-            <button
-              type="button"
-              onClick={() => onRemoveDescBlock(idx)}
-              className="absolute top-3 right-3 w-6 h-6 rounded-xl flex items-center justify-center text-zinc-600 hover:text-red-400 hover:bg-red-500/10 transition-all z-10"
-            >
-              <X className="w-3 h-3" />
-            </button>
-
-            <Field label="Block Type">
-              <Select
-                value={block.type || 'none'}
-                onValueChange={(v) => onUpdateDescBlock(idx, 'type', v === 'none' ? '' : v)}
-              >
-                <SelectTrigger className="bg-zinc-900 border-zinc-800 h-10 w-64 rounded-lg">
-                  <SelectValue placeholder="Paragraph/Text" />
-                </SelectTrigger>
-                <SelectContent className="bg-zinc-950 border-zinc-900 text-zinc-300">
-                  <SelectItem value="none">Mixed Output (Text + Image)</SelectItem>
-                  <SelectItem value="heading">Heading (Title)</SelectItem>
-                  <SelectItem value="paragraph">Paragraph Only</SelectItem>
-                  <SelectItem value="list">List items</SelectItem>
-                  <SelectItem value="image">Image Only</SelectItem>
-                  <SelectItem value="video">Video Embed</SelectItem>
-                </SelectContent>
-              </Select>
-            </Field>
-
-            {(!block.type ||
-              block.type === 'paragraph' ||
-              block.type === 'heading' ||
-              block.type === 'none') && (
-              <Field label="Text">
-                <Textarea
-                  value={block.text || ''}
-                  onChange={(e) => onUpdateDescBlock(idx, 'text', e.target.value)}
-                  rows={3}
-                  className="bg-zinc-900 border-zinc-800 resize-none rounded-lg text-sm leading-relaxed"
-                />
-              </Field>
-            )}
-
-            {block.type === 'list' && (
-              <Field label="List Items (one per line)">
-                <Textarea
-                  value={(block.items || []).join('\n')}
-                  onChange={(e) => onUpdateDescListItems(idx, e.target.value)}
-                  rows={4}
-                  className="bg-zinc-900 border-zinc-800 resize-none rounded-lg text-sm leading-relaxed"
-                />
-              </Field>
-            )}
-
-            {(!block.type || block.type === 'image' || block.type === 'none') && (
-              <Field label="Image">
-                <LinkField
-                  value={block.image || ''}
-                  onChange={(v) => onUpdateDescBlock(idx, 'image', v)}
-                  onUpload={(e) => onUploadDescBlockImage(e, idx)}
-                  uploading={isUploading === `desc.image.${idx}`}
-                />
-              </Field>
-            )}
-
-            {block.type === 'video' && (
-              <Field label="Video Embed URL">
-                <LinkField
-                  value={block.video || ''}
-                  onChange={(v) => onUpdateDescBlock(idx, 'video', v)}
-                />
-              </Field>
-            )}
-          </div>
-        ))}
-
-        <Button
-          type="button"
-          onClick={onAddDescBlock}
-          variant="ghost"
-          className="h-10 w-full text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-white border border-zinc-800 rounded-xl hover:bg-zinc-900 flex items-center gap-2"
+        {/* DnD block list */}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          onDragEnd={handleDragEnd}
         >
-          <Plus className="w-3.5 h-3.5" />
-          + Add description
-        </Button>
+          <SortableContext items={blockIds} strategy={verticalListSortingStrategy}>
+            {sectionDraft.blocks.map((block, idx) => (
+              <div key={`block-${idx}`}>
+                {/* "+ Add" between blocks */}
+                {idx === 0 && (
+                  <AddBlockMenu onAdd={(type) => onAddDescBlock(type, 0)} />
+                )}
+
+                <SortableBlock
+                  id={`block-${idx}`}
+                  index={idx}
+                  block={block}
+                  isUploading={isUploading}
+                  onRemove={() => onRemoveDescBlock(idx)}
+                  onUpdateText={(val) => onUpdateDescBlock(idx, 'text', val)}
+                  onUpdateListItems={(items) => onUpdateDescListItems(idx, items)}
+                  onUpdateVideo={(url) => onUpdateDescBlock(idx, 'video', url)}
+                  onUpdateImage={(url) => onUpdateDescBlock(idx, 'image', url)}
+                  onUploadImage={(e) => onUploadDescBlockImage(e, idx)}
+                />
+
+                <AddBlockMenu onAdd={(type) => onAddDescBlock(type, idx + 1)} />
+              </div>
+            ))}
+          </SortableContext>
+        </DndContext>
+
+        {/* Bottom "Add Block" button */}
+        <AddBlockButton onAdd={(type) => onAddDescBlock(type)} />
       </div>
+
+      {/* ── Right: section settings panel ────────────────────────────────── */}
+      <aside className="w-full lg:w-72 xl:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-zinc-800/60 bg-zinc-950/60 backdrop-blur-sm">
+        <div className="p-6 space-y-6 lg:sticky lg:top-0">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">
+              Section Settings
+            </p>
+            <div className="space-y-4">
+              <Field label="Title">
+                <Input
+                  value={sectionDraft.title}
+                  onChange={(e) => onTitleChange(e.target.value)}
+                  placeholder="Section title…"
+                  className="bg-zinc-900 border-zinc-800 h-10 text-white font-semibold rounded-lg"
+                />
+              </Field>
+
+              <Field label="Sidebar Image">
+                <LinkField
+                  value={sectionDraft.image}
+                  onChange={onImageChange}
+                  onUpload={onUploadSectionImage}
+                  uploading={isUploading === 'section.image'}
+                  placeholder="Upload or paste URL…"
+                />
+                {sectionDraft.image && (
+                  <div className="mt-2 relative w-full aspect-video rounded-lg overflow-hidden border border-zinc-800">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={sectionDraft.image}
+                      alt="Sidebar preview"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <p className="text-[10px] text-zinc-600 mt-1">
+                  Renders beside content on desktop.
+                </p>
+              </Field>
+
+              <Field label="Section Video">
+                <LinkField
+                  value={sectionDraft.video}
+                  onChange={onVideoChange}
+                  placeholder="YouTube URL…"
+                />
+                <p className="text-[10px] text-zinc-600 mt-1">
+                  Displayed above content in this section.
+                </p>
+              </Field>
+            </div>
+          </div>
+
+          {/* Block count */}
+          <div className="pt-4 border-t border-zinc-800/50">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+              {sectionDraft.blocks.length} block{sectionDraft.blocks.length !== 1 ? 's' : ''}
+            </p>
+            <p className="text-[10px] text-zinc-700 mt-1">
+              Drag ⠿ to reorder · Hover blocks to reveal controls
+            </p>
+          </div>
+        </div>
+      </aside>
     </div>
   )
 }

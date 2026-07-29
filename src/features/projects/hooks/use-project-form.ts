@@ -144,11 +144,16 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     setActiveTab('content')
   }
 
-  const addDescBlock = () =>
-    setSectionDraft((p) => ({
-      ...p,
-      blocks: [...p.blocks, { type: '', text: '', image: '', video: '', items: [] }],
-    }))
+  const addDescBlock = (type: string = '', atIndex?: number) =>
+    setSectionDraft((p) => {
+      const newBlock = { type, text: '', image: '', video: '', items: [] }
+      if (atIndex !== undefined) {
+        const blocks = [...p.blocks]
+        blocks.splice(atIndex, 0, newBlock)
+        return { ...p, blocks }
+      }
+      return { ...p, blocks: [...p.blocks, newBlock] }
+    })
 
   const removeDescBlock = (i: number) =>
     setSectionDraft((p) => ({
@@ -167,15 +172,15 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
       return { ...p, blocks }
     })
 
-  const updateDescListItems = (i: number, itemsStr: string) =>
+  const updateDescListItems = (i: number, items: string[]) =>
     setSectionDraft((p) => {
       const blocks = [...p.blocks]
-      blocks[i] = {
-        ...blocks[i],
-        items: itemsStr.split('\n').filter((s) => s.trim() !== ''),
-      }
+      blocks[i] = { ...blocks[i], items }
       return { ...p, blocks }
     })
+
+  const reorderDescBlocks = (blocks: DescBlock[]) =>
+    setSectionDraft((p) => ({ ...p, blocks }))
 
   const uploadSectionCoverImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -223,6 +228,7 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     removeDescBlock,
     updateDescBlock,
     updateDescListItems,
+    reorderDescBlocks,
     // Upload
     handleFieldUpload,
     uploadSectionCoverImage,

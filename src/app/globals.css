@@ -122,6 +122,14 @@ body {
   }
 }
 
+/* Block editor: placeholder text for empty contenteditable elements */
+[contenteditable]:empty::before {
+  content: attr(data-placeholder);
+  color: #3f3f46; /* zinc-700 */
+  pointer-events: none;
+  display: block;
+}
+
 .scrollbar-custom {
   scrollbar-color: #333 transparent;
 }

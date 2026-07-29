@@ -39,6 +39,7 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
     removeDescBlock,
     updateDescBlock,
     updateDescListItems,
+    reorderDescBlocks,
     handleFieldUpload,
     uploadSectionCoverImage,
     uploadDescBlockImage,
@@ -215,14 +216,15 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
             sectionDraft={sectionDraft}
             isUploading={isUploading}
             onTitleChange={(title) => setSectionDraft((p) => ({ ...p, title }))}
-            onImageChange={(image) => setSectionDraft((p) => ({ ...p, image: image }))}
-            onVideoChange={(video) => setSectionDraft((p) => ({ ...p, video: video }))}
+            onImageChange={(image) => setSectionDraft((p) => ({ ...p, image }))}
+            onVideoChange={(video) => setSectionDraft((p) => ({ ...p, video }))}
             onAddDescBlock={addDescBlock}
             onRemoveDescBlock={removeDescBlock}
             onUpdateDescBlock={updateDescBlock}
             onUpdateDescListItems={updateDescListItems}
             onUploadSectionImage={uploadSectionCoverImage}
             onUploadDescBlockImage={uploadDescBlockImage}
+            onReorderBlocks={reorderDescBlocks}
           />
         )}
       </div>
