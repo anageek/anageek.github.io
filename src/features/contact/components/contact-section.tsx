@@ -78,7 +78,7 @@ export function ContactSection() {
         </p>
       </div>
       <footer className="py-6 text-center text-zinc-500 font-normal">
-        <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} by Ana Neiva. All rights reserved..</p>
       </footer>
     </section>
   )
