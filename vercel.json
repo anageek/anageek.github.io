@@ -1,4 +1,4 @@
 {
-  "installCommand": "corepack enable && yarn install",
-  "buildCommand": "yarn drizzle-kit push && yarn next build"
+  "installCommand": "npm install",
+  "buildCommand": "npm run db:push && npm run build"
 }
