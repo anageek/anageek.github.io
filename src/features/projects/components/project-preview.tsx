@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import SectionRenderer from './section-renderer'
 import type { SectionState, DescBlock } from '@/features/projects/hooks/use-project-form'
@@ -54,9 +55,19 @@ interface ProjectPreviewProps {
 
 export function ProjectPreview({ sectionsState, projectTitle, onClose }: ProjectPreviewProps) {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
 
-  return (
-    <div className="fixed inset-0 z-[100] bg-zinc-950/98 overflow-y-auto">
+  useEffect(() => {
+    setMounted(true)
+    // Lock body scroll while preview is open
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  if (!mounted) return null
+
+  const overlay = (
+    <div className="fixed inset-0 z-[9999] bg-zinc-950 overflow-y-auto text-zinc-300">
       {/* Header */}
       <div className="sticky top-0 z-10 flex items-center justify-between px-8 py-4 bg-zinc-950/90 border-b border-zinc-800 backdrop-blur-xl">
         <div>
@@ -97,7 +108,7 @@ export function ProjectPreview({ sectionsState, projectTitle, onClose }: Project
       {/* Lightbox */}
       {lightboxSrc && (
         <div
-          className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center cursor-zoom-out"
+          className="fixed inset-0 z-[10000] bg-black/90 flex items-center justify-center cursor-zoom-out"
           onClick={() => setLightboxSrc(null)}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -110,4 +121,6 @@ export function ProjectPreview({ sectionsState, projectTitle, onClose }: Project
       )}
     </div>
   )
+
+  return createPortal(overlay, document.body)
 }
