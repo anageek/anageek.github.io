@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Plus, Heading2, AlignLeft, List, ImageIcon, Video } from 'lucide-react'
+import { Plus, Heading2, AlignLeft, List, ImageIcon, Video, LayoutGrid, Columns2 } from 'lucide-react'
 
 const BLOCK_TYPES = [
   { type: 'heading', label: 'Heading', Icon: Heading2 },
@@ -9,6 +9,8 @@ const BLOCK_TYPES = [
   { type: 'list', label: 'List', Icon: List },
   { type: 'image', label: 'Image', Icon: ImageIcon },
   { type: 'video', label: 'Video', Icon: Video },
+  { type: 'gallery', label: 'Gallery', Icon: LayoutGrid },
+  { type: 'layout', label: 'Layout', Icon: Columns2 },
 ] as const
 
 interface AddBlockMenuProps {
@@ -33,7 +35,6 @@ export function AddBlockMenu({ onAdd }: AddBlockMenuProps) {
       ref={containerRef}
       className="relative flex justify-center items-center my-1 h-6 group/adder"
     >
-      {/* Divider line */}
       <div className="absolute inset-x-0 top-1/2 -translate-y-px h-px bg-zinc-800/0 group-hover/adder:bg-zinc-800 transition-colors" />
 
       <button
@@ -91,7 +92,7 @@ export function AddBlockButton({ onAdd }: AddBlockMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute top-full mt-2 z-50 bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl p-1.5 flex gap-0.5">
+        <div className="absolute bottom-full mb-2 z-50 bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl p-1.5 flex gap-0.5">
           {BLOCK_TYPES.map(({ type, label, Icon }) => (
             <button
               key={type}

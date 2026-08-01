@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Edit2, Save, Loader2 } from 'lucide-react'
+import { Edit2, Save, Loader2, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ChevronTabs } from '@/components/ui/chevron-tabs'
 import { useProjectForm } from '@/features/projects/hooks/use-project-form'
@@ -11,7 +11,7 @@ import { createProject, updateProject } from '@/features/projects'
 import { toast } from 'sonner'
 import { OverviewTab } from './overview-tab'
 import { ContentTab } from './content-tab'
-import { SectionEditor } from './section-editor'
+import { ProjectPreview } from '../project-preview'
 import { projectFormSchema } from '@/features/projects/types/project'
 import type { ProjectFormValues } from '@/features/projects/types/project'
 import type { Category } from '@/features/projects/types/project'
@@ -23,26 +23,36 @@ interface ProjectFormProps {
 
 export function ProjectForm({ project, categories }: ProjectFormProps) {
   const router = useRouter()
+  const [showPreview, setShowPreview] = useState(false)
 
   const {
     form,
     activeTab,
     setActiveTab,
-    sectionDraft,
-    setSectionDraft,
+    sectionsState,
     isUploading,
     imageFieldArray,
-    sectionFieldArray,
-    openSection,
-    saveSection,
-    addDescBlock,
-    removeDescBlock,
-    updateDescBlock,
-    updateDescListItems,
-    reorderDescBlocks,
+    addSection,
+    removeSection,
+    reorderSections,
+    updateSectionMeta,
+    toggleSection,
+    toggleSectionSettings,
+    addBlock,
+    removeBlock,
+    updateBlock,
+    reorderBlocks,
+    updateLayoutConfig,
+    addLayoutChild,
+    removeLayoutChild,
+    updateLayoutChild,
+    reorderLayoutColumn,
     handleFieldUpload,
-    uploadSectionCoverImage,
-    uploadDescBlockImage,
+    uploadSectionImage,
+    uploadBlockImage,
+    uploadGalleryItem,
+    uploadLayoutChildImage,
+    syncSectionsToForm,
   } = useProjectForm(project)
 
   const { isDirty } = form.formState
@@ -50,13 +60,13 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isDirty) {
+      if (isDirty || sectionsState.length > 0) {
         e.preventDefault()
       }
     }
     window.addEventListener('beforeunload', handleBeforeUnload)
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
-  }, [isDirty])
+  }, [isDirty, sectionsState.length])
 
   const handleSave = async (data: ProjectFormValues) => {
     setIsSaving(true)
@@ -76,9 +86,14 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
   }
 
   const handleClickSave = async () => {
+    syncSectionsToForm()
+
+    // Small delay to let setValue settle
+    await new Promise((r) => setTimeout(r, 0))
+
     const rawData = form.getValues()
 
-    // Garante que blocos sem type não quebram a validação
+    // Ensure blocks always have a type
     if (rawData.sections) {
       rawData.sections = rawData.sections.map((s) => ({
         ...s,
@@ -147,50 +162,43 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
               DESCARTAR
             </Button>
 
-            {activeTab === 'section' ? (
-              <Button
-                type="button"
-                onClick={saveSection}
-                className="bg-primary hover:bg-primary/90 text-white font-bold text-xs uppercase tracking-widest px-8 h-10 rounded-xl shadow-lg shadow-primary/20"
-              >
-                Save Section
-              </Button>
-            ) : (
-              <Button
-                type="button"
-                disabled={isSaving}
-                onClick={handleClickSave}
-                className="bg-primary hover:bg-primary/90 text-white font-bold text-xs uppercase tracking-widest px-8 h-10 rounded-xl shadow-lg shadow-primary/20 flex items-center gap-2"
-              >
-                {isSaving ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <>
-                    <Save className="w-4 h-4" />
-                    PUBLICAR ALTERAÇÕES
-                  </>
-                )}
-              </Button>
-            )}
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setShowPreview(true)}
+              className="flex items-center gap-2 text-zinc-400 font-bold text-xs uppercase tracking-widest px-5 h-10 rounded-xl border border-zinc-800 hover:bg-zinc-900 hover:text-white"
+            >
+              <Eye className="w-4 h-4" />
+              PREVIEW
+            </Button>
+
+            <Button
+              type="button"
+              disabled={isSaving}
+              onClick={handleClickSave}
+              className="bg-primary hover:bg-primary/90 text-white font-bold text-xs uppercase tracking-widest px-8 h-10 rounded-xl shadow-lg shadow-primary/20 flex items-center gap-2"
+            >
+              {isSaving ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  PUBLICAR ALTERAÇÕES
+                </>
+              )}
+            </Button>
           </div>
         </div>
 
         <ChevronTabs
           active={activeTab}
-          tabs={['Overview', 'Content', 'Section']}
-          onChange={(t) => {
-            if (t === 'section' && activeTab !== 'section') {
-              openSection(null)
-            } else {
-              setActiveTab(t as 'overview' | 'content' | 'section')
-            }
-          }}
+          tabs={['Overview', 'Content']}
+          onChange={(t) => setActiveTab(t as 'overview' | 'content')}
         />
       </div>
 
       {/* ── Tab Content ─────────────────────────────────────────────────────── */}
       <div className="flex-1 overflow-y-auto">
-
         {activeTab === 'overview' && (
           <OverviewTab
             form={form}
@@ -203,31 +211,47 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
         {activeTab === 'content' && (
           <ContentTab
             form={form}
-            imageFieldArray={imageFieldArray as unknown as { fields: { id: string; [key: string]: unknown }[]; append: (v: unknown) => void; remove: (i: number) => void }}
-            sectionFieldArray={sectionFieldArray as unknown as { fields: { id: string; [key: string]: unknown }[]; append: (v: unknown) => void; remove: (i: number) => void }}
+            imageFieldArray={
+              imageFieldArray as unknown as {
+                fields: { id: string }[]
+                append: (v: unknown) => void
+                remove: (i: number) => void
+              }
+            }
+            sectionsState={sectionsState}
             isUploading={isUploading}
-            onSectionOpen={openSection}
+            onAddSection={addSection}
+            onRemoveSection={removeSection}
+            onReorderSections={reorderSections}
+            onUpdateSectionMeta={updateSectionMeta}
+            onToggleSection={toggleSection}
+            onToggleSectionSettings={toggleSectionSettings}
+            onAddBlock={addBlock}
+            onRemoveBlock={removeBlock}
+            onUpdateBlock={updateBlock}
+            onReorderBlocks={reorderBlocks}
+            onUpdateLayoutConfig={updateLayoutConfig}
+            onAddLayoutChild={addLayoutChild}
+            onRemoveLayoutChild={removeLayoutChild}
+            onUpdateLayoutChild={updateLayoutChild}
+            onReorderLayoutColumn={reorderLayoutColumn}
+            onUploadSectionImage={uploadSectionImage}
+            onUploadBlockImage={uploadBlockImage}
+            onUploadGalleryItem={uploadGalleryItem}
+            onUploadLayoutChildImage={uploadLayoutChildImage}
             onFieldUpload={handleFieldUpload}
           />
         )}
-
-        {activeTab === 'section' && (
-          <SectionEditor
-            sectionDraft={sectionDraft}
-            isUploading={isUploading}
-            onTitleChange={(title) => setSectionDraft((p) => ({ ...p, title }))}
-            onImageChange={(image) => setSectionDraft((p) => ({ ...p, image }))}
-            onVideoChange={(video) => setSectionDraft((p) => ({ ...p, video }))}
-            onAddDescBlock={addDescBlock}
-            onRemoveDescBlock={removeDescBlock}
-            onUpdateDescBlock={updateDescBlock}
-            onUpdateDescListItems={updateDescListItems}
-            onUploadSectionImage={uploadSectionCoverImage}
-            onUploadDescBlockImage={uploadDescBlockImage}
-            onReorderBlocks={reorderDescBlocks}
-          />
-        )}
       </div>
+
+      {/* ── Preview overlay ──────────────────────────────────────────────────── */}
+      {showPreview && (
+        <ProjectPreview
+          sectionsState={sectionsState}
+          projectTitle={form.getValues('title') || project?.title || ''}
+          onClose={() => setShowPreview(false)}
+        />
+      )}
     </div>
   )
 }

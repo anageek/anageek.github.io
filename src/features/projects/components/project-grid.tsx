@@ -2,9 +2,12 @@
 
 import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/features/projects/components/project-card"
 import type { ProjectWithCategory, Category } from "@/features/projects/types/project"
+
+const ITEMS_PER_PAGE = 6
 
 interface ProjectGridProps {
   projects: ProjectWithCategory[]
@@ -15,9 +18,8 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
   const [activeCategory, setActiveCategory] = useState<string>(
     categories.length > 0 ? categories[0].slug : ""
   )
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const sectionRef = useRef<HTMLElement>(null)
   const navRef = useRef<HTMLDivElement>(null)
   const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
@@ -37,6 +39,10 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
     )
     return acc
   }, {})
+
+  const filteredProjects = projectsByCategory[activeCategory] ?? []
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE)
+  const paginatedProjects = filteredProjects.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE)
 
   // Responsive check
   useEffect(() => {
@@ -73,37 +79,14 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
     }
   }, [activeCategory, isMobile])
 
-  // Reset scroll when category changes
+  // Reset page when category changes
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    setCurrentPage(0)
   }, [activeCategory])
-
-  // Reset scroll when section comes into view
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section) return
-
-    const observer = new window.IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && scrollRef.current) {
-            scrollRef.current.scrollTop = 0
-          }
-        })
-      },
-      { threshold: 0.5 }
-    )
-
-    observer.observe(section)
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <section
       id="projects"
-      ref={sectionRef}
       className="bg-black"
     >
       <div className="container pt-20 pb-20">
@@ -122,7 +105,6 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
             "md:border-b border-zinc-800 md:w-full md:justify-center md:mb-8"
           )}
           style={{
-            minWidth: "max-content",
             position: "relative",
             height: isMobile ? "auto" : undefined,
           }}
@@ -163,48 +145,56 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
           ))}
         </nav>
         {/* Projects Grid */}
-        <div
-          ref={scrollRef}
-          className={cn(
-            "p-4 overflow-y-auto scrollbar-custom rounded-lg",
-            "md:ml-0 md:mr-0 flex-1"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
+          {paginatedProjects.length === 0 ? (
+            <div className="col-span-full flex flex-col items-center py-16">
+              <svg className="w-12 h-12 text-zinc-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <p className="text-zinc-500 text-sm">No projects in this category yet</p>
+            </div>
+          ) : paginatedProjects.map((project, idx) =>
+            project.slug ? (
+              <Link href={`/project/${project.slug}`} key={`${project.slug}-${idx}`}>
+                <ProjectCard
+                  slug={project.slug}
+                  title={project.title}
+                  role={project.role ?? ""}
+                  tools={project.tools ?? ""}
+                  coverImage={project.coverImage ?? ""}
+                  coverAnimated={project.coverAnimated ?? ""}
+                  columns={activeCategory === "games" || activeCategory === "uiux" ? 2 : 3}
+                />
+              </Link>
+            ) : null
           )}
-          style={{
-            height: "calc(2 * 17.5vw)",
-            maxHeight: "700px",
-            minHeight: "380px",
-          }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {categories.map((cat) => {
-              if (activeCategory !== cat.slug) return null
-              const list = projectsByCategory[cat.slug] ?? []
-              if (list.length === 0) return (
-                <div key={cat.slug} className="col-span-full flex flex-col items-center py-16">
-                  <svg className="w-12 h-12 text-zinc-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p className="text-zinc-500 text-sm">No projects in this category yet</p>
-                </div>
-              )
-              return list.map((project, idx) =>
-                project.slug ? (
-                  <Link href={`/project/${project.slug}`} key={`${cat.slug}-${project.slug}-${idx}`}>
-                    <ProjectCard
-                      slug={project.slug}
-                      title={project.title}
-                      role={project.role ?? ""}
-                      tools={project.tools ?? ""}
-                      coverImage={project.coverImage ?? ""}
-                      coverAnimated={project.coverAnimated ?? ""}
-                      columns={cat.slug === "games" || cat.slug === "uiux" ? 2 : 3}
-                    />
-                  </Link>
-                ) : null
-              )
-            })}
-          </div>
         </div>
+        {/* Pagination controls */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              type="button"
+              onClick={() => setCurrentPage(p => Math.max(0, p - 1))}
+              disabled={currentPage === 0}
+              className="w-9 h-9 rounded-xl border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="text-xs text-zinc-500 font-medium tabular-nums">
+              <span className="text-white">{currentPage + 1}</span>
+              <span className="mx-1 text-zinc-700">/</span>
+              {totalPages}
+            </span>
+            <button
+              type="button"
+              onClick={() => setCurrentPage(p => Math.min(totalPages - 1, p + 1))}
+              disabled={currentPage === totalPages - 1}
+              className="w-9 h-9 rounded-xl border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-white hover:border-zinc-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

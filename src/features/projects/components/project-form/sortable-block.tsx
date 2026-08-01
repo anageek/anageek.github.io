@@ -3,14 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video } from 'lucide-react'
+import {
+  GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video, LayoutGrid, ArrowRightLeft,
+  Bold, Italic, AlignLeft, AlignCenter, AlignRight, AlignJustify,
+} from 'lucide-react'
 import Image from 'next/image'
 import { toYouTubeEmbedUrl } from '@/lib/utils'
 import type { DescBlock } from '@/features/projects/hooks/use-project-form'
 
-// ─── contentEditable sync hook ────────────────────────────────────────────────
-// Sets DOM content only when the element is NOT focused (avoids cursor jump).
-// Runs after every render, guarded by two conditions.
+// ─── contentEditable sync hook (innerText) ────────────────────────────────────
 function useSyncedEditable(value: string) {
   const ref = useRef<HTMLElement>(null)
 
@@ -25,33 +26,147 @@ function useSyncedEditable(value: string) {
   return ref
 }
 
+// ─── contentEditable sync hook (innerHTML) ────────────────────────────────────
+function useSyncedHTMLEditable(value: string) {
+  const ref = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (el === document.activeElement) return
+    if (el.innerHTML === value) return
+    el.innerHTML = value ?? ''
+  })
+  return ref
+}
+
 // ─── HeadingBlock ─────────────────────────────────────────────────────────────
-function HeadingBlock({ text, onUpdate }: { text: string; onUpdate: (v: string) => void }) {
+function HeadingBlock({
+  type,
+  text,
+  onUpdate,
+  onTypeChange,
+}: {
+  type: string
+  text: string
+  onUpdate: (v: string) => void
+  onTypeChange: (t: string) => void
+}) {
+  const level = type === 'heading' ? 3 : (parseInt(type.replace('heading-', ''), 10) || 3)
   const ref = useSyncedEditable(text)
+  const Tag = `h${level}` as React.ElementType
+
+  const sizeClass: Record<number, string> = {
+    1: 'text-3xl font-extrabold',
+    2: 'text-2xl font-bold',
+    3: 'text-xl font-bold',
+    4: 'text-lg font-semibold',
+  }
+
   return (
-    <h3
-      ref={ref as React.Ref<HTMLHeadingElement>}
-      contentEditable
-      suppressContentEditableWarning
-      data-placeholder="Heading…"
-      onInput={(e) => onUpdate(e.currentTarget.innerText)}
-      className="text-xl font-bold text-white outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem]"
-    />
+    <div className="space-y-1.5">
+      <div className="flex gap-0.5">
+        {([1, 2, 3, 4] as const).map((n) => (
+          <button
+            key={n}
+            type="button"
+            onMouseDown={(e) => { e.preventDefault(); onTypeChange(`heading-${n}`) }}
+            className={`px-1.5 py-0.5 rounded text-[9px] font-bold tracking-wider transition-colors ${
+              level === n
+                ? 'bg-primary text-white'
+                : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'
+            }`}
+          >
+            H{n}
+          </button>
+        ))}
+      </div>
+      <Tag
+        ref={ref}
+        contentEditable
+        suppressContentEditableWarning
+        data-placeholder="Heading…"
+        onInput={(e: React.FormEvent<HTMLElement>) => onUpdate(e.currentTarget.innerText)}
+        className={`${sizeClass[level] ?? 'text-xl font-bold'} text-white outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem]`}
+      />
+    </div>
   )
 }
 
+// ─── Alignment toolbar options (defined outside for stability) ─────────────────
+const alignOpts = [
+  { cmd: 'justifyLeft', Icon: AlignLeft, title: 'Esquerda' },
+  { cmd: 'justifyCenter', Icon: AlignCenter, title: 'Centro' },
+  { cmd: 'justifyRight', Icon: AlignRight, title: 'Direita' },
+  { cmd: 'justifyFull', Icon: AlignJustify, title: 'Justificado' },
+]
+
 // ─── ParagraphBlock ────────────────────────────────────────────────────────────
 function ParagraphBlock({ text, onUpdate }: { text: string; onUpdate: (v: string) => void }) {
-  const ref = useSyncedEditable(text)
+  const ref = useSyncedHTMLEditable(text)
+  const [formats, setFormats] = useState({ bold: false, italic: false })
+
+  const refreshFormats = () => {
+    try {
+      setFormats({
+        bold: document.queryCommandState('bold'),
+        italic: document.queryCommandState('italic'),
+      })
+    } catch { /* ignore */ }
+  }
+
+  const execCmd = (cmd: string) => {
+    ref.current?.focus()
+    document.execCommand(cmd, false)
+    if (ref.current) onUpdate(ref.current.innerHTML)
+    refreshFormats()
+  }
+
   return (
-    <p
-      ref={ref as React.Ref<HTMLParagraphElement>}
-      contentEditable
-      suppressContentEditableWarning
-      data-placeholder="Start typing…"
-      onInput={(e) => onUpdate(e.currentTarget.innerText)}
-      className="text-zinc-400 font-light leading-relaxed text-justify outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem] whitespace-pre-wrap"
-    />
+    <div className="space-y-1.5">
+      <div className="flex items-center gap-0.5 flex-wrap">
+        <button
+          type="button"
+          title="Negrito"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('bold') }}
+          className={`p-1 rounded transition-colors ${formats.bold ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Bold className="w-3 h-3" />
+        </button>
+        <button
+          type="button"
+          title="Itálico"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('italic') }}
+          className={`p-1 rounded transition-colors ${formats.italic ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Italic className="w-3 h-3" />
+        </button>
+        <div className="w-px h-3.5 bg-zinc-800 mx-0.5" />
+        {alignOpts.map(({ cmd, Icon, title }) => (
+          <button
+            key={cmd}
+            type="button"
+            title={title}
+            onMouseDown={(e) => { e.preventDefault(); execCmd(cmd) }}
+            className="p-1 rounded text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800 transition-colors"
+          >
+            <Icon className="w-3 h-3" />
+          </button>
+        ))}
+      </div>
+      <div
+        ref={ref as React.Ref<HTMLDivElement>}
+        contentEditable
+        suppressContentEditableWarning
+        data-placeholder="Start typing…"
+        onInput={(e) => {
+          onUpdate(e.currentTarget.innerHTML)
+          refreshFormats()
+        }}
+        onKeyUp={refreshFormats}
+        onMouseUp={refreshFormats}
+        className="text-zinc-400 font-light leading-relaxed outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem] [&_strong]:font-bold [&_strong]:text-zinc-300 [&_b]:font-bold [&_b]:text-zinc-300 [&_em]:italic [&_i]:italic"
+      />
+    </div>
   )
 }
 
@@ -64,14 +179,19 @@ function ListBlock({
   onUpdate: (items: string[]) => void
 }) {
   const [localItems, setLocalItems] = useState<string[]>(items.length ? items : [''])
+  const skipNextSync = useRef(false)
 
-  // Sync from parent only when not in use
   useEffect(() => {
+    if (skipNextSync.current) {
+      skipNextSync.current = false
+      return
+    }
     setLocalItems(items.length ? items : [''])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(items)])
 
   const update = (next: string[]) => {
+    skipNextSync.current = true
     setLocalItems(next)
     onUpdate(next.filter((s) => s.trim() !== ''))
   }
@@ -134,6 +254,109 @@ function ListBlock({
   )
 }
 
+// ─── GalleryBlock ──────────────────────────────────────────────────────────────
+function GalleryBlock({
+  items,
+  blockIdx,
+  isUploading,
+  onUpdate,
+  onUploadItem,
+}: {
+  items: string[]
+  blockIdx: number
+  isUploading: string | null
+  onUpdate: (items: string[]) => void
+  onUploadItem: (e: React.ChangeEvent<HTMLInputElement>, itemIdx: number) => void
+}) {
+  const [targetIdx, setTargetIdx] = useState<number | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const removeItem = (i: number) => onUpdate(items.filter((_, idx) => idx !== i))
+  const addItem = () => onUpdate([...items, ''])
+  const updateUrl = (i: number, url: string) => {
+    const next = [...items]
+    next[i] = url
+    onUpdate(next)
+  }
+
+  const handleUploadClick = (idx: number) => {
+    setTargetIdx(idx)
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (targetIdx === null) return
+    onUploadItem(e, targetIdx)
+    setTargetIdx(null)
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="grid grid-cols-3 gap-2">
+        {items.map((url, i) => (
+          <div key={i} className="relative group/gitem">
+            <div className="relative aspect-square rounded-lg overflow-hidden border border-zinc-800">
+              {url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={url} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-zinc-700">
+                  <ImageIcon className="w-5 h-5" />
+                </div>
+              )}
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/gitem:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => handleUploadClick(i)}
+                  disabled={isUploading === `gallery.${blockIdx}.${i}`}
+                  className="p-1.5 bg-zinc-900 rounded-lg text-zinc-400 hover:text-white transition-colors"
+                >
+                  {isUploading === `gallery.${blockIdx}.${i}` ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Upload className="w-3 h-3" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeItem(i)}
+                  className="p-1.5 bg-zinc-900 rounded-lg text-zinc-400 hover:text-red-400 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+            {!url && (
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => updateUrl(i, e.target.value)}
+                placeholder="URL…"
+                className="mt-1 w-full bg-zinc-900 border border-zinc-800 rounded text-[10px] px-2 py-1 text-zinc-400 font-mono outline-none focus:border-zinc-600"
+              />
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addItem}
+          className="aspect-square rounded-lg border-2 border-dashed border-zinc-800 hover:border-zinc-600 flex items-center justify-center text-zinc-700 hover:text-zinc-400 transition-colors"
+        >
+          <Plus className="w-5 h-5" />
+        </button>
+      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+      <p className="text-[10px] text-zinc-700">{items.length} image{items.length !== 1 ? 's' : ''} · hover to upload or remove</p>
+    </div>
+  )
+}
+
 // ─── ImageBlock ────────────────────────────────────────────────────────────────
 function ImageBlock({
   image,
@@ -142,12 +365,32 @@ function ImageBlock({
   isUploading,
 }: {
   image: string
-  onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpload?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeUrl: (url: string) => void
   isUploading: boolean
 }) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [urlMode, setUrlMode] = useState(false)
+
+  // URL-only mode when no upload handler provided
+  if (!onUpload) {
+    return (
+      <div className="space-y-2 w-full">
+        {image && (
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-zinc-800">
+            <Image src={image} alt="Block image" fill className="object-cover" sizes="600px" />
+          </div>
+        )}
+        <input
+          type="text"
+          value={image}
+          onChange={(e) => onChangeUrl(e.target.value)}
+          placeholder="https://…"
+          className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-300 outline-none focus:border-zinc-600"
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-2 w-full">
@@ -262,12 +505,22 @@ function VideoBlock({
 }
 
 // ─── Block type label ──────────────────────────────────────────────────────────
-const TYPE_LABELS: Record<string, string> = {
-  heading: 'H',
+const BASE_TYPE_LABELS: Record<string, string> = {
   paragraph: '¶',
   list: '≡',
   image: '⬜',
   video: '▶',
+  gallery: '▦',
+  layout: '▤',
+}
+
+function getTypeLabel(type: string): string {
+  if (type === 'heading') return 'H'
+  if (type.startsWith('heading-')) {
+    const n = type.replace('heading-', '')
+    return `H${n}`
+  }
+  return BASE_TYPE_LABELS[type] ?? '?'
 }
 
 // ─── SortableBlock ─────────────────────────────────────────────────────────────
@@ -281,7 +534,11 @@ interface SortableBlockProps {
   onUpdateListItems: (items: string[]) => void
   onUpdateVideo: (url: string) => void
   onUpdateImage: (url: string) => void
-  onUploadImage: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUploadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUploadGalleryItem?: (e: React.ChangeEvent<HTMLInputElement>, itemIdx: number) => void
+  onUpdateType?: (type: string) => void
+  onMoveToColumn?: () => void
+  moveColumnLabel?: string
 }
 
 export function SortableBlock({
@@ -295,6 +552,10 @@ export function SortableBlock({
   onUpdateVideo,
   onUpdateImage,
   onUploadImage,
+  onUploadGalleryItem,
+  onUpdateType,
+  onMoveToColumn,
+  moveColumnLabel,
 }: SortableBlockProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
@@ -320,14 +581,19 @@ export function SortableBlock({
           <GripVertical className="w-4 h-4" />
         </button>
         <span className="text-[10px] text-zinc-700 font-mono select-none">
-          {TYPE_LABELS[block.type ?? ''] ?? '?'}
+          {getTypeLabel(block.type ?? '')}
         </span>
       </div>
 
       {/* Block content */}
       <div className="flex-1 min-w-0 py-1">
-        {block.type === 'heading' && (
-          <HeadingBlock text={block.text ?? ''} onUpdate={onUpdateText} />
+        {(block.type === 'heading' || block.type?.startsWith('heading-')) && (
+          <HeadingBlock
+            type={block.type}
+            text={block.text ?? ''}
+            onUpdate={onUpdateText}
+            onTypeChange={(t) => onUpdateType?.(t)}
+          />
         )}
         {block.type === 'paragraph' && (
           <ParagraphBlock text={block.text ?? ''} onUpdate={onUpdateText} />
@@ -346,19 +612,43 @@ export function SortableBlock({
         {block.type === 'video' && (
           <VideoBlock video={block.video ?? ''} onChangeUrl={onUpdateVideo} />
         )}
-        {!block.type && (
+        {block.type === 'gallery' && (
+          <GalleryBlock
+            items={block.items ?? []}
+            blockIdx={index}
+            isUploading={isUploading}
+            onUpdate={onUpdateListItems}
+            onUploadItem={onUploadGalleryItem ?? (() => {})}
+          />
+        )}
+        {(!block.type || (!['paragraph', 'list', 'image', 'video', 'gallery'].includes(block.type) && !block.type.startsWith('heading'))) && block.type !== 'layout' && (
           <p className="text-zinc-700 text-sm italic">Unknown block type</p>
         )}
       </div>
 
-      {/* Delete */}
-      <button
-        type="button"
-        onClick={onRemove}
-        className="mt-1 opacity-0 group-hover/block:opacity-100 p-1.5 text-zinc-700 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all shrink-0"
-      >
-        <Trash2 className="w-3.5 h-3.5" />
-      </button>
+      {/* Controls */}
+      <div className="flex flex-col gap-1 mt-1 shrink-0">
+        {onMoveToColumn && (
+          <button
+            type="button"
+            onClick={onMoveToColumn}
+            title={moveColumnLabel}
+            className="opacity-0 group-hover/block:opacity-100 p-1.5 text-zinc-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+          >
+            <ArrowRightLeft className="w-3 h-3" />
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onRemove}
+          className="opacity-0 group-hover/block:opacity-100 p-1.5 text-zinc-700 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+      </div>
     </div>
   )
 }
+
+// ─── ColumnIcon export (used in section-editor) ────────────────────────────────
+export { LayoutGrid }

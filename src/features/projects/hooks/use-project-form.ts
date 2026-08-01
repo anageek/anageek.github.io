@@ -4,34 +4,93 @@ import { useState } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import { projectFormSchema, type ProjectFormValues } from '@/features/projects/types/project'
+import { projectFormSchema, type ProjectFormValues, type RawBlock, type LayoutChildren } from '@/features/projects/types/project'
 
-export type EditorTab = 'overview' | 'content' | 'section'
+export type EditorTab = 'overview' | 'content'
+
+const genKey = () => Math.random().toString(36).slice(2, 9)
 
 export interface DescBlock {
-  type?: string
+  _key: string
+  type: string
   text?: string
   image?: string
   video?: string
   items?: string[]
+  // Layout block specific:
+  layoutColumns?: number
+  layoutBreakpoint?: string
+  children?: DescBlock[][]
 }
 
-export interface SectionDraft {
+export interface SectionState {
+  _key: string
   title: string
   image: string
   video: string
   blocks: DescBlock[]
+  isOpen: boolean
+  showSettings: boolean
 }
+
+// ── Converters ────────────────────────────────────────────────────────────────
+
+function rawBlockToDesc(b: RawBlock): DescBlock {
+  const base: DescBlock = {
+    _key: genKey(),
+    type: b.type,
+    text: b.text ?? '',
+    image: b.image ?? '',
+    video: b.video ?? '',
+    items: b.items ?? [],
+  }
+  if (b.type === 'layout' && b.children) {
+    base.layoutColumns = b.children.columns
+    base.layoutBreakpoint = b.children.breakpoint
+    base.children = b.children.content.map((col) => col.map(rawBlockToDesc))
+  }
+  return base
+}
+
+function descBlockToRaw(b: DescBlock): RawBlock {
+  if (b.type === 'layout') {
+    return {
+      type: 'layout',
+      children: {
+        columns: b.layoutColumns ?? 2,
+        breakpoint: b.layoutBreakpoint ?? 'md',
+        content: (b.children ?? []).map((col) => col.map(descBlockToRaw)),
+      },
+    }
+  }
+  return {
+    type: b.type,
+    text: b.text || undefined,
+    image: b.image || undefined,
+    video: b.video || undefined,
+    items: b.items?.filter((s) => s.trim() !== '') || undefined,
+  }
+}
+
+function initSections(formSections: ProjectFormValues['sections']): SectionState[] {
+  return formSections.map((s, idx) => ({
+    _key: genKey(),
+    title: s.title,
+    image: s.image ?? '',
+    video: s.video ?? '',
+    isOpen: idx === 0,
+    showSettings: false,
+    blocks: (s.blocks ?? []).map(rawBlockToDesc),
+  }))
+}
+
+// ── Hook ──────────────────────────────────────────────────────────────────────
 
 export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id?: number }) {
   const [activeTab, setActiveTab] = useState<EditorTab>('overview')
-  const [sectionDraft, setSectionDraft] = useState<SectionDraft>({
-    title: '',
-    image: '',
-    video: '',
-    blocks: [],
-  })
-  const [editingIndex, setEditingIndex] = useState<number | null>(null)
+  const [sectionsState, setSectionsState] = useState<SectionState[]>(() =>
+    initSections(initialValues?.sections ?? []),
+  )
   const [isUploading, setIsUploading] = useState<string | null>(null)
 
   const form = useForm<ProjectFormValues>({
@@ -46,12 +105,10 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     },
   })
 
-  const { control, getValues, setValue } = form
-
+  const { control, setValue } = form
   const imageFieldArray = useFieldArray({ control, name: 'images' as never })
-  const sectionFieldArray = useFieldArray({ control, name: 'sections' })
 
-  // ── Upload ────────────────────────────────────────────────────────────────
+  // ── Upload helpers ────────────────────────────────────────────────────────
 
   const uploadFile = async (file: File): Promise<string | null> => {
     if (file.size > 10 * 1024 * 1024) {
@@ -86,152 +143,295 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     setIsUploading(key)
     const url = await uploadFile(file)
     if (url) {
-      setValue(key as Parameters<typeof setValue>[0], url)
+      setValue(key as Parameters<typeof setValue>[0], url as never)
       toast.success('Upload concluído!')
     }
     setIsUploading(null)
+  }
+
+  const uploadSectionImage = async (sIdx: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const key = `s${sIdx}.image`
+    setIsUploading(key)
+    const url = await uploadFile(file)
+    if (url) {
+      updateSectionMeta(sIdx, { image: url })
+      toast.success('Upload concluído!')
+    }
+    setIsUploading(null)
+    e.target.value = ''
+  }
+
+  const uploadBlockImage = async (sIdx: number, bIdx: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const key = `desc.image.${bIdx}`
+    setIsUploading(key)
+    const url = await uploadFile(file)
+    if (url) {
+      updateBlock(sIdx, bIdx, { image: url })
+      toast.success('Upload concluído!')
+    }
+    setIsUploading(null)
+    e.target.value = ''
+  }
+
+  const uploadGalleryItem = async (
+    sIdx: number,
+    bIdx: number,
+    itemIdx: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const key = `s${sIdx}.b${bIdx}.gallery.${itemIdx}`
+    setIsUploading(key)
+    const url = await uploadFile(file)
+    if (url) {
+      setSectionsState((prev) => {
+        const sections = [...prev]
+        const blocks = [...sections[sIdx].blocks]
+        const items = [...(blocks[bIdx].items ?? [])]
+        if (itemIdx >= items.length) items.push(url)
+        else items[itemIdx] = url
+        blocks[bIdx] = { ...blocks[bIdx], items }
+        sections[sIdx] = { ...sections[sIdx], blocks }
+        return sections
+      })
+      toast.success('Upload concluído!')
+    }
+    setIsUploading(null)
+    e.target.value = ''
+  }
+
+  const uploadLayoutChildImage = async (
+    sIdx: number,
+    bIdx: number,
+    colIdx: number,
+    childIdx: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const key = `desc.image.${childIdx}`
+    setIsUploading(key)
+    const url = await uploadFile(file)
+    if (url) {
+      updateLayoutChild(sIdx, bIdx, colIdx, childIdx, { image: url })
+      toast.success('Upload concluído!')
+    }
+    setIsUploading(null)
+    e.target.value = ''
   }
 
   // ── Section management ────────────────────────────────────────────────────
 
-  const openSection = (index: number | null) => {
-    if (index !== null) {
-      const secs = getValues('sections') || []
-      const sec = secs[index]
-      setSectionDraft({
-        title: sec.title ?? '',
-        image: sec.image ?? '',
-        video: sec.video ?? '',
-        blocks: (sec.blocks ?? []).map((b) => ({
-          type: b.type ?? '',
-          text: b.text ?? '',
-          image: b.image ?? '',
-          video: b.video ?? '',
-          items: b.items ?? [],
-        })),
-      })
-    } else {
-      setSectionDraft({ title: '', image: '', video: '', blocks: [] })
-    }
-    setEditingIndex(index)
-    setActiveTab('section')
-  }
-
-  const saveSection = () => {
-    if (!sectionDraft.title.trim()) {
-      toast.error('Título da seção é obrigatório')
-      return
-    }
-    const sectionValue: ProjectFormValues['sections'][number] = {
-      title: sectionDraft.title,
-      image: sectionDraft.image,
-      video: sectionDraft.video,
-      blocks: sectionDraft.blocks.map((b) => ({
-        type: b.type || 'paragraph',
-        text: b.text ?? '',
-        image: b.image ?? '',
-        video: b.video ?? '',
-        items: b.items,
-      })),
-    }
-    if (editingIndex !== null) {
-      const secs = [...(getValues('sections') || [])]
-      secs[editingIndex] = sectionValue
-      setValue('sections', secs)
-    } else {
-      sectionFieldArray.append(sectionValue)
-    }
-    setActiveTab('content')
-  }
-
-  const addDescBlock = (type: string = '', atIndex?: number) =>
-    setSectionDraft((p) => {
-      const newBlock = { type, text: '', image: '', video: '', items: [] }
-      if (atIndex !== undefined) {
-        const blocks = [...p.blocks]
-        blocks.splice(atIndex, 0, newBlock)
-        return { ...p, blocks }
-      }
-      return { ...p, blocks: [...p.blocks, newBlock] }
-    })
-
-  const removeDescBlock = (i: number) =>
-    setSectionDraft((p) => ({
+  const addSection = () =>
+    setSectionsState((p) => [
       ...p,
-      blocks: p.blocks.filter((_, idx) => idx !== i),
-    }))
+      {
+        _key: genKey(),
+        title: 'New Section',
+        image: '',
+        video: '',
+        blocks: [],
+        isOpen: true,
+        showSettings: false,
+      },
+    ])
 
-  const updateDescBlock = (
-    i: number,
-    field: 'type' | 'text' | 'image' | 'video',
-    val: string,
-  ) =>
-    setSectionDraft((p) => {
-      const blocks = [...p.blocks]
-      blocks[i] = { ...blocks[i], [field]: val }
-      return { ...p, blocks }
-    })
+  const removeSection = (idx: number) =>
+    setSectionsState((p) => p.filter((_, i) => i !== idx))
 
-  const updateDescListItems = (i: number, items: string[]) =>
-    setSectionDraft((p) => {
-      const blocks = [...p.blocks]
-      blocks[i] = { ...blocks[i], items }
-      return { ...p, blocks }
-    })
+  const reorderSections = (newSections: SectionState[]) => setSectionsState(newSections)
 
-  const reorderDescBlocks = (blocks: DescBlock[]) =>
-    setSectionDraft((p) => ({ ...p, blocks }))
-
-  const uploadSectionCoverImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setIsUploading('section.image')
-    const url = await uploadFile(file)
-    if (url) {
-      setSectionDraft((p) => ({ ...p, image: url }))
-      toast.success('Upload concluído!')
-    }
-    setIsUploading(null)
-    e.target.value = ''
-  }
-
-  const uploadDescBlockImage = async (
-    e: React.ChangeEvent<HTMLInputElement>,
+  const updateSectionMeta = (
     idx: number,
-  ) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setIsUploading(`desc.image.${idx}`)
-    const url = await uploadFile(file)
-    if (url) {
-      updateDescBlock(idx, 'image', url)
-      toast.success('Upload concluído!')
-    }
-    setIsUploading(null)
-    e.target.value = ''
+    meta: Partial<Pick<SectionState, 'title' | 'image' | 'video'>>,
+  ) =>
+    setSectionsState((p) => {
+      const s = [...p]
+      s[idx] = { ...s[idx], ...meta }
+      return s
+    })
+
+  const toggleSection = (idx: number) =>
+    setSectionsState((p) => {
+      const s = [...p]
+      s[idx] = { ...s[idx], isOpen: !s[idx].isOpen }
+      return s
+    })
+
+  const toggleSectionSettings = (idx: number) =>
+    setSectionsState((p) => {
+      const s = [...p]
+      s[idx] = { ...s[idx], showSettings: !s[idx].showSettings }
+      return s
+    })
+
+  // ── Block management ──────────────────────────────────────────────────────
+
+  const addBlock = (sIdx: number, type: string, atIndex?: number) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      const newBlock: DescBlock = {
+        _key: genKey(),
+        type,
+        text: '',
+        image: '',
+        video: '',
+        items: [],
+        ...(type === 'layout'
+          ? { layoutColumns: 2, layoutBreakpoint: 'md', children: [[], []] }
+          : {}),
+      }
+      if (atIndex !== undefined) blocks.splice(atIndex, 0, newBlock)
+      else blocks.push(newBlock)
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  const removeBlock = (sIdx: number, bIdx: number) =>
+    setSectionsState((p) => {
+      const s = [...p]
+      s[sIdx] = { ...s[sIdx], blocks: s[sIdx].blocks.filter((_, i) => i !== bIdx) }
+      return s
+    })
+
+  const updateBlock = (sIdx: number, bIdx: number, changes: Partial<DescBlock>) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      blocks[bIdx] = { ...blocks[bIdx], ...changes }
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  const reorderBlocks = (sIdx: number, newBlocks: DescBlock[]) =>
+    setSectionsState((p) => {
+      const s = [...p]
+      s[sIdx] = { ...s[sIdx], blocks: newBlocks }
+      return s
+    })
+
+  // ── Layout block management ───────────────────────────────────────────────
+
+  const updateLayoutConfig = (sIdx: number, bIdx: number, cols: number, bp: string) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      const block = { ...blocks[bIdx] }
+      const oldChildren = block.children ?? []
+      const newChildren = Array.from({ length: cols }, (_, i) => oldChildren[i] ?? [])
+      blocks[bIdx] = { ...block, layoutColumns: cols, layoutBreakpoint: bp, children: newChildren }
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  const addLayoutChild = (sIdx: number, bIdx: number, colIdx: number, type: string, atIndex?: number) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      const block = { ...blocks[bIdx] }
+      const children = (block.children ?? []).map((c) => [...c])
+      const newBlock: DescBlock = { _key: genKey(), type, text: '', image: '', video: '', items: [] }
+      if (atIndex !== undefined) children[colIdx].splice(atIndex, 0, newBlock)
+      else children[colIdx].push(newBlock)
+      blocks[bIdx] = { ...block, children }
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  const removeLayoutChild = (sIdx: number, bIdx: number, colIdx: number, childIdx: number) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      const block = { ...blocks[bIdx] }
+      const children = (block.children ?? []).map((c) => [...c])
+      children[colIdx] = children[colIdx].filter((_, i) => i !== childIdx)
+      blocks[bIdx] = { ...block, children }
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  const updateLayoutChild = (
+    sIdx: number,
+    bIdx: number,
+    colIdx: number,
+    childIdx: number,
+    changes: Partial<DescBlock>,
+  ) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      const block = { ...blocks[bIdx] }
+      const children = (block.children ?? []).map((c) => [...c])
+      children[colIdx][childIdx] = { ...children[colIdx][childIdx], ...changes }
+      blocks[bIdx] = { ...block, children }
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  const reorderLayoutColumn = (sIdx: number, bIdx: number, colIdx: number, newColBlocks: DescBlock[]) =>
+    setSectionsState((p) => {
+      const sections = [...p]
+      const blocks = [...sections[sIdx].blocks]
+      const block = { ...blocks[bIdx] }
+      const children = (block.children ?? []).map((c) => [...c])
+      children[colIdx] = newColBlocks
+      blocks[bIdx] = { ...block, children }
+      sections[sIdx] = { ...sections[sIdx], blocks }
+      return sections
+    })
+
+  // ── Sync to form before save ──────────────────────────────────────────────
+
+  const syncSectionsToForm = () => {
+    setValue(
+      'sections',
+      sectionsState.map((s) => ({
+        title: s.title,
+        image: s.image,
+        video: s.video,
+        blocks: s.blocks.map(descBlockToRaw),
+      })),
+    )
   }
 
   return {
     form,
     activeTab,
     setActiveTab,
-    sectionDraft,
-    setSectionDraft,
-    editingIndex,
+    sectionsState,
     isUploading,
     imageFieldArray,
-    sectionFieldArray,
-    // Section CRUD
-    openSection,
-    saveSection,
-    addDescBlock,
-    removeDescBlock,
-    updateDescBlock,
-    updateDescListItems,
-    reorderDescBlocks,
-    // Upload
+    // Section management
+    addSection,
+    removeSection,
+    reorderSections,
+    updateSectionMeta,
+    toggleSection,
+    toggleSectionSettings,
+    // Block management
+    addBlock,
+    removeBlock,
+    updateBlock,
+    reorderBlocks,
+    // Layout block management
+    updateLayoutConfig,
+    addLayoutChild,
+    removeLayoutChild,
+    updateLayoutChild,
+    reorderLayoutColumn,
+    // Uploads
     handleFieldUpload,
-    uploadSectionCoverImage,
-    uploadDescBlockImage,
+    uploadSectionImage,
+    uploadBlockImage,
+    uploadGalleryItem,
+    uploadLayoutChildImage,
+    // Sync
+    syncSectionsToForm,
   }
 }

@@ -11,4 +11,4 @@ export { default as FeaturedProjectsSection } from './components/featured-projec
 export { ProjectTable } from './components/project-table'
 export { ProjectForm } from './components/project-form'
 export { useProjectForm } from './hooks/use-project-form'
-export type { EditorTab, SectionDraft } from './hooks/use-project-form'
+export type { EditorTab, SectionState, DescBlock } from './hooks/use-project-form'

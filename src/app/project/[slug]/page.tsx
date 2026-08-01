@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getProjectBySlug, getPublicProjects } from '@/features/projects'
+import { getPublicCategories } from '@/features/categories'
 import { ProjectDetail } from '@/features/projects'
 import { notFound } from 'next/navigation'
 
@@ -21,23 +22,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params
-  const project = await getProjectBySlug(slug)
+
+  const [project, allProjects, allCategories] = await Promise.all([
+    getProjectBySlug(slug),
+    getPublicProjects(),
+    getPublicCategories(),
+  ])
 
   if (!project) notFound()
 
-  // Get all visible projects for prev/next navigation
-  const allProjects = await getPublicProjects()
-  const currentIndex = allProjects.findIndex(p => p.slug === slug)
-  const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null
-  const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null
+  const simpleProjects = allProjects.map((p) => ({
+    slug: p.slug ?? '',
+    title: p.title,
+    category: p.category
+      ? { slug: p.category.slug, label: p.category.label }
+      : null,
+  })).filter((p) => p.slug)
 
   return (
     <ProjectDetail
       project={project}
-      prevProjectSlug={prevProject?.slug ?? null}
-      nextProjectSlug={nextProject?.slug ?? null}
-      currentIndex={currentIndex}
-      totalProjects={allProjects.length}
+      allProjects={simpleProjects}
+      allCategories={allCategories.map((c) => ({ slug: c.slug, label: c.label }))}
     />
   )
 }

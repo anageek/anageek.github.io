@@ -57,7 +57,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Demo Reel — Video scales up on scroll ────────────────── */}
-      <section id="showreel" className="relative bg-black py-20">
+      <section id="showreel" className="relative bg-black py-20 overflow-hidden">
         <ScrollScaleVideo src={heroVideoUrl || defaultVideo} />
       </section>
 

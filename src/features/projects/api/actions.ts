@@ -66,13 +66,13 @@ export const createProject = withAuth(async (data: unknown) => {
           image: block.image || null,
           video: block.video || null,
           items: block.items || null,
+          children: block.children ? JSON.stringify(block.children) : null,
           sortOrder: bIdx,
         }))
       ).run()
     }
   }
 
-  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const, data: newProject }
 })
 
@@ -121,7 +121,6 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
   }
 
   // Replace sections + blocks
-  // First get existing section IDs to delete their blocks
   const existingSections = db.select().from(projectSections).where(eq(projectSections.projectId, id)).all()
   for (const sec of existingSections) {
     db.delete(sectionBlocks).where(eq(sectionBlocks.sectionId, sec.id)).run()
@@ -146,18 +145,17 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
           image: block.image || null,
           video: block.video || null,
           items: block.items || null,
+          children: block.children ? JSON.stringify(block.children) : null,
           sortOrder: bIdx,
         }))
       ).run()
     }
   }
 
-  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const }
 })
 
 export const deleteProject = withAuth(async (id: number) => {
-  // Delete blocks for each section first
   const sections = db.select().from(projectSections).where(eq(projectSections.projectId, id)).all()
   for (const sec of sections) {
     db.delete(sectionBlocks).where(eq(sectionBlocks.sectionId, sec.id)).run()
@@ -165,12 +163,10 @@ export const deleteProject = withAuth(async (id: number) => {
   db.delete(projectSections).where(eq(projectSections.projectId, id)).run()
   db.delete(projectImages).where(eq(projectImages.projectId, id)).run()
   db.delete(projects).where(eq(projects.id, id)).run()
-  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const }
 })
 
 export const toggleProjectField = withAuth(async (id: number, field: 'visible' | 'featured', value: boolean) => {
   db.update(projects).set({ [field]: value, updatedAt: new Date().toISOString() }).where(eq(projects.id, id)).run()
-  // revalidateTag removed: unstable_cache no longer used
   return { success: true as const }
 })

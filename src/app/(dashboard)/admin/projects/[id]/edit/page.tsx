@@ -52,6 +52,9 @@ export default async function EditProjectPage({ params }: Props) {
         image: b.image ?? '',
         video: b.video ?? '',
         items: b.items ?? undefined,
+        children: b.children
+          ? (() => { try { return JSON.parse(b.children as string) } catch { return null } })()
+          : null,
       })),
     })),
   }
