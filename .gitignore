@@ -38,8 +38,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# SQLite database
-data/portfolio.db
+# SQLite WAL/SHM temp files (main .db é commitado)
 data/portfolio.db-wal
 data/portfolio.db-shm
 

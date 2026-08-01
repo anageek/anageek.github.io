@@ -7,5 +7,7 @@ export const projectSections = sqliteTable('project_sections', {
   title: text('title').notNull(),
   image: text('image'),
   video: text('video'),
+  columns: integer('columns').default(1).notNull(),
+  breakpoint: text('breakpoint').default('md').notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
 })

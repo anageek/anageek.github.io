@@ -3,14 +3,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video } from 'lucide-react'
+import { GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video, LayoutGrid, ArrowRightLeft } from 'lucide-react'
 import Image from 'next/image'
 import { toYouTubeEmbedUrl } from '@/lib/utils'
 import type { DescBlock } from '@/features/projects/hooks/use-project-form'
 
 // ─── contentEditable sync hook ────────────────────────────────────────────────
-// Sets DOM content only when the element is NOT focused (avoids cursor jump).
-// Runs after every render, guarded by two conditions.
 function useSyncedEditable(value: string) {
   const ref = useRef<HTMLElement>(null)
 
@@ -64,14 +62,19 @@ function ListBlock({
   onUpdate: (items: string[]) => void
 }) {
   const [localItems, setLocalItems] = useState<string[]>(items.length ? items : [''])
+  const skipNextSync = useRef(false)
 
-  // Sync from parent only when not in use
   useEffect(() => {
+    if (skipNextSync.current) {
+      skipNextSync.current = false
+      return
+    }
     setLocalItems(items.length ? items : [''])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(items)])
 
   const update = (next: string[]) => {
+    skipNextSync.current = true
     setLocalItems(next)
     onUpdate(next.filter((s) => s.trim() !== ''))
   }
@@ -131,6 +134,109 @@ function ListBlock({
         </button>
       </li>
     </ul>
+  )
+}
+
+// ─── GalleryBlock ──────────────────────────────────────────────────────────────
+function GalleryBlock({
+  items,
+  blockIdx,
+  isUploading,
+  onUpdate,
+  onUploadItem,
+}: {
+  items: string[]
+  blockIdx: number
+  isUploading: string | null
+  onUpdate: (items: string[]) => void
+  onUploadItem: (e: React.ChangeEvent<HTMLInputElement>, itemIdx: number) => void
+}) {
+  const [targetIdx, setTargetIdx] = useState<number | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const removeItem = (i: number) => onUpdate(items.filter((_, idx) => idx !== i))
+  const addItem = () => onUpdate([...items, ''])
+  const updateUrl = (i: number, url: string) => {
+    const next = [...items]
+    next[i] = url
+    onUpdate(next)
+  }
+
+  const handleUploadClick = (idx: number) => {
+    setTargetIdx(idx)
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (targetIdx === null) return
+    onUploadItem(e, targetIdx)
+    setTargetIdx(null)
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="grid grid-cols-3 gap-2">
+        {items.map((url, i) => (
+          <div key={i} className="relative group/gitem">
+            <div className="relative aspect-square rounded-lg overflow-hidden border border-zinc-800">
+              {url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={url} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-zinc-700">
+                  <ImageIcon className="w-5 h-5" />
+                </div>
+              )}
+              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/gitem:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => handleUploadClick(i)}
+                  disabled={isUploading === `gallery.${blockIdx}.${i}`}
+                  className="p-1.5 bg-zinc-900 rounded-lg text-zinc-400 hover:text-white transition-colors"
+                >
+                  {isUploading === `gallery.${blockIdx}.${i}` ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Upload className="w-3 h-3" />
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeItem(i)}
+                  className="p-1.5 bg-zinc-900 rounded-lg text-zinc-400 hover:text-red-400 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+            {!url && (
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => updateUrl(i, e.target.value)}
+                placeholder="URL…"
+                className="mt-1 w-full bg-zinc-900 border border-zinc-800 rounded text-[10px] px-2 py-1 text-zinc-400 font-mono outline-none focus:border-zinc-600"
+              />
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addItem}
+          className="aspect-square rounded-lg border-2 border-dashed border-zinc-800 hover:border-zinc-600 flex items-center justify-center text-zinc-700 hover:text-zinc-400 transition-colors"
+        >
+          <Plus className="w-5 h-5" />
+        </button>
+      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+      <p className="text-[10px] text-zinc-700">{items.length} image{items.length !== 1 ? 's' : ''} · hover to upload or remove</p>
+    </div>
   )
 }
 
@@ -268,6 +374,7 @@ const TYPE_LABELS: Record<string, string> = {
   list: '≡',
   image: '⬜',
   video: '▶',
+  gallery: '▦',
 }
 
 // ─── SortableBlock ─────────────────────────────────────────────────────────────
@@ -282,6 +389,9 @@ interface SortableBlockProps {
   onUpdateVideo: (url: string) => void
   onUpdateImage: (url: string) => void
   onUploadImage: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUploadGalleryItem?: (e: React.ChangeEvent<HTMLInputElement>, itemIdx: number) => void
+  onMoveToColumn?: () => void
+  moveColumnLabel?: string
 }
 
 export function SortableBlock({
@@ -295,6 +405,9 @@ export function SortableBlock({
   onUpdateVideo,
   onUpdateImage,
   onUploadImage,
+  onUploadGalleryItem,
+  onMoveToColumn,
+  moveColumnLabel,
 }: SortableBlockProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
 
@@ -346,19 +459,43 @@ export function SortableBlock({
         {block.type === 'video' && (
           <VideoBlock video={block.video ?? ''} onChangeUrl={onUpdateVideo} />
         )}
+        {block.type === 'gallery' && (
+          <GalleryBlock
+            items={block.items ?? []}
+            blockIdx={index}
+            isUploading={isUploading}
+            onUpdate={onUpdateListItems}
+            onUploadItem={onUploadGalleryItem ?? (() => {})}
+          />
+        )}
         {!block.type && (
           <p className="text-zinc-700 text-sm italic">Unknown block type</p>
         )}
       </div>
 
-      {/* Delete */}
-      <button
-        type="button"
-        onClick={onRemove}
-        className="mt-1 opacity-0 group-hover/block:opacity-100 p-1.5 text-zinc-700 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all shrink-0"
-      >
-        <Trash2 className="w-3.5 h-3.5" />
-      </button>
+      {/* Controls */}
+      <div className="flex flex-col gap-1 mt-1 shrink-0">
+        {onMoveToColumn && (
+          <button
+            type="button"
+            onClick={onMoveToColumn}
+            title={moveColumnLabel}
+            className="opacity-0 group-hover/block:opacity-100 p-1.5 text-zinc-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+          >
+            <ArrowRightLeft className="w-3 h-3" />
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onRemove}
+          className="opacity-0 group-hover/block:opacity-100 p-1.5 text-zinc-700 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+      </div>
     </div>
   )
 }
+
+// ─── ColumnIcon export (used in section-editor) ────────────────────────────────
+export { LayoutGrid }

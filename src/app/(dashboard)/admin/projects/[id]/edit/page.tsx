@@ -46,12 +46,15 @@ export default async function EditProjectPage({ params }: Props) {
       title: s.title,
       image: s.image ?? '',
       video: s.video ?? '',
+      columns: s.columns ?? 1,
+      breakpoint: s.breakpoint ?? 'md',
       blocks: (s.blocks ?? []).map((b) => ({
         type: b.type,
         text: b.text ?? '',
         image: b.image ?? '',
         video: b.video ?? '',
         items: b.items ?? undefined,
+        columnIndex: b.columnIndex ?? 0,
       })),
     })),
   }

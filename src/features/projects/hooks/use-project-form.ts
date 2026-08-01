@@ -14,13 +14,22 @@ export interface DescBlock {
   image?: string
   video?: string
   items?: string[]
+  columnIndex?: number
 }
 
 export interface SectionDraft {
   title: string
   image: string
   video: string
+  columns: number
+  breakpoint: string
   blocks: DescBlock[]
+}
+
+function arrayMove<T>(arr: T[], from: number, to: number): T[] {
+  const result = [...arr]
+  result.splice(to, 0, result.splice(from, 1)[0])
+  return result
 }
 
 export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id?: number }) {
@@ -29,6 +38,8 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     title: '',
     image: '',
     video: '',
+    columns: 1,
+    breakpoint: 'md',
     blocks: [],
   })
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
@@ -102,16 +113,19 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
         title: sec.title ?? '',
         image: sec.image ?? '',
         video: sec.video ?? '',
+        columns: sec.columns ?? 1,
+        breakpoint: sec.breakpoint ?? 'md',
         blocks: (sec.blocks ?? []).map((b) => ({
           type: b.type ?? '',
           text: b.text ?? '',
           image: b.image ?? '',
           video: b.video ?? '',
           items: b.items ?? [],
+          columnIndex: b.columnIndex ?? 0,
         })),
       })
     } else {
-      setSectionDraft({ title: '', image: '', video: '', blocks: [] })
+      setSectionDraft({ title: '', image: '', video: '', columns: 1, breakpoint: 'md', blocks: [] })
     }
     setEditingIndex(index)
     setActiveTab('section')
@@ -126,12 +140,15 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
       title: sectionDraft.title,
       image: sectionDraft.image,
       video: sectionDraft.video,
+      columns: sectionDraft.columns,
+      breakpoint: sectionDraft.breakpoint,
       blocks: sectionDraft.blocks.map((b) => ({
         type: b.type || 'paragraph',
         text: b.text ?? '',
         image: b.image ?? '',
         video: b.video ?? '',
         items: b.items,
+        columnIndex: b.columnIndex ?? 0,
       })),
     }
     if (editingIndex !== null) {
@@ -144,9 +161,9 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     setActiveTab('content')
   }
 
-  const addDescBlock = (type: string = '', atIndex?: number) =>
+  const addDescBlock = (type: string = '', atIndex?: number, columnIndex: number = 0) =>
     setSectionDraft((p) => {
-      const newBlock = { type, text: '', image: '', video: '', items: [] }
+      const newBlock: DescBlock = { type, text: '', image: '', video: '', items: [], columnIndex }
       if (atIndex !== undefined) {
         const blocks = [...p.blocks]
         blocks.splice(atIndex, 0, newBlock)
@@ -182,6 +199,38 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
   const reorderDescBlocks = (blocks: DescBlock[]) =>
     setSectionDraft((p) => ({ ...p, blocks }))
 
+  // ── Column management ─────────────────────────────────────────────────────
+
+  const updateSectionColumns = (cols: number) =>
+    setSectionDraft((p) => ({
+      ...p,
+      columns: cols,
+      blocks: cols === 1 ? p.blocks.map((b) => ({ ...b, columnIndex: 0 })) : p.blocks,
+    }))
+
+  const updateSectionBreakpoint = (bp: string) =>
+    setSectionDraft((p) => ({ ...p, breakpoint: bp }))
+
+  const moveBlockToColumn = (mainIdx: number, col: number) =>
+    setSectionDraft((p) => {
+      const blocks = [...p.blocks]
+      blocks[mainIdx] = { ...blocks[mainIdx], columnIndex: col }
+      return { ...p, blocks }
+    })
+
+  const reorderColumnBlocks = (column: number, oldColIdx: number, newColIdx: number) =>
+    setSectionDraft((p) => {
+      const colItems = p.blocks.map((b, i) => ({ b, i })).filter(({ b }) => (b.columnIndex ?? 0) === column)
+      const reordered = arrayMove(colItems, oldColIdx, newColIdx)
+      const result = [...p.blocks]
+      reordered.forEach((item, newColPos) => {
+        result[colItems[newColPos].i] = item.b
+      })
+      return { ...p, blocks: result }
+    })
+
+  // ── Image uploads ─────────────────────────────────────────────────────────
+
   const uploadSectionCoverImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -211,6 +260,30 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     e.target.value = ''
   }
 
+  const uploadGalleryItem = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    blockIdx: number,
+    itemIdx: number,
+  ) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setIsUploading(`gallery.${blockIdx}.${itemIdx}`)
+    const url = await uploadFile(file)
+    if (url) {
+      setSectionDraft((p) => {
+        const blocks = [...p.blocks]
+        const currentItems = [...(blocks[blockIdx].items ?? [])]
+        if (itemIdx >= currentItems.length) currentItems.push(url)
+        else currentItems[itemIdx] = url
+        blocks[blockIdx] = { ...blocks[blockIdx], items: currentItems }
+        return { ...p, blocks }
+      })
+      toast.success('Upload concluído!')
+    }
+    setIsUploading(null)
+    e.target.value = ''
+  }
+
   return {
     form,
     activeTab,
@@ -229,9 +302,15 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     updateDescBlock,
     updateDescListItems,
     reorderDescBlocks,
+    // Column management
+    updateSectionColumns,
+    updateSectionBreakpoint,
+    moveBlockToColumn,
+    reorderColumnBlocks,
     // Upload
     handleFieldUpload,
     uploadSectionCoverImage,
     uploadDescBlockImage,
+    uploadGalleryItem,
   }
 }

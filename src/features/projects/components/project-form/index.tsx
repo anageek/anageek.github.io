@@ -40,9 +40,14 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
     updateDescBlock,
     updateDescListItems,
     reorderDescBlocks,
+    updateSectionColumns,
+    updateSectionBreakpoint,
+    moveBlockToColumn,
+    reorderColumnBlocks,
     handleFieldUpload,
     uploadSectionCoverImage,
     uploadDescBlockImage,
+    uploadGalleryItem,
   } = useProjectForm(project)
 
   const { isDirty } = form.formState
@@ -218,12 +223,17 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
             onTitleChange={(title) => setSectionDraft((p) => ({ ...p, title }))}
             onImageChange={(image) => setSectionDraft((p) => ({ ...p, image }))}
             onVideoChange={(video) => setSectionDraft((p) => ({ ...p, video }))}
+            onColumnsChange={updateSectionColumns}
+            onBreakpointChange={updateSectionBreakpoint}
             onAddDescBlock={addDescBlock}
             onRemoveDescBlock={removeDescBlock}
             onUpdateDescBlock={updateDescBlock}
             onUpdateDescListItems={updateDescListItems}
+            onMoveBlockToColumn={moveBlockToColumn}
+            onReorderColumnBlocks={reorderColumnBlocks}
             onUploadSectionImage={uploadSectionCoverImage}
             onUploadDescBlockImage={uploadDescBlockImage}
+            onUploadGalleryItem={uploadGalleryItem}
             onReorderBlocks={reorderDescBlocks}
           />
         )}

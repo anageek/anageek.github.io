@@ -33,16 +33,19 @@ export default async function NewProjectPage({ searchParams }: Props) {
         visible: source.visible,
         featured: false,
         images: (source.images ?? []).map((img: { url: string }) => img.url),
-        sections: (source.sections ?? []).map((s: { title: string; image?: string | null; video?: string | null; blocks: Array<{ type: string; text?: string | null; image?: string | null; video?: string | null; items?: string[] | null }> }) => ({
+        sections: (source.sections ?? []).map((s: { title: string; image?: string | null; video?: string | null; columns?: number | null; breakpoint?: string | null; blocks: Array<{ type: string; text?: string | null; image?: string | null; video?: string | null; items?: string[] | null; columnIndex?: number | null }> }) => ({
           title: s.title,
           image: s.image ?? '',
           video: s.video ?? '',
-          blocks: (s.blocks ?? []).map((b: { type: string; text?: string | null; image?: string | null; video?: string | null; items?: string[] | null }) => ({
+          columns: s.columns ?? 1,
+          breakpoint: s.breakpoint ?? 'md',
+          blocks: (s.blocks ?? []).map((b: { type: string; text?: string | null; image?: string | null; video?: string | null; items?: string[] | null; columnIndex?: number | null }) => ({
             type: b.type,
             text: b.text ?? '',
             image: b.image ?? '',
             video: b.video ?? '',
             items: b.items ?? undefined,
+            columnIndex: b.columnIndex ?? 0,
           })),
         })),
       }

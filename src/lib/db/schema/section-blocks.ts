@@ -9,5 +9,6 @@ export const sectionBlocks = sqliteTable('section_blocks', {
   image: text('image'),
   video: text('video'),
   items: text('items', { mode: 'json' }).$type<string[]>(),
+  columnIndex: integer('column_index').default(0).notNull(),
   sortOrder: integer('sort_order').default(0).notNull(),
 })

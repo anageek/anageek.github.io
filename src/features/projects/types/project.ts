@@ -25,12 +25,15 @@ const sectionBlockFormSchema = z.object({
   image: z.string().optional().default(''),
   video: z.string().optional().default(''),
   items: z.array(z.string()).optional(),
+  columnIndex: z.number().optional().default(0),
 })
 
 const sectionFormSchema = z.object({
   title: z.string().min(1, 'Section title is required'),
   image: z.string().optional().default(''),
   video: z.string().optional().default(''),
+  columns: z.number().optional().default(1),
+  breakpoint: z.string().optional().default('md'),
   blocks: z.array(sectionBlockFormSchema).default([]),
 })
 

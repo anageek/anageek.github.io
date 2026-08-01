@@ -54,6 +54,8 @@ export const createProject = withAuth(async (data: unknown) => {
       title: section.title,
       image: section.image || null,
       video: section.video || null,
+      columns: section.columns ?? 1,
+      breakpoint: section.breakpoint ?? 'md',
       sortOrder: sIdx,
     }).returning().get()
 
@@ -66,6 +68,7 @@ export const createProject = withAuth(async (data: unknown) => {
           image: block.image || null,
           video: block.video || null,
           items: block.items || null,
+          columnIndex: block.columnIndex ?? 0,
           sortOrder: bIdx,
         }))
       ).run()
@@ -134,6 +137,8 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
       title: section.title,
       image: section.image || null,
       video: section.video || null,
+      columns: section.columns ?? 1,
+      breakpoint: section.breakpoint ?? 'md',
       sortOrder: sIdx,
     }).returning().get()
 
@@ -146,6 +151,7 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
           image: block.image || null,
           video: block.video || null,
           items: block.items || null,
+          columnIndex: block.columnIndex ?? 0,
           sortOrder: bIdx,
         }))
       ).run()

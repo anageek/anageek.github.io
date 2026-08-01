@@ -6,6 +6,8 @@ interface Section {
   title: string
   image?: string | null
   video?: string | null
+  columns?: number | null
+  breakpoint?: string | null
   blocks: SectionBlock[]
 }
 
@@ -16,7 +18,102 @@ interface SectionRendererProps {
   onImageClick: (imageSrc: string) => void
 }
 
+const BP_CLASS: Record<string, string> = {
+  sm: 'sm:grid-cols-2',
+  md: 'md:grid-cols-2',
+  lg: 'lg:grid-cols-2',
+  always: 'grid-cols-2',
+}
+
+function renderBlock(
+  block: SectionBlock,
+  idx: number,
+  projectTitle: string,
+  onImageClick: (src: string) => void,
+) {
+  if (block.type === "heading" && block.text) {
+    return <h3 key={idx} className="text-lg font-semibold text-white">{block.text}</h3>
+  }
+  if (block.type === "paragraph" && block.text) {
+    return (
+      <p key={idx} className="text-zinc-400 font-light leading-relaxed text-justify">
+        {block.text}
+      </p>
+    )
+  }
+  if (block.type === "list" && Array.isArray(block.items)) {
+    return (
+      <ul key={idx} className="space-y-3">
+        {block.items.map((point: string, i: number) => (
+          <li key={i} className="flex items-start gap-2 text-zinc-400 font-light text-sm">
+            <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+            {point}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  if (block.type === "image" && block.image) {
+    return (
+      <div
+        key={idx}
+        className="my-8 rounded-2xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
+        onClick={() => onImageClick(block.image!)}
+      >
+        <Image
+          src={block.image || "/placeholder.svg"}
+          alt={`${projectTitle} - Section Image`}
+          width={800}
+          height={600}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+        />
+      </div>
+    )
+  }
+  if (block.type === "video" && block.video) {
+    return (
+      <div key={idx} className="my-8 w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-zinc-800/50">
+        <iframe
+          src={toYouTubeEmbedUrl(block.video)}
+          title={`${projectTitle} block video`}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full"
+        />
+      </div>
+    )
+  }
+  if (block.type === "gallery" && Array.isArray(block.items) && block.items.length > 0) {
+    return (
+      <div key={idx} className="my-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {block.items.map((url: string, i: number) => (
+          <div
+            key={i}
+            className="relative aspect-square rounded-xl overflow-hidden cursor-zoom-in border border-zinc-800/50 shadow group"
+            onClick={() => onImageClick(url)}
+          >
+            <Image
+              src={url}
+              alt={`${projectTitle} gallery ${i + 1}`}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-700"
+              sizes="(max-width: 640px) 50vw, 33vw"
+            />
+          </div>
+        ))}
+      </div>
+    )
+  }
+  return null
+}
+
 export default function SectionRenderer({ section, projectTitle, sectionIndex, onImageClick }: SectionRendererProps) {
+  const numCols = section.columns ?? 1
+  const bp = section.breakpoint ?? 'md'
+  const is2Col = numCols >= 2
+
   return (
     <div className="flex flex-col mb-16">
       <div className="relative mb-8">
@@ -38,80 +135,45 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
         </div>
       )}
 
-      <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${section.image ? "lg:grid-cols-2" : ""}`}>
-        <div className="space-y-6">
-          {section.blocks.map((block, idx) => {
-            if (block.type === "heading" && block.text) {
-              return <h3 key={idx} className="text-lg font-semibold text-white">{block.text}</h3>
-            }
-            if (block.type === "paragraph" && block.text) {
-              return <p key={idx} className="text-zinc-400 font-light leading-relaxed text-justify">{block.text}</p>
-            }
-            if (block.type === "list" && Array.isArray(block.items)) {
-              return (
-                <ul key={idx} className="space-y-3">
-                  {block.items.map((point: string, i: number) => (
-                    <li key={i} className="flex items-start gap-2 text-zinc-400 font-light text-sm">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              )
-            }
-            if (block.type === "image" && block.image) {
-              return (
-                <div
-                  key={idx}
-                  className="my-8 rounded-2xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
-                  onClick={() => onImageClick(block.image!)}
-                >
-                  <Image
-                    src={block.image || "/placeholder.svg"}
-                    alt={`${projectTitle} - Section Image`}
-                    width={800}
-                    height={600}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
-                  />
-                </div>
-              )
-            }
-            if (block.type === "video" && block.video) {
-              return (
-                <div key={idx} className="my-8 w-full aspect-video rounded-2xl overflow-hidden shadow-xl border border-zinc-800/50">
-                  <iframe
-                    src={toYouTubeEmbedUrl(block.video)}
-                    title={`${projectTitle} block video`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                  />
-                </div>
-              )
-            }
-            return null
-          })}
-        </div>
-
-        {section.image && (
-          <div
-            className="relative group cursor-zoom-in rounded-2xl overflow-hidden border border-zinc-800/50 shadow-xl"
-            onClick={() => onImageClick(section.image!)}
-          >
-            <Image
-              src={section.image || "/placeholder.svg"}
-              alt={`${projectTitle} - Section ${sectionIndex + 1}`}
-              width={500}
-              height={500}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors pointer-events-none" />
+      {is2Col ? (
+        /* Two-column block layout */
+        <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${BP_CLASS[bp] ?? 'md:grid-cols-2'}`}>
+          <div className="space-y-6">
+            {section.blocks
+              .filter((b) => (b.columnIndex ?? 0) === 0)
+              .map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
           </div>
-        )}
-      </div>
+          <div className="space-y-6">
+            {section.blocks
+              .filter((b) => (b.columnIndex ?? 0) === 1)
+              .map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
+          </div>
+        </div>
+      ) : (
+        /* Single-column layout (preserves sidebar image) */
+        <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${section.image ? "lg:grid-cols-2" : ""}`}>
+          <div className="space-y-6">
+            {section.blocks.map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
+          </div>
+
+          {section.image && (
+            <div
+              className="relative group cursor-zoom-in rounded-2xl overflow-hidden border border-zinc-800/50 shadow-xl"
+              onClick={() => onImageClick(section.image!)}
+            >
+              <Image
+                src={section.image || "/placeholder.svg"}
+                alt={`${projectTitle} - Section ${sectionIndex + 1}`}
+                width={500}
+                height={500}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors pointer-events-none" />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
