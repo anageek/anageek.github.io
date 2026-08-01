@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import SectionRenderer from './section-renderer'
@@ -53,7 +53,7 @@ interface ProjectPreviewProps {
   onClose: () => void
 }
 
-export function ProjectPreview({ sectionsState, projectTitle, onClose }: ProjectPreviewProps) {
+export function ProjectPreview({ sectionsState, projectTitle, onClose }: ProjectPreviewProps): React.ReactNode {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
 
