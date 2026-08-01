@@ -100,7 +100,6 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "packageManager": "yarn@4.10.3",
   "allowScripts": {
     "esbuild@0.18.20": true,
     "esbuild@0.25.12": true,
