@@ -1,13 +1,12 @@
 import Image from "next/image"
 import type { SectionBlock } from "@/features/projects/types/project"
+import type { LayoutChildren, RawBlock } from "@/features/projects/types/project"
 import { toYouTubeEmbedUrl } from "@/lib/utils"
 
 interface Section {
   title: string
   image?: string | null
   video?: string | null
-  columns?: number | null
-  breakpoint?: string | null
   blocks: SectionBlock[]
 }
 
@@ -26,11 +25,11 @@ const BP_CLASS: Record<string, string> = {
 }
 
 function renderBlock(
-  block: SectionBlock,
+  block: SectionBlock | RawBlock,
   idx: number,
   projectTitle: string,
   onImageClick: (src: string) => void,
-) {
+): React.ReactNode {
   if (block.type === "heading" && block.text) {
     return <h3 key={idx} className="text-lg font-semibold text-white">{block.text}</h3>
   }
@@ -106,14 +105,36 @@ function renderBlock(
       </div>
     )
   }
+  if (block.type === "layout") {
+    let layoutData: LayoutChildren | null = null
+    try {
+      const raw = (block as SectionBlock).children
+      if (raw) layoutData = JSON.parse(raw) as LayoutChildren
+    } catch { /* ignore */ }
+
+    if (layoutData) {
+      const { columns, breakpoint, content } = layoutData
+      const col3 = breakpoint === 'always' ? 'grid-cols-3' : `grid-cols-1 ${BP_CLASS[breakpoint]?.replace('-cols-2', '-cols-3') ?? 'md:grid-cols-3'}`
+      const col2 = `grid-cols-1 ${BP_CLASS[breakpoint] ?? 'md:grid-cols-2'}`
+      const gridClass = columns === 1 ? 'grid-cols-1' : columns === 3 ? col3 : col2
+
+      return (
+        <div key={idx} className={`grid gap-6 lg:gap-8 my-6 ${gridClass}`}>
+          {content.map((col, colIdx) => (
+            <div key={colIdx} className="space-y-4">
+              {col.map((childBlock, childIdx) =>
+                renderBlock(childBlock as SectionBlock, childIdx, projectTitle, onImageClick)
+              )}
+            </div>
+          ))}
+        </div>
+      )
+    }
+  }
   return null
 }
 
 export default function SectionRenderer({ section, projectTitle, sectionIndex, onImageClick }: SectionRendererProps) {
-  const numCols = section.columns ?? 1
-  const bp = section.breakpoint ?? 'md'
-  const is2Col = numCols >= 2
-
   return (
     <div className="flex flex-col mb-16">
       <div className="relative mb-8">
@@ -135,45 +156,28 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
         </div>
       )}
 
-      {is2Col ? (
-        /* Two-column block layout */
-        <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${BP_CLASS[bp] ?? 'md:grid-cols-2'}`}>
-          <div className="space-y-6">
-            {section.blocks
-              .filter((b) => (b.columnIndex ?? 0) === 0)
-              .map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
-          </div>
-          <div className="space-y-6">
-            {section.blocks
-              .filter((b) => (b.columnIndex ?? 0) === 1)
-              .map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
-          </div>
+      <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${section.image ? "lg:grid-cols-2" : ""}`}>
+        <div className="space-y-6">
+          {section.blocks.map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
         </div>
-      ) : (
-        /* Single-column layout (preserves sidebar image) */
-        <div className={`grid grid-cols-1 gap-8 lg:gap-12 ${section.image ? "lg:grid-cols-2" : ""}`}>
-          <div className="space-y-6">
-            {section.blocks.map((block, idx) => renderBlock(block, idx, projectTitle, onImageClick))}
-          </div>
 
-          {section.image && (
-            <div
-              className="relative group cursor-zoom-in rounded-2xl overflow-hidden border border-zinc-800/50 shadow-xl"
-              onClick={() => onImageClick(section.image!)}
-            >
-              <Image
-                src={section.image || "/placeholder.svg"}
-                alt={`${projectTitle} - Section ${sectionIndex + 1}`}
-                width={500}
-                height={500}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors pointer-events-none" />
-            </div>
-          )}
-        </div>
-      )}
+        {section.image && (
+          <div
+            className="relative group cursor-zoom-in rounded-2xl overflow-hidden border border-zinc-800/50 shadow-xl"
+            onClick={() => onImageClick(section.image!)}
+          >
+            <Image
+              src={section.image || "/placeholder.svg"}
+              alt={`${projectTitle} - Section ${sectionIndex + 1}`}
+              width={500}
+              height={500}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors pointer-events-none" />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

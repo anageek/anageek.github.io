@@ -248,12 +248,32 @@ function ImageBlock({
   isUploading,
 }: {
   image: string
-  onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpload?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onChangeUrl: (url: string) => void
   isUploading: boolean
 }) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [urlMode, setUrlMode] = useState(false)
+
+  // URL-only mode when no upload handler provided
+  if (!onUpload) {
+    return (
+      <div className="space-y-2 w-full">
+        {image && (
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-zinc-800">
+            <Image src={image} alt="Block image" fill className="object-cover" sizes="600px" />
+          </div>
+        )}
+        <input
+          type="text"
+          value={image}
+          onChange={(e) => onChangeUrl(e.target.value)}
+          placeholder="https://…"
+          className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-300 outline-none focus:border-zinc-600"
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-2 w-full">
@@ -388,7 +408,7 @@ interface SortableBlockProps {
   onUpdateListItems: (items: string[]) => void
   onUpdateVideo: (url: string) => void
   onUpdateImage: (url: string) => void
-  onUploadImage: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onUploadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUploadGalleryItem?: (e: React.ChangeEvent<HTMLInputElement>, itemIdx: number) => void
   onMoveToColumn?: () => void
   moveColumnLabel?: string

@@ -45,3 +45,6 @@ data/portfolio.db-shm
 
 # Playwright MCP artifacts
 .playwright-mcp/
+
+# Claude Code worktrees
+.claude/worktrees/

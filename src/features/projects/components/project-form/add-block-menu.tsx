@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Plus, Heading2, AlignLeft, List, ImageIcon, Video, LayoutGrid } from 'lucide-react'
+import { Plus, Heading2, AlignLeft, List, ImageIcon, Video, LayoutGrid, Columns2 } from 'lucide-react'
 
 const BLOCK_TYPES = [
   { type: 'heading', label: 'Heading', Icon: Heading2 },
@@ -10,6 +10,7 @@ const BLOCK_TYPES = [
   { type: 'image', label: 'Image', Icon: ImageIcon },
   { type: 'video', label: 'Video', Icon: Video },
   { type: 'gallery', label: 'Gallery', Icon: LayoutGrid },
+  { type: 'layout', label: 'Layout', Icon: Columns2 },
 ] as const
 
 interface AddBlockMenuProps {
@@ -34,7 +35,6 @@ export function AddBlockMenu({ onAdd }: AddBlockMenuProps) {
       ref={containerRef}
       className="relative flex justify-center items-center my-1 h-6 group/adder"
     >
-      {/* Divider line */}
       <div className="absolute inset-x-0 top-1/2 -translate-y-px h-px bg-zinc-800/0 group-hover/adder:bg-zinc-800 transition-colors" />
 
       <button

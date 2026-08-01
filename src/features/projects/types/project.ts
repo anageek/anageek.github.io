@@ -19,28 +19,62 @@ export type ProjectWithCategory = Project & {
   images: ProjectImage[]
 }
 
-const sectionBlockFormSchema = z.object({
-  type: z.string().min(1, 'Block type is required'),
-  text: z.string().optional().default(''),
-  image: z.string().optional().default(''),
-  video: z.string().optional().default(''),
-  items: z.array(z.string()).optional(),
-  columnIndex: z.number().optional().default(0),
-})
+// ── Layout block types ────────────────────────────────────────────────────────
+
+export interface RawBlock {
+  type: string
+  text?: string
+  image?: string
+  video?: string
+  items?: string[]
+  children?: LayoutChildren | null
+}
+
+export interface LayoutChildren {
+  columns: number
+  breakpoint: string
+  content: RawBlock[][]
+}
+
+// ── Zod schemas ───────────────────────────────────────────────────────────────
+
+const blockFormSchema: z.ZodType<RawBlock> = z.lazy(() =>
+  z.object({
+    type: z.string(),
+    text: z.string().optional(),
+    image: z.string().optional(),
+    video: z.string().optional(),
+    items: z.array(z.string()).optional(),
+    children: z
+      .object({
+        columns: z.number(),
+        breakpoint: z.string(),
+        content: z.array(z.array(z.lazy(() => blockFormSchema))),
+      })
+      .optional()
+      .nullable(),
+  })
+)
 
 const sectionFormSchema = z.object({
   title: z.string().min(1, 'Section title is required'),
   image: z.string().optional().default(''),
   video: z.string().optional().default(''),
-  columns: z.number().optional().default(1),
-  breakpoint: z.string().optional().default('md'),
-  blocks: z.array(sectionBlockFormSchema).default([]),
+  blocks: z.array(blockFormSchema).default([]),
 })
 
-const optionalUrl = z.string().refine(
-  (val) => val === '' || val.startsWith('/') || val.startsWith('http://') || val.startsWith('https://'),
-  { message: 'Must be a valid URL or path' }
-).optional().default('')
+const optionalUrl = z
+  .string()
+  .refine(
+    (val) =>
+      val === '' ||
+      val.startsWith('/') ||
+      val.startsWith('http://') ||
+      val.startsWith('https://'),
+    { message: 'Must be a valid URL or path' },
+  )
+  .optional()
+  .default('')
 
 export const projectFormSchema = z.object({
   categoryId: z.number({ required_error: 'Category is required' }),
@@ -64,3 +98,4 @@ export const projectFormSchema = z.object({
 })
 
 export type ProjectFormValues = z.infer<typeof projectFormSchema>
+export type BlockFormValue = RawBlock
