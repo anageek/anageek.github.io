@@ -38,9 +38,9 @@ ADMIN_EMAIL=seu@email.com
 ADMIN_PASSWORD_HASH=hash-sha256-da-sua-senha
 ```
 
-Para gerar o `ADMIN_PASSWORD_HASH` (Linux/Mac):
+Para gerar o `ADMIN_PASSWORD_HASH`:
 ```bash
-echo -n "sua-senha" | sha256sum | cut -d' ' -f1
+npm run hash-password -- sua-senha
 ```
 
 ```bash
@@ -90,3 +90,4 @@ git push origin main
 | `npm run build` | Gera build de produção |
 | `npm run db:studio` | Abre o Drizzle Studio (inspetor visual do banco) |
 | `npm run db:push` | Aplica mudanças de schema no banco local |
+| `npm run hash-password -- <senha>` | Gera o hash SHA-256 de uma senha para o `.env.local` |
