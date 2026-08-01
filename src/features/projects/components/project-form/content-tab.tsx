@@ -36,6 +36,14 @@ import type { UseFormReturn } from 'react-hook-form'
 import type { ProjectFormValues } from '@/features/projects/types/project'
 import type { SectionState, DescBlock } from '@/features/projects/hooks/use-project-form'
 
+// ── Layout breakpoint helpers ─────────────────────────────────────────────────
+// Maps UX-facing labels to Tailwind breakpoint keys stored in DB
+const LAYOUT_BREAKPOINTS = [
+  { value: 'always', label: 'Sempre', hint: 'Colunas em qualquer tamanho de tela' },
+  { value: 'md', label: 'Tablet+', hint: 'Colunas a partir de 768px (tablet)' },
+  { value: 'lg', label: 'Desktop+', hint: 'Colunas a partir de 1024px (desktop)' },
+] as const
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 interface FieldItem {
@@ -72,12 +80,11 @@ interface ContentTabProps {
   onUploadSectionImage: (sIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onUploadBlockImage: (sIdx: number, bIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onUploadGalleryItem: (sIdx: number, bIdx: number, itemIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
+  onUploadLayoutChildImage: (sIdx: number, bIdx: number, colIdx: number, childIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onFieldUpload: (e: React.ChangeEvent<HTMLInputElement>, fieldName: string, index?: number) => void
 }
 
 // ── Layout Block Editor ───────────────────────────────────────────────────────
-
-const BREAKPOINTS = ['sm', 'md', 'lg', 'always'] as const
 
 const BP_GRID: Record<string, string> = {
   sm: 'sm:grid-cols-2',
@@ -94,6 +101,8 @@ function LayoutColumnPane({
   onRemoveBlock,
   onUpdateBlock,
   onReorder,
+  onUpdateBlockType,
+  onUploadChildImage,
 }: {
   colIdx: number
   colBlocks: DescBlock[]
@@ -102,6 +111,8 @@ function LayoutColumnPane({
   onRemoveBlock: (childIdx: number) => void
   onUpdateBlock: (childIdx: number, changes: Partial<DescBlock>) => void
   onReorder: (newBlocks: DescBlock[]) => void
+  onUpdateBlockType: (childIdx: number, type: string) => void
+  onUploadChildImage: (childIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -143,8 +154,9 @@ function LayoutColumnPane({
                 onUpdateListItems={(items) => onUpdateBlock(childIdx, { items })}
                 onUpdateVideo={(v) => onUpdateBlock(childIdx, { video: v })}
                 onUpdateImage={(v) => onUpdateBlock(childIdx, { image: v })}
-                onUploadImage={undefined}
+                onUploadImage={(e) => onUploadChildImage(childIdx, e)}
                 onUploadGalleryItem={undefined}
+                onUpdateType={(type) => onUpdateBlockType(childIdx, type)}
               />
               <AddBlockMenu onAdd={(type) => onAddBlock(type, childIdx + 1)} />
             </div>
@@ -166,6 +178,8 @@ function LayoutBlockEditor({
   onRemoveChild,
   onUpdateChild,
   onReorderColumn,
+  onUploadLayoutChild,
+  onUpdateLayoutChildType,
 }: {
   block: DescBlock
   isUploading: string | null
@@ -175,6 +189,8 @@ function LayoutBlockEditor({
   onRemoveChild: (colIdx: number, childIdx: number) => void
   onUpdateChild: (colIdx: number, childIdx: number, changes: Partial<DescBlock>) => void
   onReorderColumn: (colIdx: number, newBlocks: DescBlock[]) => void
+  onUploadLayoutChild: (colIdx: number, childIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
+  onUpdateLayoutChildType: (colIdx: number, childIdx: number, type: string) => void
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: block._key,
@@ -196,52 +212,68 @@ function LayoutBlockEditor({
       className={`my-2 border border-zinc-700/60 rounded-xl overflow-hidden bg-zinc-900/20 ${isDragging ? 'opacity-50' : ''}`}
     >
       {/* Toolbar */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-zinc-800/60 bg-zinc-900/60">
+      <div className="flex items-center gap-2 px-3 py-2.5 border-b border-zinc-800/60 bg-zinc-900/60">
         <button
           type="button"
           {...attributes}
           {...listeners}
-          className="p-1 text-zinc-600 hover:text-zinc-400 cursor-grab active:cursor-grabbing"
+          className="p-1 text-zinc-600 hover:text-zinc-400 cursor-grab active:cursor-grabbing shrink-0"
         >
           <GripVertical className="w-3.5 h-3.5" />
         </button>
-        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 mr-1">
+
+        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 shrink-0">
           Layout
         </span>
+
+        <div className="w-px h-4 bg-zinc-800 mx-0.5 shrink-0" />
+
         {/* Column count */}
-        <div className="flex gap-0.5">
+        <div className="flex gap-0.5 shrink-0">
           {[1, 2, 3].map((n) => (
             <button
               key={n}
               type="button"
+              title={`${n} coluna${n > 1 ? 's' : ''}`}
               onClick={() => onUpdateConfig(n, bp)}
-              className={`px-2 py-0.5 rounded text-[10px] font-bold transition-colors ${cols === n ? 'bg-primary text-white' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'}`}
+              className={`w-6 h-6 rounded text-[10px] font-bold transition-colors ${
+                cols === n ? 'bg-primary text-white' : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
+              }`}
             >
               {n}
             </button>
           ))}
         </div>
-        <span className="text-zinc-700 text-[9px]">cols</span>
-        {/* Breakpoint */}
+
+        {/* Breakpoint — only when multi-column */}
         {cols > 1 && (
-          <div className="flex gap-0.5 ml-2">
-            {BREAKPOINTS.map((b) => (
-              <button
-                key={b}
-                type="button"
-                onClick={() => onUpdateConfig(cols, b)}
-                className={`px-2 py-0.5 rounded text-[9px] font-bold transition-colors ${bp === b ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400'}`}
-              >
-                {b}
-              </button>
-            ))}
-          </div>
+          <>
+            <div className="w-px h-4 bg-zinc-800 mx-0.5 shrink-0" />
+            <div className="flex gap-0.5 shrink-0">
+              {LAYOUT_BREAKPOINTS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  title={opt.hint}
+                  onClick={() => onUpdateConfig(cols, opt.value)}
+                  className={`px-2 py-0.5 rounded text-[9px] font-semibold transition-colors ${
+                    bp === opt.value
+                      ? 'bg-zinc-700 text-white'
+                      : 'text-zinc-600 hover:text-zinc-300 hover:bg-zinc-800/60'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </>
         )}
+
         <div className="flex-1" />
         <button
           type="button"
           onClick={onRemove}
-          className="p-1 text-zinc-700 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors"
+          className="p-1 text-zinc-700 hover:text-red-400 hover:bg-red-500/10 rounded transition-colors shrink-0"
         >
           <Trash2 className="w-3 h-3" />
         </button>
@@ -259,6 +291,8 @@ function LayoutBlockEditor({
             onRemoveBlock={(childIdx) => onRemoveChild(colIdx, childIdx)}
             onUpdateBlock={(childIdx, changes) => onUpdateChild(colIdx, childIdx, changes)}
             onReorder={(newBlocks) => onReorderColumn(colIdx, newBlocks)}
+            onUploadChildImage={(childIdx, e) => onUploadLayoutChild(colIdx, childIdx, e)}
+            onUpdateBlockType={(childIdx, type) => onUpdateLayoutChildType(colIdx, childIdx, type)}
           />
         ))}
       </div>
@@ -289,6 +323,7 @@ function SectionPanel({
   onUploadSectionImage,
   onUploadBlockImage,
   onUploadGalleryItem,
+  onUploadLayoutChildImage,
 }: {
   section: SectionState
   sIdx: number
@@ -310,6 +345,7 @@ function SectionPanel({
   onUploadSectionImage: (sIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onUploadBlockImage: (sIdx: number, bIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
   onUploadGalleryItem: (sIdx: number, bIdx: number, itemIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
+  onUploadLayoutChildImage: (sIdx: number, bIdx: number, colIdx: number, childIdx: number, e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -327,9 +363,9 @@ function SectionPanel({
   }
 
   return (
-    <div className="border border-zinc-800 rounded-2xl overflow-hidden bg-zinc-950/40">
+    <div className="border border-zinc-800 rounded-2xl bg-zinc-950/40">
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900/60">
+      <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900/60 rounded-t-2xl">
         <button
           type="button"
           {...dragHandleProps}
@@ -442,6 +478,12 @@ function SectionPanel({
                         onReorderColumn={(colIdx, newBlocks) =>
                           onReorderLayoutColumn(sIdx, bIdx, colIdx, newBlocks)
                         }
+                        onUploadLayoutChild={(colIdx, childIdx, e) =>
+                          onUploadLayoutChildImage(sIdx, bIdx, colIdx, childIdx, e)
+                        }
+                        onUpdateLayoutChildType={(colIdx, childIdx, type) =>
+                          onUpdateLayoutChild(sIdx, bIdx, colIdx, childIdx, { type })
+                        }
                       />
                     ) : (
                       <SortableBlock
@@ -458,6 +500,7 @@ function SectionPanel({
                         onUploadGalleryItem={(e, itemIdx) =>
                           onUploadGalleryItem(sIdx, bIdx, itemIdx, e)
                         }
+                        onUpdateType={(type) => onUpdateBlock(sIdx, bIdx, { type })}
                       />
                     )}
 
@@ -527,6 +570,7 @@ export function ContentTab({
   onUploadSectionImage,
   onUploadBlockImage,
   onUploadGalleryItem,
+  onUploadLayoutChildImage,
   onFieldUpload,
 }: ContentTabProps) {
   const { setValue, watch } = form
@@ -602,6 +646,7 @@ export function ContentTab({
                   onUploadSectionImage={onUploadSectionImage}
                   onUploadBlockImage={onUploadBlockImage}
                   onUploadGalleryItem={onUploadGalleryItem}
+                  onUploadLayoutChildImage={onUploadLayoutChildImage}
                 />
               ))}
             </div>

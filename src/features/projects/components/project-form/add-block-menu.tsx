@@ -92,7 +92,7 @@ export function AddBlockButton({ onAdd }: AddBlockMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute top-full mt-2 z-50 bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl p-1.5 flex gap-0.5">
+        <div className="absolute bottom-full mb-2 z-50 bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl p-1.5 flex gap-0.5">
           {BLOCK_TYPES.map(({ type, label, Icon }) => (
             <button
               key={type}

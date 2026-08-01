@@ -51,6 +51,7 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
     uploadSectionImage,
     uploadBlockImage,
     uploadGalleryItem,
+    uploadLayoutChildImage,
     syncSectionsToForm,
   } = useProjectForm(project)
 
@@ -237,6 +238,7 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
             onUploadSectionImage={uploadSectionImage}
             onUploadBlockImage={uploadBlockImage}
             onUploadGalleryItem={uploadGalleryItem}
+            onUploadLayoutChildImage={uploadLayoutChildImage}
             onFieldUpload={handleFieldUpload}
           />
         )}

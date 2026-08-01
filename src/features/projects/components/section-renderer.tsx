@@ -1,3 +1,4 @@
+import React from "react"
 import Image from "next/image"
 import type { SectionBlock } from "@/features/projects/types/project"
 import type { LayoutChildren, RawBlock } from "@/features/projects/types/project"
@@ -30,14 +31,24 @@ function renderBlock(
   projectTitle: string,
   onImageClick: (src: string) => void,
 ): React.ReactNode {
-  if (block.type === "heading" && block.text) {
-    return <h3 key={idx} className="text-lg font-semibold text-white">{block.text}</h3>
+  if ((block.type === "heading" || block.type?.startsWith("heading-")) && block.text) {
+    const level = block.type === "heading" ? 3 : (parseInt(block.type.replace("heading-", ""), 10) || 3)
+    const Tag = `h${level}` as React.ElementType
+    const sizeClass: Record<number, string> = {
+      1: "text-3xl font-extrabold",
+      2: "text-2xl font-bold",
+      3: "text-xl font-semibold",
+      4: "text-lg font-semibold",
+    }
+    return <Tag key={idx} className={`${sizeClass[level] ?? "text-lg font-semibold"} text-white`}>{block.text}</Tag>
   }
   if (block.type === "paragraph" && block.text) {
     return (
-      <p key={idx} className="text-zinc-400 font-light leading-relaxed text-justify">
-        {block.text}
-      </p>
+      <div
+        key={idx}
+        className="text-zinc-400 font-light leading-relaxed [&_strong]:text-zinc-300 [&_strong]:font-bold [&_b]:text-zinc-300 [&_b]:font-bold [&_em]:italic [&_i]:italic"
+        dangerouslySetInnerHTML={{ __html: block.text }}
+      />
     )
   }
   if (block.type === "list" && Array.isArray(block.items)) {

@@ -3,12 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video, LayoutGrid, ArrowRightLeft } from 'lucide-react'
+import {
+  GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video, LayoutGrid, ArrowRightLeft,
+  Bold, Italic, AlignLeft, AlignCenter, AlignRight, AlignJustify,
+} from 'lucide-react'
 import Image from 'next/image'
 import { toYouTubeEmbedUrl } from '@/lib/utils'
 import type { DescBlock } from '@/features/projects/hooks/use-project-form'
 
-// ─── contentEditable sync hook ────────────────────────────────────────────────
+// ─── contentEditable sync hook (innerText) ────────────────────────────────────
 function useSyncedEditable(value: string) {
   const ref = useRef<HTMLElement>(null)
 
@@ -23,33 +26,147 @@ function useSyncedEditable(value: string) {
   return ref
 }
 
+// ─── contentEditable sync hook (innerHTML) ────────────────────────────────────
+function useSyncedHTMLEditable(value: string) {
+  const ref = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (el === document.activeElement) return
+    if (el.innerHTML === value) return
+    el.innerHTML = value ?? ''
+  })
+  return ref
+}
+
 // ─── HeadingBlock ─────────────────────────────────────────────────────────────
-function HeadingBlock({ text, onUpdate }: { text: string; onUpdate: (v: string) => void }) {
+function HeadingBlock({
+  type,
+  text,
+  onUpdate,
+  onTypeChange,
+}: {
+  type: string
+  text: string
+  onUpdate: (v: string) => void
+  onTypeChange: (t: string) => void
+}) {
+  const level = type === 'heading' ? 3 : (parseInt(type.replace('heading-', ''), 10) || 3)
   const ref = useSyncedEditable(text)
+  const Tag = `h${level}` as React.ElementType
+
+  const sizeClass: Record<number, string> = {
+    1: 'text-3xl font-extrabold',
+    2: 'text-2xl font-bold',
+    3: 'text-xl font-bold',
+    4: 'text-lg font-semibold',
+  }
+
   return (
-    <h3
-      ref={ref as React.Ref<HTMLHeadingElement>}
-      contentEditable
-      suppressContentEditableWarning
-      data-placeholder="Heading…"
-      onInput={(e) => onUpdate(e.currentTarget.innerText)}
-      className="text-xl font-bold text-white outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem]"
-    />
+    <div className="space-y-1.5">
+      <div className="flex gap-0.5">
+        {([1, 2, 3, 4] as const).map((n) => (
+          <button
+            key={n}
+            type="button"
+            onMouseDown={(e) => { e.preventDefault(); onTypeChange(`heading-${n}`) }}
+            className={`px-1.5 py-0.5 rounded text-[9px] font-bold tracking-wider transition-colors ${
+              level === n
+                ? 'bg-primary text-white'
+                : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'
+            }`}
+          >
+            H{n}
+          </button>
+        ))}
+      </div>
+      <Tag
+        ref={ref}
+        contentEditable
+        suppressContentEditableWarning
+        data-placeholder="Heading…"
+        onInput={(e: React.FormEvent<HTMLElement>) => onUpdate(e.currentTarget.innerText)}
+        className={`${sizeClass[level] ?? 'text-xl font-bold'} text-white outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem]`}
+      />
+    </div>
   )
 }
 
+// ─── Alignment toolbar options (defined outside for stability) ─────────────────
+const alignOpts = [
+  { cmd: 'justifyLeft', Icon: AlignLeft, title: 'Esquerda' },
+  { cmd: 'justifyCenter', Icon: AlignCenter, title: 'Centro' },
+  { cmd: 'justifyRight', Icon: AlignRight, title: 'Direita' },
+  { cmd: 'justifyFull', Icon: AlignJustify, title: 'Justificado' },
+]
+
 // ─── ParagraphBlock ────────────────────────────────────────────────────────────
 function ParagraphBlock({ text, onUpdate }: { text: string; onUpdate: (v: string) => void }) {
-  const ref = useSyncedEditable(text)
+  const ref = useSyncedHTMLEditable(text)
+  const [formats, setFormats] = useState({ bold: false, italic: false })
+
+  const refreshFormats = () => {
+    try {
+      setFormats({
+        bold: document.queryCommandState('bold'),
+        italic: document.queryCommandState('italic'),
+      })
+    } catch { /* ignore */ }
+  }
+
+  const execCmd = (cmd: string) => {
+    ref.current?.focus()
+    document.execCommand(cmd, false)
+    if (ref.current) onUpdate(ref.current.innerHTML)
+    refreshFormats()
+  }
+
   return (
-    <p
-      ref={ref as React.Ref<HTMLParagraphElement>}
-      contentEditable
-      suppressContentEditableWarning
-      data-placeholder="Start typing…"
-      onInput={(e) => onUpdate(e.currentTarget.innerText)}
-      className="text-zinc-400 font-light leading-relaxed text-justify outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem] whitespace-pre-wrap"
-    />
+    <div className="space-y-1.5">
+      <div className="flex items-center gap-0.5 flex-wrap">
+        <button
+          type="button"
+          title="Negrito"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('bold') }}
+          className={`p-1 rounded transition-colors ${formats.bold ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Bold className="w-3 h-3" />
+        </button>
+        <button
+          type="button"
+          title="Itálico"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('italic') }}
+          className={`p-1 rounded transition-colors ${formats.italic ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Italic className="w-3 h-3" />
+        </button>
+        <div className="w-px h-3.5 bg-zinc-800 mx-0.5" />
+        {alignOpts.map(({ cmd, Icon, title }) => (
+          <button
+            key={cmd}
+            type="button"
+            title={title}
+            onMouseDown={(e) => { e.preventDefault(); execCmd(cmd) }}
+            className="p-1 rounded text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800 transition-colors"
+          >
+            <Icon className="w-3 h-3" />
+          </button>
+        ))}
+      </div>
+      <div
+        ref={ref as React.Ref<HTMLDivElement>}
+        contentEditable
+        suppressContentEditableWarning
+        data-placeholder="Start typing…"
+        onInput={(e) => {
+          onUpdate(e.currentTarget.innerHTML)
+          refreshFormats()
+        }}
+        onKeyUp={refreshFormats}
+        onMouseUp={refreshFormats}
+        className="text-zinc-400 font-light leading-relaxed outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem] [&_strong]:font-bold [&_strong]:text-zinc-300 [&_b]:font-bold [&_b]:text-zinc-300 [&_em]:italic [&_i]:italic"
+      />
+    </div>
   )
 }
 
@@ -388,13 +505,22 @@ function VideoBlock({
 }
 
 // ─── Block type label ──────────────────────────────────────────────────────────
-const TYPE_LABELS: Record<string, string> = {
-  heading: 'H',
+const BASE_TYPE_LABELS: Record<string, string> = {
   paragraph: '¶',
   list: '≡',
   image: '⬜',
   video: '▶',
   gallery: '▦',
+  layout: '▤',
+}
+
+function getTypeLabel(type: string): string {
+  if (type === 'heading') return 'H'
+  if (type.startsWith('heading-')) {
+    const n = type.replace('heading-', '')
+    return `H${n}`
+  }
+  return BASE_TYPE_LABELS[type] ?? '?'
 }
 
 // ─── SortableBlock ─────────────────────────────────────────────────────────────
@@ -410,6 +536,7 @@ interface SortableBlockProps {
   onUpdateImage: (url: string) => void
   onUploadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onUploadGalleryItem?: (e: React.ChangeEvent<HTMLInputElement>, itemIdx: number) => void
+  onUpdateType?: (type: string) => void
   onMoveToColumn?: () => void
   moveColumnLabel?: string
 }
@@ -426,6 +553,7 @@ export function SortableBlock({
   onUpdateImage,
   onUploadImage,
   onUploadGalleryItem,
+  onUpdateType,
   onMoveToColumn,
   moveColumnLabel,
 }: SortableBlockProps) {
@@ -453,14 +581,19 @@ export function SortableBlock({
           <GripVertical className="w-4 h-4" />
         </button>
         <span className="text-[10px] text-zinc-700 font-mono select-none">
-          {TYPE_LABELS[block.type ?? ''] ?? '?'}
+          {getTypeLabel(block.type ?? '')}
         </span>
       </div>
 
       {/* Block content */}
       <div className="flex-1 min-w-0 py-1">
-        {block.type === 'heading' && (
-          <HeadingBlock text={block.text ?? ''} onUpdate={onUpdateText} />
+        {(block.type === 'heading' || block.type?.startsWith('heading-')) && (
+          <HeadingBlock
+            type={block.type}
+            text={block.text ?? ''}
+            onUpdate={onUpdateText}
+            onTypeChange={(t) => onUpdateType?.(t)}
+          />
         )}
         {block.type === 'paragraph' && (
           <ParagraphBlock text={block.text ?? ''} onUpdate={onUpdateText} />
@@ -488,7 +621,7 @@ export function SortableBlock({
             onUploadItem={onUploadGalleryItem ?? (() => {})}
           />
         )}
-        {!block.type && (
+        {(!block.type || (!['paragraph', 'list', 'image', 'video', 'gallery'].includes(block.type) && !block.type.startsWith('heading'))) && block.type !== 'layout' && (
           <p className="text-zinc-700 text-sm italic">Unknown block type</p>
         )}
       </div>

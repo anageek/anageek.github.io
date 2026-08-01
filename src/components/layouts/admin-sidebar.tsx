@@ -38,16 +38,20 @@ export function AdminSidebar() {
 
   return (
     <>
-      {/* Desktop sidebar */}
+      {/* Desktop sidebar — fixed height = viewport, never scrolls with page */}
       <aside
         className={cn(
-          'hidden md:flex flex-col shrink-0 min-h-screen bg-zinc-950 border-r border-zinc-800 py-6 transition-[width] duration-200 ease-in-out overflow-hidden',
-          // Only apply the final width after mount to avoid flicker
+          'hidden md:flex flex-col shrink-0 h-screen sticky top-0 bg-zinc-950 border-r border-zinc-800 py-6 transition-[width] duration-200 ease-in-out overflow-hidden',
           mounted ? (collapsed ? 'w-16' : 'w-60') : 'w-60',
         )}
       >
-        {/* Logo + toggle */}
-        <div className={cn('mb-8 flex items-center', collapsed ? 'px-4 justify-center' : 'px-5 justify-between')}>
+        {/* Logo + toggle — always in the same row/column, always visible */}
+        <div
+          className={cn(
+            'mb-8 flex shrink-0',
+            collapsed ? 'flex-col items-center gap-3 px-2' : 'flex-row items-center justify-between px-5',
+          )}
+        >
           <Link href="/admin" className="flex items-center shrink-0">
             <div className="relative h-9 w-9">
               <Image
@@ -59,20 +63,20 @@ export function AdminSidebar() {
             </div>
           </Link>
 
-          {!collapsed && (
-            <button
-              type="button"
-              onClick={toggle}
-              className="p-1.5 rounded-lg text-zinc-600 hover:text-zinc-300 hover:bg-zinc-800 transition-colors"
-              title="Collapse sidebar"
-            >
-              <PanelLeft className="w-4 h-4" />
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={toggle}
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="p-1.5 rounded-lg text-zinc-600 hover:text-zinc-300 hover:bg-zinc-800 transition-colors shrink-0"
+          >
+            <PanelLeft
+              className={cn('w-4 h-4 transition-transform duration-200', collapsed && 'rotate-180')}
+            />
+          </button>
         </div>
 
-        {/* Navigation */}
-        <nav className={cn('flex-1 space-y-1', collapsed ? 'px-2' : 'px-3')}>
+        {/* Navigation — flex-1 so it fills remaining space */}
+        <nav className={cn('flex-1 space-y-1 overflow-y-auto', collapsed ? 'px-2' : 'px-3')}>
           {adminNav.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
             return (
@@ -95,22 +99,8 @@ export function AdminSidebar() {
           })}
         </nav>
 
-        {/* Expand button (only shown when collapsed) */}
-        {collapsed && (
-          <div className="px-2 mb-2">
-            <button
-              type="button"
-              onClick={toggle}
-              className="w-full flex items-center justify-center p-2.5 rounded-xl text-zinc-600 hover:text-zinc-300 hover:bg-zinc-800 transition-colors border border-transparent"
-              title="Expand sidebar"
-            >
-              <PanelLeft className="w-4 h-4 rotate-180" />
-            </button>
-          </div>
-        )}
-
-        {/* Logout */}
-        <div className={cn(collapsed ? 'px-2' : 'px-3')}>
+        {/* Logout — always at the bottom, always visible */}
+        <div className={cn('mt-4 shrink-0', collapsed ? 'px-2' : 'px-3')}>
           <form action={logoutAction}>
             <button
               type="submit"

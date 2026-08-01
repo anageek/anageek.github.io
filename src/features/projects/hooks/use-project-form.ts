@@ -166,7 +166,7 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
   const uploadBlockImage = async (sIdx: number, bIdx: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    const key = `s${sIdx}.b${bIdx}.image`
+    const key = `desc.image.${bIdx}`
     setIsUploading(key)
     const url = await uploadFile(file)
     if (url) {
@@ -199,6 +199,26 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
         sections[sIdx] = { ...sections[sIdx], blocks }
         return sections
       })
+      toast.success('Upload concluído!')
+    }
+    setIsUploading(null)
+    e.target.value = ''
+  }
+
+  const uploadLayoutChildImage = async (
+    sIdx: number,
+    bIdx: number,
+    colIdx: number,
+    childIdx: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const key = `desc.image.${childIdx}`
+    setIsUploading(key)
+    const url = await uploadFile(file)
+    if (url) {
+      updateLayoutChild(sIdx, bIdx, colIdx, childIdx, { image: url })
       toast.success('Upload concluído!')
     }
     setIsUploading(null)
@@ -410,6 +430,7 @@ export function useProjectForm(initialValues?: Partial<ProjectFormValues> & { id
     uploadSectionImage,
     uploadBlockImage,
     uploadGalleryItem,
+    uploadLayoutChildImage,
     // Sync
     syncSectionsToForm,
   }
