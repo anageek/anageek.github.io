@@ -4,6 +4,13 @@ import { getPublicCategories } from '@/features/categories'
 import { ProjectDetail } from '@/features/projects'
 import { notFound } from 'next/navigation'
 
+export async function generateStaticParams() {
+  const projects = await getPublicProjects()
+  return projects
+    .filter((p) => p.slug)
+    .map((p) => ({ slug: p.slug! }))
+}
+
 interface Props {
   params: Promise<{ slug: string }>
 }
