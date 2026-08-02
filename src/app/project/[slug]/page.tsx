@@ -4,6 +4,8 @@ import { getPublicCategories } from '@/features/categories'
 import { ProjectDetail } from '@/features/projects'
 import { notFound } from 'next/navigation'
 
+export const dynamicParams = false
+
 export async function generateStaticParams() {
   const projects = await getPublicProjects()
   return projects
