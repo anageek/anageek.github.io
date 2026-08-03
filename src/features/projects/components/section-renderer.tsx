@@ -67,7 +67,7 @@ function renderBlock(
     return (
       <div
         key={idx}
-        className="my-8 rounded-2xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
+        className="my-8 overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
         onClick={() => onImageClick(block.image!)}
       >
         <Image
@@ -101,7 +101,7 @@ function renderBlock(
         {block.items.map((url: string, i: number) => (
           <div
             key={i}
-            className="relative aspect-square rounded-xl overflow-hidden cursor-zoom-in border border-zinc-800/50 shadow group"
+            className="relative aspect-square overflow-hidden cursor-zoom-in border border-zinc-800/50 shadow group"
             onClick={() => onImageClick(url)}
           >
             <Image
@@ -174,7 +174,7 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
 
         {section.image && (
           <div
-            className="relative group cursor-zoom-in rounded-2xl overflow-hidden border border-zinc-800/50 shadow-xl"
+            className="relative group cursor-zoom-in overflow-hidden border border-zinc-800/50 shadow-xl"
             onClick={() => onImageClick(section.image!)}
           >
             <Image

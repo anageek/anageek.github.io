@@ -11,6 +11,8 @@ import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react'
 import { loginAction } from '@/features/auth'
 import { loginSchema } from '@/features/auth'
 import type { LoginFormValues } from '@/features/auth'
+import Link from 'next/link'
+import { GlitchText } from '@/components/common/glitch-text'
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>(null)
@@ -128,8 +130,13 @@ export function LoginForm() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
+
           <p className="text-zinc-600 text-[10px] text-center uppercase tracking-widest font-bold">
-            Arkion Systems &copy; 2024
+            <Link className=" text-blue-600" target='_blank' href={"https://github.com/pedro-Laurenti"}>
+            <GlitchText interval={2000}>
+            Feito com carinho por Pedro Laurenti
+            </GlitchText>
+            </Link>
           </p>
         </CardFooter>
       </Card>

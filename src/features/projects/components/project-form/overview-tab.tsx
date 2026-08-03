@@ -1,7 +1,8 @@
 'use client'
 
+import { useRef } from 'react'
 import { Controller } from 'react-hook-form'
-import { Image as ImageIcon } from 'lucide-react'
+import { Image as ImageIcon, Upload, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
@@ -35,6 +36,8 @@ interface OverviewTabProps {
 export function OverviewTab({ form, categories, isUploading, onFieldUpload }: OverviewTabProps) {
   const { register, control, setValue, watch, formState: { errors } } = form
   const watchedProject = watch()
+  const coverImageRef = useRef<HTMLInputElement>(null)
+  const coverAnimatedRef = useRef<HTMLInputElement>(null)
 
   return (
     <div className="p-8">
@@ -46,46 +49,82 @@ export function OverviewTab({ form, categories, isUploading, onFieldUpload }: Ov
             Preview
           </Label>
 
-          {/* 4:3 cover */}
+          {/* Cover — proporção 3:4 (portrait, igual ao card real) */}
           <div
-            className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden"
-            style={{ aspectRatio: '4/3' }}
+            className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden cursor-pointer group"
+            style={{ aspectRatio: '3/4' }}
+            onClick={() => coverImageRef.current?.click()}
+            title="Clique para fazer upload"
           >
             {watchedProject.coverImage ? (
-              <img
-                src={watchedProject.coverImage}
-                alt="cover"
-                className="w-full h-full object-cover"
-              />
+              <>
+                <img src={watchedProject.coverImage} alt="cover" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-10">
+                  <Upload className="w-4 h-4 text-white" />
+                  <span className="text-xs text-white font-medium">Substituir</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setValue('coverImage', '') }}
+                  className="absolute top-2 right-2 w-6 h-6 bg-black/70 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 hover:bg-black"
+                >
+                  <X className="w-3 h-3 text-white" />
+                </button>
+              </>
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-8 h-8 text-zinc-800" />
+              <div className="w-full h-full flex flex-col items-center justify-center gap-2 group-hover:bg-zinc-800/40 transition-colors">
+                <Upload className="w-6 h-6 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
+                <span className="text-[10px] text-zinc-600 group-hover:text-zinc-400 transition-colors">Cover</span>
               </div>
             )}
-            <span className="absolute bottom-2 right-2 text-[10px] font-bold text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded">
-              4:3
+            {isUploading === 'coverImage' && (
+              <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-30">
+                <span className="text-xs text-white">Enviando...</span>
+              </div>
+            )}
+            <span className="absolute bottom-2 left-2 text-[10px] font-bold text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded z-10">
+              Cover
             </span>
+            <input ref={coverImageRef} type="file" accept="image/*" className="hidden" onChange={(e) => onFieldUpload(e, 'coverImage')} />
           </div>
 
-          {/* 4:6 animated cover */}
+          {/* Cover Animado — proporção 2:3 */}
           <div
-            className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden"
-            style={{ aspectRatio: '4/6' }}
+            className="relative bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden cursor-pointer group"
+            style={{ aspectRatio: '2/3' }}
+            onClick={() => coverAnimatedRef.current?.click()}
+            title="Clique para fazer upload"
           >
             {watchedProject.coverAnimated ? (
-              <img
-                src={watchedProject.coverAnimated}
-                alt="cover animated"
-                className="w-full h-full object-cover"
-              />
+              <>
+                <img src={watchedProject.coverAnimated} alt="cover animado" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 z-10">
+                  <Upload className="w-4 h-4 text-white" />
+                  <span className="text-xs text-white font-medium">Substituir</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setValue('coverAnimated', '') }}
+                  className="absolute top-2 right-2 w-6 h-6 bg-black/70 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 hover:bg-black"
+                >
+                  <X className="w-3 h-3 text-white" />
+                </button>
+              </>
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <ImageIcon className="w-6 h-6 text-zinc-800" />
+              <div className="w-full h-full flex flex-col items-center justify-center gap-2 group-hover:bg-zinc-800/40 transition-colors">
+                <Upload className="w-6 h-6 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
+                <span className="text-[10px] text-zinc-600 group-hover:text-zinc-400 transition-colors">Cover Animado</span>
               </div>
             )}
-            <span className="absolute bottom-2 right-2 text-[10px] font-bold text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded">
-              4:6
+            {isUploading === 'coverAnimated' && (
+              <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-30">
+                <span className="text-xs text-white">Enviando...</span>
+              </div>
+            )}
+            <span className="absolute bottom-2 left-2 text-[10px] font-bold text-zinc-500 bg-zinc-950/80 px-1.5 py-0.5 rounded z-10">
+              Hover
             </span>
+            <input ref={coverAnimatedRef} type="file" accept="image/*" className="hidden" onChange={(e) => onFieldUpload(e, 'coverAnimated')} />
           </div>
 
           <Field label="URL Cover">
