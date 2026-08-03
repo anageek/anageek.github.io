@@ -6,7 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import {
   ArrowLeft, ArrowUp, Monitor, Smartphone,
-  X, ChevronLeft, ChevronRight, ChevronDown, Loader2,
+  X, ChevronLeft, ChevronRight, ChevronDown, Loader2, PanelLeft,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/common/scroll-reveal"
@@ -45,18 +45,31 @@ export default function ProjectDetail({
 
   // Sidebar hide/show on scroll
   const [sidebarVisible, setSidebarVisible] = useState(true)
+  const [sidebarLocked, setSidebarLocked] = useState(false)
   const lastScrollY = useRef(0)
+  const sidebarLockedRef = useRef(false)
+
+  const toggleSidebarLock = () => {
+    const next = !sidebarLockedRef.current
+    sidebarLockedRef.current = next
+    setSidebarLocked(next)
+    if (next) {
+      setSidebarVisible(true)
+    } else if (window.scrollY >= 80) {
+      setSidebarVisible(false)
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => {
+      if (sidebarLockedRef.current) { lastScrollY.current = window.scrollY; return }
       const y = window.scrollY
       if (y < 80) {
         setSidebarVisible(true)
       } else if (y > lastScrollY.current) {
         setSidebarVisible(false) // scrolling down → hide
-      } else {
-        setSidebarVisible(true)  // scrolling up → show
       }
+      // scrolling up but not at top → keep current state
       lastScrollY.current = y
     }
     window.addEventListener("scroll", onScroll, { passive: true })
@@ -67,15 +80,23 @@ export default function ProjectDetail({
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
   const lightboxImages = useMemo(() => {
     const imgs: string[] = []
+    function collectBlock(block: any) {
+      if (block.type === "image" && block.image) imgs.push(block.image)
+      if (block.type === "gallery" && Array.isArray(block.items)) {
+        block.items.forEach((url: string) => { if (url) imgs.push(url) })
+      }
+      if (block.type === "layout" && block.children) {
+        try {
+          const layout = typeof block.children === "string" ? JSON.parse(block.children) : block.children
+          layout.content?.forEach((col: any[]) => col.forEach(collectBlock))
+        } catch { /* ignore malformed layout */ }
+      }
+    }
     project.sections?.forEach((section) => {
-      section.blocks.forEach((block) => {
-        if (block.type === "image" && block.image) imgs.push(block.image)
-      })
+      section.blocks.forEach(collectBlock)
       if (section.image) imgs.push(section.image)
     })
-    project.images.forEach((img) => {
-      if (img.url) imgs.push(img.url)
-    })
+    project.images.forEach((img) => { if (img.url) imgs.push(img.url) })
     return imgs
   }, [project])
 
@@ -118,7 +139,7 @@ export default function ProjectDetail({
   const [selectedCategory, setSelectedCategory] = useState(
     project.category?.slug ?? (allCategories[0]?.slug ?? ""),
   )
-  const [categoryOpen, setCategoryOpen] = useState(false)
+  const [catDropdownId, setCatDropdownId] = useState<string | null>(null)
 
   const categoryProjects = useMemo(
     () => allProjects.filter((p) => p.category?.slug === selectedCategory),
@@ -138,29 +159,30 @@ export default function ProjectDetail({
     allCategories.find((c) => c.slug === selectedCategory)?.label ?? selectedCategory
 
   useEffect(() => {
-    if (!categoryOpen) return
+    if (!catDropdownId) return
     const close = (e: MouseEvent) => {
-      if (!(e.target as Element).closest("[data-cat-dropdown]")) setCategoryOpen(false)
+      if (!(e.target as Element).closest("[data-cat-dropdown]")) setCatDropdownId(null)
     }
     document.addEventListener("mousedown", close)
     return () => document.removeEventListener("mousedown", close)
-  }, [categoryOpen])
+  }, [catDropdownId])
 
   // ── Shared navigation controls ──────────────────────────────────────────────
-  function NavControls({ opensUp = false }: { opensUp?: boolean }) {
+  function NavControls({ opensUp = false, dropdownId }: { opensUp?: boolean; dropdownId: string }) {
+    const isOpen = catDropdownId === dropdownId
     return (
       <div className="flex items-center gap-2 flex-wrap gap-y-2">
         {/* Category dropdown */}
         <div className="relative" data-cat-dropdown="">
           <button
             type="button"
-            onClick={() => setCategoryOpen((o) => !o)}
+            onClick={() => setCatDropdownId(isOpen ? null : dropdownId)}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition-all"
           >
             <span className="max-w-[100px] truncate">{selectedCategoryLabel}</span>
-            <ChevronDown className={cn("w-3 h-3 shrink-0 transition-transform", categoryOpen && "rotate-180")} />
+            <ChevronDown className={cn("w-3 h-3 shrink-0 transition-transform", isOpen && "rotate-180")} />
           </button>
-          {categoryOpen && (
+          {isOpen && (
             <div className={cn(
               "absolute left-0 z-[60] bg-zinc-950 border border-zinc-800 rounded-xl shadow-2xl py-1 min-w-[140px]",
               opensUp ? "bottom-full mb-1" : "top-full mt-1",
@@ -169,7 +191,7 @@ export default function ProjectDetail({
                 <button
                   key={cat.slug}
                   type="button"
-                  onClick={() => { setSelectedCategory(cat.slug); setCategoryOpen(false) }}
+                  onClick={() => { setSelectedCategory(cat.slug); setCatDropdownId(null) }}
                   className={cn(
                     "w-full text-left px-4 py-2 text-xs transition-colors",
                     cat.slug === selectedCategory
@@ -231,7 +253,7 @@ export default function ProjectDetail({
           <ArrowLeft className="mr-1.5 h-4 w-4" />
           Back
         </Link>
-        <NavControls />
+        <NavControls dropdownId="mobile" />
       </div>
 
       {/* ── Desktop sidebar — fixed position, slides left ────────────────────── */}
@@ -240,7 +262,7 @@ export default function ProjectDetail({
           "hidden lg:flex flex-col fixed left-0 top-0 h-screen z-40 w-[340px]",
           "bg-zinc-950 border-r border-zinc-800/50 overflow-hidden",
           "transition-transform duration-300 ease-in-out",
-          sidebarVisible ? "translate-x-0" : "-translate-x-full",
+          sidebarVisible || sidebarLocked ? "translate-x-0" : "-translate-x-full",
         )}
       >
         {/* Header — shrink-0 */}
@@ -261,7 +283,7 @@ export default function ProjectDetail({
             </Link>
           </div>
 
-          <NavControls />
+          <NavControls dropdownId="sidebar" />
         </div>
 
         {/* Content — fills remaining space, no scroll */}
@@ -355,7 +377,7 @@ export default function ProjectDetail({
         className={cn(
           "min-h-screen bg-black text-white",
           "transition-[margin-left] duration-300 ease-in-out",
-          sidebarVisible ? "lg:ml-[340px]" : "lg:ml-0",
+          sidebarVisible || sidebarLocked ? "lg:ml-[340px]" : "lg:ml-0",
         )}
       >
         {/* Mobile info block */}
@@ -455,12 +477,14 @@ export default function ProjectDetail({
         className={cn(
           "hidden lg:block fixed bottom-0 left-0 right-0 z-50",
           "transition-transform duration-300 ease-in-out",
-          !sidebarVisible ? "translate-y-0" : "translate-y-full",
+          !sidebarVisible && !sidebarLocked ? "translate-y-0" : "translate-y-full",
         )}
       >
         <div className="bg-zinc-950/95 backdrop-blur-xl border-t border-zinc-800/50 shadow-2xl">
           <div className="flex items-center justify-between px-8 py-3">
-            <NavControls opensUp />
+            <div className="flex items-center gap-3">
+              <NavControls opensUp dropdownId="bottom" />
+            </div>
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -564,6 +588,28 @@ export default function ProjectDetail({
           </div>
         </div>
       )}
+
+      {/* ── Floating sidebar tab — always visible on desktop ─────────────── */}
+      <button
+        type="button"
+        onClick={toggleSidebarLock}
+        title={sidebarLocked ? "Soltar sidebar" : "Fixar sidebar"}
+        className={cn(
+          "hidden lg:flex fixed top-1/2 -translate-y-1/2 z-[60]",
+          "h-14 w-7 flex-col items-center justify-center",
+          "bg-zinc-900/90 border border-zinc-800 rounded-r-lg",
+          "text-zinc-500 hover:text-white hover:bg-zinc-800",
+          "transition-all duration-300 ease-in-out",
+          sidebarVisible || sidebarLocked ? "left-[340px]" : "left-0",
+        )}
+      >
+        <PanelLeft
+          className={cn(
+            "w-3.5 h-3.5 transition-transform duration-300",
+            sidebarLocked && "rotate-180",
+          )}
+        />
+      </button>
     </>
   )
 }

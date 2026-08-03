@@ -81,7 +81,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full pt-20 bg-cover bg-center transition-all duration-200 ease-in-out bg-zinc-950"
+      className="relative w-full pt-20 bg-cover bg-center transition-all duration-200 ease-in-out bg-transparent"
     >
       <div className="container mx-auto px-4">
         <div className="w-full items-center">

@@ -32,7 +32,7 @@ export default function ProjectGallery({
         {images.map((image, index) => (
           <div
             key={index}
-            className="rounded-2xl overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl shadow-black/20"
+            className="overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl shadow-black/20"
             onClick={() => onImageClick(image)}
           >
             <Image

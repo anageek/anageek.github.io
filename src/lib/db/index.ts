@@ -7,7 +7,7 @@ import { join } from 'path'
 const dbPath = join(process.cwd(), 'data', 'portfolio.db')
 const sqlite = new Database(dbPath)
 
-sqlite.pragma('journal_mode = WAL')
+sqlite.pragma('journal_mode = DELETE')
 sqlite.pragma('foreign_keys = ON')
 
 export const db = drizzle(sqlite, { schema })

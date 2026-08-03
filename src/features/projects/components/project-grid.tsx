@@ -87,7 +87,7 @@ export default function ProjectGrid({ projects, categories }: ProjectGridProps) 
   return (
     <section
       id="projects"
-      className="bg-black"
+      className="bg-transparent"
     >
       <div className="container pt-20 pb-20">
         <div className="flex flex-col items-center mb-10">
