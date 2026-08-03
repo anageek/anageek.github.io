@@ -11,7 +11,7 @@ export function AnimatedWave({ fill = 'white', height = 100 }: AnimatedWaveProps
   const path1Ref = useRef<SVGPathElement>(null)
   const path2Ref = useRef<SVGPathElement>(null)
   const phaseRef = useRef(0)
-  const rafRef = useRef<number>()
+  const rafRef = useRef<number | undefined>(undefined)
 
   function buildPath(phase: number, amp: number, yMid: number): string {
     const W = 1440
