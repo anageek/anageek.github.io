@@ -1,8 +1,8 @@
 import React from "react"
-import Image from "next/image"
 import type { SectionBlock } from "@/features/projects/types/project"
 import type { LayoutChildren, RawBlock } from "@/features/projects/types/project"
 import { toYouTubeEmbedUrl } from "@/lib/utils"
+import { ProgressiveImage } from "@/components/common/progressive-image"
 
 interface Section {
   title: string
@@ -67,16 +67,18 @@ function renderBlock(
     return (
       <div
         key={idx}
-        className="my-8 overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl"
+        className="my-8 overflow-hidden cursor-pointer group"
         onClick={() => onImageClick(block.image!)}
       >
-        <Image
+        <ProgressiveImage
           src={block.image || "/placeholder.svg"}
           alt={`${projectTitle} - Section Image`}
-          width={800}
-          height={600}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          width={1600}
+          height={1200}
+          quality={100}
+          sizes="(max-width: 768px) 100vw, calc(100vw - 340px)"
           className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+          wrapperClassName="w-full"
         />
       </div>
     )
@@ -101,15 +103,16 @@ function renderBlock(
         {block.items.map((url: string, i: number) => (
           <div
             key={i}
-            className="relative aspect-square overflow-hidden cursor-zoom-in border border-zinc-800/50 shadow group"
+            className="relative aspect-square overflow-hidden cursor-pointer group"
             onClick={() => onImageClick(url)}
           >
-            <Image
+            <ProgressiveImage
               src={url}
               alt={`${projectTitle} gallery ${i + 1}`}
               fill
+              quality={90}
               className="object-cover group-hover:scale-105 transition-transform duration-700"
-              sizes="(max-width: 640px) 50vw, 33vw"
+              sizes="(max-width: 640px) 50vw, calc((100vw - 340px) / 3)"
             />
           </div>
         ))}
@@ -174,16 +177,18 @@ export default function SectionRenderer({ section, projectTitle, sectionIndex, o
 
         {section.image && (
           <div
-            className="relative group cursor-zoom-in overflow-hidden border border-zinc-800/50 shadow-xl"
+            className="relative group cursor-pointer overflow-hidden"
             onClick={() => onImageClick(section.image!)}
           >
-            <Image
+            <ProgressiveImage
               src={section.image || "/placeholder.svg"}
               alt={`${projectTitle} - Section ${sectionIndex + 1}`}
-              width={500}
-              height={500}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              width={1200}
+              height={1200}
+              quality={100}
+              sizes="(max-width: 768px) 100vw, calc((100vw - 340px) / 2)"
               className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+              wrapperClassName="w-full"
             />
             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors pointer-events-none" />
           </div>

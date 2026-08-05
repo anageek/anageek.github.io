@@ -191,9 +191,9 @@ export function HeroSection({ videoUrl, glitchEnabled = false }: HeroSectionProp
           )}
         >
           {minimized ? (
-            <><ChevronDown className="w-3 h-3" /> Mostrar</>
+            <><ChevronDown className="w-3 h-3" /> Show</>
           ) : (
-            <><ChevronUp className="w-3 h-3" /> Minimizar</>
+            <><ChevronUp className="w-3 h-3" /> Minimize</>
           )}
         </button>
       </div>

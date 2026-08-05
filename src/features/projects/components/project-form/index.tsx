@@ -68,16 +68,31 @@ export function ProjectForm({ project, categories }: ProjectFormProps) {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
   }, [isDirty, sectionsState.length])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault()
+        if (!isSaving) handleClickSave()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isSaving])
+
   const handleSave = async (data: ProjectFormValues) => {
     setIsSaving(true)
     try {
       if (project?.id) {
         await updateProject(project.id, data)
+        toast.success('Projeto atualizado!')
       } else {
-        await createProject(data)
+        const result = await createProject(data)
+        toast.success('Projeto criado!')
+        // Navigate to edit page so subsequent saves work correctly
+        if (result && 'data' in result && result.data?.id) {
+          router.replace(`/admin/projects/${result.data.id}/edit`)
+        }
       }
-      toast.success(project?.id ? 'Projeto atualizado!' : 'Projeto criado!')
-      router.push('/admin/projects')
     } catch {
       toast.error('Erro ao salvar projeto')
     } finally {

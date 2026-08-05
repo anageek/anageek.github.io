@@ -3,6 +3,7 @@ import 'server-only'
 import { db } from '@/lib/db'
 import { projects, projectImages, projectSections, sectionBlocks, categories } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
+import { revalidatePath } from 'next/cache'
 import { withAuth } from '@/lib/auth/guards'
 import { projectFormSchema } from '../types/project'
 import { slugify } from '@/lib/utils'
@@ -73,6 +74,8 @@ export const createProject = withAuth(async (data: unknown) => {
     }
   }
 
+  revalidatePath('/')
+  revalidatePath('/admin/projects')
   return { success: true as const, data: newProject }
 })
 
@@ -152,6 +155,8 @@ export const updateProject = withAuth(async (id: number, data: unknown) => {
     }
   }
 
+  revalidatePath('/')
+  revalidatePath('/admin/projects')
   return { success: true as const }
 })
 
@@ -168,5 +173,7 @@ export const deleteProject = withAuth(async (id: number) => {
 
 export const toggleProjectField = withAuth(async (id: number, field: 'visible' | 'featured', value: boolean) => {
   db.update(projects).set({ [field]: value, updatedAt: new Date().toISOString() }).where(eq(projects.id, id)).run()
+  revalidatePath('/')
+  revalidatePath('/admin/projects')
   return { success: true as const }
 })

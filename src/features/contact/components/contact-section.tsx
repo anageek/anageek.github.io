@@ -15,7 +15,7 @@ export function ContactSection({ glitchEnabled = false }: ContactSectionProps) {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center mb-12">
             <h2 className="text-2xl font-semibold tracking-tight mb-3 text-zinc-800">
-              <GlitchText enabled={glitchEnabled}>Contact</GlitchText>
+              Contact
             </h2>
             <div className="h-1 w-16 bg-zinc-900 rounded-full" />
           </div>

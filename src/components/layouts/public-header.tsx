@@ -9,7 +9,9 @@ import { cn } from '@/lib/utils'
 import { publicNav } from '@/config/navigation'
 import { siteConfig } from '@/config/site'
 
-export function PublicHeader() {
+const DEFAULT_LOGO = '/images/logo/logo-small-white.png'
+
+export function PublicHeader({ logoUrl }: { logoUrl?: string }) {
   const [scrolled, setScrolled] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
 
@@ -58,10 +60,11 @@ export function PublicHeader() {
           <Link href="/" className="flex items-center">
             <div className="relative h-10 w-10">
               <Image
-                src="/images/logo/logo-small-white.png?height=40&width=40"
+                src={logoUrl || DEFAULT_LOGO}
                 alt={siteConfig.name}
                 fill
                 className="object-contain"
+                unoptimized={!!(logoUrl && !logoUrl.startsWith('/'))}
               />
             </div>
           </Link>

@@ -424,21 +424,30 @@ function ImageBlock({
           </div>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={() => fileRef.current?.click()}
-          disabled={isUploading}
-          className="w-full aspect-video rounded-xl border-2 border-dashed border-zinc-800 hover:border-zinc-600 flex flex-col items-center justify-center gap-2 text-zinc-600 hover:text-zinc-400 transition-colors"
-        >
-          {isUploading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
-          ) : (
-            <>
-              <ImageIcon className="w-8 h-8" />
-              <span className="text-xs font-medium">Click to upload image</span>
-            </>
-          )}
-        </button>
+        <>
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            disabled={isUploading}
+            className="w-full aspect-video rounded-xl border-2 border-dashed border-zinc-800 hover:border-zinc-600 flex flex-col items-center justify-center gap-2 text-zinc-600 hover:text-zinc-400 transition-colors"
+          >
+            {isUploading ? (
+              <Loader2 className="w-6 h-6 animate-spin" />
+            ) : (
+              <>
+                <ImageIcon className="w-8 h-8" />
+                <span className="text-xs font-medium">Click to upload image</span>
+              </>
+            )}
+          </button>
+          <input
+            type="text"
+            value={image}
+            onChange={(e) => onChangeUrl(e.target.value)}
+            placeholder="or paste URL…"
+            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-300 outline-none focus:border-zinc-600"
+          />
+        </>
       )}
 
       {urlMode && (

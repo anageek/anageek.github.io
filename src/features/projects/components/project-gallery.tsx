@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { ProgressiveImage } from "@/components/common/progressive-image"
 
 interface ProjectGalleryProps {
   images: string[]
@@ -32,16 +32,18 @@ export default function ProjectGallery({
         {images.map((image, index) => (
           <div
             key={index}
-            className="overflow-hidden cursor-zoom-in group border border-zinc-800/50 shadow-xl shadow-black/20"
+            className="overflow-hidden cursor-pointer group"
             onClick={() => onImageClick(image)}
           >
-            <Image
+            <ProgressiveImage
               src={image || "/placeholder.svg"}
               alt={`${projectTitle} - Image ${index + 1}`}
-              width={800}
-              height={600}
-              sizes="(max-width: 768px) 100vw, 50vw"
+              width={1600}
+              height={1200}
+              quality={100}
+              sizes="(max-width: 768px) 100vw, calc((100vw - 340px) / 2)"
               className="w-full h-auto group-hover:scale-[1.02] transition-transform duration-700"
+              wrapperClassName="w-full"
             />
           </div>
         ))}

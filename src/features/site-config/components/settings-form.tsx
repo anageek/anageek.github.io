@@ -1,15 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Save, Loader2, Link as LinkIcon, PlaySquare, Type, Check, Sparkles } from 'lucide-react'
+import { Save, Loader2, Link as LinkIcon, PlaySquare, Type, Check, Sparkles, ImageIcon, Upload, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { updateSiteConfig } from '@/features/site-config'
 import { cn } from '@/lib/utils'
+
+const DEFAULT_LOGO = '/images/logo/logo-small-white.png'
 
 const FONT_PRESETS = [
   { name: 'Space Grotesk', label: 'Space Grotesk', note: 'Atual' },
@@ -33,6 +35,9 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
   const [saving, setSaving] = useState(false)
   const [heroVideoUrl, setHeroVideoUrl] = useState(initialConfig.heroVideoUrl ?? '')
   const [titleGlitch, setTitleGlitch] = useState(initialConfig.titleGlitch === 'true')
+  const [logoUrl, setLogoUrl] = useState(initialConfig.logoUrl ?? '')
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+  const logoFileRef = useRef<HTMLInputElement>(null)
   // '' means "use default Space Grotesk" (no custom font stored)
   const [siteFont, setSiteFont] = useState(initialConfig.siteFont ?? '')
   const [customFont, setCustomFont] = useState(
@@ -57,12 +62,32 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
     return () => { link.remove() }
   }, [siteFont])
 
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingLogo(true)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd })
+      const json = await res.json()
+      if (json.url) setLogoUrl(json.url)
+      else toast.error('Upload failed')
+    } catch {
+      toast.error('Erro no upload')
+    } finally {
+      setUploadingLogo(false)
+      if (logoFileRef.current) logoFileRef.current.value = ''
+    }
+  }
+
   const handleSave = async () => {
     setSaving(true)
     try {
       await updateSiteConfig('heroVideoUrl', heroVideoUrl)
       await updateSiteConfig('siteFont', siteFont)
       await updateSiteConfig('titleGlitch', titleGlitch ? 'true' : 'false')
+      await updateSiteConfig('logoUrl', logoUrl)
       toast.success('Configurações salvas!')
       router.refresh()
     } catch {
@@ -89,6 +114,96 @@ export function SettingsForm({ initialConfig }: SettingsFormProps) {
             Manage core settings and global sections of your portfolio.
           </p>
         </div>
+      </div>
+
+      {/* ── Logo ──────────────────────────────────────────── */}
+      <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl p-8 backdrop-blur-3xl shadow-2xl">
+        <h2 className="text-xl font-bold flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4 text-zinc-100">
+          <ImageIcon className="w-5 h-5 text-primary" />
+          Logo do Site
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 items-start">
+          {/* Preview */}
+          <div
+            className="relative bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden cursor-pointer group flex items-center justify-center"
+            style={{ aspectRatio: '1/1', maxWidth: 200 }}
+            onClick={() => logoFileRef.current?.click()}
+          >
+            {(logoUrl || DEFAULT_LOGO) && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logoUrl || DEFAULT_LOGO}
+                alt="Logo preview"
+                className="w-16 h-16 object-contain"
+              />
+            )}
+            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1">
+              {uploadingLogo ? (
+                <Loader2 className="w-5 h-5 text-white animate-spin" />
+              ) : (
+                <>
+                  <Upload className="w-5 h-5 text-white" />
+                  <span className="text-[10px] text-white font-medium">Upload</span>
+                </>
+              )}
+            </div>
+            {logoUrl && (
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setLogoUrl('') }}
+                className="absolute top-2 right-2 w-6 h-6 bg-black/70 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black z-10"
+              >
+                <X className="w-3 h-3 text-white" />
+              </button>
+            )}
+            <span className="absolute bottom-2 left-0 right-0 text-center text-[10px] font-bold text-zinc-500">
+              {logoUrl ? 'Custom' : 'Default'}
+            </span>
+          </div>
+
+          {/* URL input */}
+          <div className="space-y-3">
+            <div>
+              <Label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
+                URL da Logo
+              </Label>
+              <div className="flex gap-3">
+                <div className="flex-1 flex items-center h-12 bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden focus-within:border-primary/50 transition-colors">
+                  <div className="px-4 border-r border-zinc-800 text-zinc-600">
+                    <LinkIcon className="w-4 h-4" />
+                  </div>
+                  <Input
+                    value={logoUrl}
+                    onChange={(e) => setLogoUrl(e.target.value)}
+                    placeholder="/images/logo/logo-small-white.png"
+                    className="flex-1 bg-transparent border-0 text-sm text-zinc-300 h-full focus-visible:ring-0 px-4 font-mono"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={uploadingLogo}
+                  onClick={() => logoFileRef.current?.click()}
+                  className="h-12 px-5 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-600 bg-zinc-950 shrink-0"
+                >
+                  {uploadingLogo ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                </Button>
+              </div>
+              <p className="text-xs text-zinc-600 mt-2">
+                Deixe em branco para usar o logo padrão. PNG com fundo transparente recomendado.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <input
+          ref={logoFileRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleLogoUpload}
+        />
       </div>
 
       {/* ── Hero Video ──────────────────────────────────────── */}

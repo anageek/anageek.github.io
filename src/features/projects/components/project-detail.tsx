@@ -16,6 +16,8 @@ import { toYouTubeEmbedUrl, cn } from "@/lib/utils"
 import SectionRenderer from "@/features/projects/components/section-renderer"
 import ProjectGallery from "@/features/projects/components/project-gallery"
 
+const isGif = (src: string) => src.toLowerCase().split('?')[0].endsWith('.gif')
+
 interface SimpleProject {
   slug: string
   title: string
@@ -31,14 +33,18 @@ interface ProjectDetailProps {
   project: ProjectWithRelations
   allProjects: SimpleProject[]
   allCategories: SimpleCategory[]
+  logoUrl?: string
 }
 
 const DESC_THRESHOLD = 280
+
+const DEFAULT_LOGO = '/images/logo/logo-small-white.png'
 
 export default function ProjectDetail({
   project,
   allProjects,
   allCategories,
+  logoUrl,
 }: ProjectDetailProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -191,7 +197,13 @@ export default function ProjectDetail({
                 <button
                   key={cat.slug}
                   type="button"
-                  onClick={() => { setSelectedCategory(cat.slug); setCatDropdownId(null) }}
+                  onClick={() => {
+                    setCatDropdownId(null)
+                    if (cat.slug === selectedCategory) return
+                    setSelectedCategory(cat.slug)
+                    const first = allProjects.find((p) => p.category?.slug === cat.slug)
+                    if (first && first.slug !== project.slug) navigateTo(first.slug)
+                  }}
                   className={cn(
                     "w-full text-left px-4 py-2 text-xs transition-colors",
                     cat.slug === selectedCategory
@@ -269,7 +281,13 @@ export default function ProjectDetail({
         <div className="shrink-0 pt-6 px-6 pb-4 border-b border-zinc-800/30">
           <Link href="/" className="mb-4 inline-block">
             <div className="relative h-7 w-7">
-              <Image src="/images/logo/logo-small-white.png" alt="Logo" fill className="object-contain" />
+              <Image
+                src={logoUrl || DEFAULT_LOGO}
+                alt="Logo"
+                fill
+                className="object-contain"
+                unoptimized={!!(logoUrl && !logoUrl.startsWith('/'))}
+              />
             </div>
           </Link>
 
@@ -292,11 +310,14 @@ export default function ProjectDetail({
             <div className="flex items-start gap-2 mb-2 flex-wrap">
               <h1 className="text-zinc-300  text-xl font-bold tracking-tighter leading-snug">{project.title}</h1>
               {project.platform && project.platform.length > 0 && (
-                <div className="flex items-center gap-1.5 mt-0.5">
+                <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                   {project.platform.map((p, i) => (
-                    <span key={i} className="text-zinc-600">
+                    <span key={i} className="flex items-center gap-1 text-zinc-500">
                       {p === "PC" && <Monitor className="w-4 h-4" />}
                       {p === "Mobile" && <Smartphone className="w-4 h-4" />}
+                      {p !== "PC" && p !== "Mobile" && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider">{p}</span>
+                      )}
                     </span>
                   ))}
                 </div>
@@ -304,10 +325,10 @@ export default function ProjectDetail({
             </div>
 
             <div className="space-y-2 mt-4">
-              {project.category?.label && (
+              {project.subCategory && (
                 <div className="flex items-start gap-3">
                   <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[56px]">Genre</p>
-                  <p className="text-zinc-300 font-medium text-sm">{project.category.label}</p>
+                  <p className="text-zinc-300 font-medium text-sm">{project.subCategory}</p>
                 </div>
               )}
               {project.role && (
@@ -325,9 +346,7 @@ export default function ProjectDetail({
               {project.status && (
                 <div className="flex items-start gap-3">
                   <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[56px]">Status</p>
-                  <p className="text-primary font-semibold uppercase text-xs tracking-wide bg-primary/10 px-3 py-1 rounded-full border border-primary/20 w-fit">
-                    {project.status}
-                  </p>
+                  <p className="text-zinc-300 font-medium text-sm">{project.status}</p>
                 </div>
               )}
               {project.tools && (
@@ -386,21 +405,24 @@ export default function ProjectDetail({
             <div className="flex items-center gap-3 mb-4 flex-wrap">
               <h1 className="text-3xl font-bold tracking-tighter">{project.title}</h1>
               {project.platform && project.platform.length > 0 && (
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5 flex-wrap">
                   {project.platform.map((p, i) => (
-                    <span key={i} className="text-zinc-600">
+                    <span key={i} className="flex items-center gap-1 text-zinc-500">
                       {p === "PC" && <Monitor className="w-4 h-4" />}
                       {p === "Mobile" && <Smartphone className="w-4 h-4" />}
+                      {p !== "PC" && p !== "Mobile" && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider">{p}</span>
+                      )}
                     </span>
                   ))}
                 </div>
               )}
             </div>
             <div className="space-y-3">
-              {project.category?.label && (
+              {project.subCategory && (
                 <div className="flex items-start gap-3">
                   <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Genre</p>
-                  <p className="text-zinc-300 text-sm font-medium">{project.category.label}</p>
+                  <p className="text-zinc-300 text-sm font-medium">{project.subCategory}</p>
                 </div>
               )}
               {project.role && (
@@ -412,9 +434,7 @@ export default function ProjectDetail({
               {project.status && (
                 <div className="flex items-start gap-3">
                   <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 mt-0.5 min-w-[60px]">Status</p>
-                  <p className="text-primary font-semibold uppercase text-xs tracking-wide bg-primary/10 px-3 py-1 rounded-full border border-primary/20 w-fit">
-                    {project.status}
-                  </p>
+                  <p className="text-zinc-300 text-sm font-medium">{project.status}</p>
                 </div>
               )}
             </div>
@@ -567,6 +587,8 @@ export default function ProjectDetail({
                 src={lightboxImages[selectedImageIndex]}
                 alt="Lightbox View"
                 fill
+                quality={100}
+                unoptimized={isGif(lightboxImages[selectedImageIndex])}
                 className="object-contain pointer-events-auto"
                 priority
               />
@@ -584,16 +606,15 @@ export default function ProjectDetail({
             {selectedImageIndex + 1}
             <span className="text-zinc-600 mx-1">/</span>
             {lightboxImages.length}
-            <span className="text-zinc-600 ml-3">ESC</span>
           </div>
         </div>
       )}
 
-      {/* ── Floating sidebar tab — always visible on desktop ─────────────── */}
+      {/* ── Floating sidebar tab — visible when sidebar is hidden or locked ── */}
       <button
         type="button"
         onClick={toggleSidebarLock}
-        title={sidebarLocked ? "Soltar sidebar" : "Fixar sidebar"}
+        title={sidebarLocked ? "Unpin sidebar" : "Pin sidebar"}
         className={cn(
           "hidden lg:flex fixed top-1/2 -translate-y-1/2 z-[60]",
           "h-14 w-7 flex-col items-center justify-center",
@@ -601,6 +622,7 @@ export default function ProjectDetail({
           "text-zinc-500 hover:text-white hover:bg-zinc-800",
           "transition-all duration-300 ease-in-out",
           sidebarVisible || sidebarLocked ? "left-[340px]" : "left-0",
+          !sidebarVisible || sidebarLocked ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
         )}
       >
         <PanelLeft

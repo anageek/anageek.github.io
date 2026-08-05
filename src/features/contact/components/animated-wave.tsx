@@ -21,7 +21,7 @@ export function AnimatedWave({ fill = 'white', height = 100 }: AnimatedWaveProps
     for (let i = 0; i <= N; i++) {
       const xNorm = i / N
       const x = xNorm * W
-      const y = yMid - amp * Math.sin(xNorm * Math.PI * 2.4 + phase)
+      const y = yMid - amp * Math.sin(xNorm * Math.PI * 1.6 + phase)
       d += ` L ${x.toFixed(1)} ${y.toFixed(1)}`
     }
     d += ` L ${W} ${H} Z`
@@ -32,12 +32,12 @@ export function AnimatedWave({ fill = 'white', height = 100 }: AnimatedWaveProps
     let alive = true
     const tick = () => {
       if (!alive) return
-      phaseRef.current += 0.007
+      phaseRef.current += 0.012
       const phase = phaseRef.current
       if (path1Ref.current)
-        path1Ref.current.setAttribute('d', buildPath(phase, 9, height * 0.50))
+        path1Ref.current.setAttribute('d', buildPath(phase, 22, height * 0.58))
       if (path2Ref.current)
-        path2Ref.current.setAttribute('d', buildPath(phase + 1.5, 5, height * 0.65))
+        path2Ref.current.setAttribute('d', buildPath(phase + 1.8, 12, height * 0.72))
       rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)

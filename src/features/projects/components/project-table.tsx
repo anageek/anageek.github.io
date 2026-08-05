@@ -44,6 +44,7 @@ interface ProjectTableProps {
 export function ProjectTable({ projects, categories, categorySlug = 'all' }: ProjectTableProps) {
   const router = useRouter()
   const [search, setSearch] = useState('')
+  const [activeCategory, setActiveCategory] = useState<string>('all')
   const [optimisticProjects, setOptimisticProjects] = useState<Project[]>(projects)
 
   const lastUpdate = (() => {
@@ -71,9 +72,11 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
   const [projectToDelete, setProjectToDelete] = useState<Project | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
 
-  const filtered = optimisticProjects.filter((p) =>
-    p.title?.toLowerCase().includes(search.toLowerCase()),
-  )
+  const filtered = optimisticProjects.filter((p) => {
+    const matchesSearch = p.title?.toLowerCase().includes(search.toLowerCase())
+    const matchesCategory = activeCategory === 'all' || (p as any).category?.slug === activeCategory
+    return matchesSearch && matchesCategory
+  })
 
   const handleToggle = async (project: Project, field: 'visible' | 'featured') => {
     const currentValue = field === 'visible' ? project.visible !== false : project.featured === true
@@ -172,6 +175,23 @@ export function ProjectTable({ projects, categories, categorySlug = 'all' }: Pro
 
       {/* ── Projects Table ─────────────────────────────────────────────────── */}
       <div className="bg-zinc-900/30 border border-zinc-900 rounded-2xl overflow-hidden backdrop-blur-3xl shadow-2xl">
+        {/* Category filter tabs */}
+        <div className="px-6 pt-4 pb-0 flex gap-2 flex-wrap border-b border-zinc-900">
+          {[{ slug: 'all', label: 'All' }, ...categories].map((cat) => (
+            <button
+              key={cat.slug}
+              type="button"
+              onClick={() => { setActiveCategory(cat.slug); setSearch('') }}
+              className={`px-4 py-1.5 rounded-t-lg text-xs font-bold uppercase tracking-widest transition-all border-b-2 -mb-px ${
+                activeCategory === cat.slug
+                  ? 'text-primary border-primary bg-primary/5'
+                  : 'text-zinc-500 border-transparent hover:text-zinc-300'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
         <div className="p-6 border-b border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-zinc-950/40">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3.5 top-3 h-4 w-4 text-zinc-600" />

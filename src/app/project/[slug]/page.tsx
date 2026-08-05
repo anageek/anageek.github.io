@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getProjectBySlug, getPublicProjects } from '@/features/projects'
 import { getPublicCategories } from '@/features/categories'
+import { getSiteConfigValue } from '@/features/site-config'
 import { ProjectDetail } from '@/features/projects'
 import { notFound } from 'next/navigation'
 
@@ -32,10 +33,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params
 
-  const [project, allProjects, allCategories] = await Promise.all([
+  const [project, allProjects, allCategories, logoUrl] = await Promise.all([
     getProjectBySlug(slug),
     getPublicProjects(),
     getPublicCategories(),
+    getSiteConfigValue('logoUrl'),
   ])
 
   if (!project) notFound()
@@ -53,6 +55,7 @@ export default async function ProjectPage({ params }: Props) {
       project={project}
       allProjects={simpleProjects}
       allCategories={allCategories.map((c) => ({ slug: c.slug, label: c.label }))}
+      logoUrl={logoUrl ?? undefined}
     />
   )
 }
