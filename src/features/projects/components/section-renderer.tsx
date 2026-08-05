@@ -46,7 +46,7 @@ function renderBlock(
     return (
       <div
         key={idx}
-        className="text-zinc-400 font-light leading-relaxed [&_strong]:text-zinc-300 [&_strong]:font-bold [&_b]:text-zinc-300 [&_b]:font-bold [&_em]:italic [&_i]:italic"
+        className="text-zinc-400 font-light leading-relaxed [&_strong]:text-zinc-300 [&_strong]:font-bold [&_b]:text-zinc-300 [&_b]:font-bold [&_em]:italic [&_i]:italic [&_u]:underline [&_u]:underline-offset-2 [&_s]:line-through [&_strike]:line-through [&_blockquote]:border-l-2 [&_blockquote]:border-zinc-600 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:text-zinc-500 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:hover:opacity-80"
         dangerouslySetInnerHTML={{ __html: block.text }}
         suppressHydrationWarning
       />
@@ -117,6 +117,21 @@ function renderBlock(
             />
           </div>
         ))}
+      </div>
+    )
+  }
+  if (block.type === "button" && block.text) {
+    const href = block.video || '#'
+    const isExternal = href.startsWith('http://') || href.startsWith('https://')
+    return (
+      <div key={idx} className="my-2">
+        <a
+          href={href}
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          className="inline-flex items-center px-6 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-xl transition-colors"
+        >
+          {block.text}
+        </a>
       </div>
     )
   }
