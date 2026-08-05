@@ -48,6 +48,7 @@ function renderBlock(
         key={idx}
         className="text-zinc-400 font-light leading-relaxed [&_strong]:text-zinc-300 [&_strong]:font-bold [&_b]:text-zinc-300 [&_b]:font-bold [&_em]:italic [&_i]:italic"
         dangerouslySetInnerHTML={{ __html: block.text }}
+        suppressHydrationWarning
       />
     )
   }
