@@ -43,7 +43,7 @@ export default async function HomePage() {
         </ScrollReveal>
 
         {/* White wave: transparent above (shows gradient), white fill below */}
-        <AnimatedWave fill="white" height={100} />
+        <AnimatedWave fill="white" height={100} startPhase={-300} />
       </div>
 
       {/* ── Contact + Footer — white bg for contact, blue for footer ────── */}

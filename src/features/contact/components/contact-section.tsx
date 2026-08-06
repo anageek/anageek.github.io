@@ -22,7 +22,7 @@ export function ContactSection({ glitchEnabled = false }: ContactSectionProps) {
 
           <div className="max-w-2xl mx-auto">
             <div className="flex justify-center">
-              <div className="inline-flex items-center mb-8 bg-zinc-900 rounded-full">
+              <div className="inline-flex items-center mb-8 bg-[#0c2446] rounded-full">
                 <div className="p-3 border rounded-full border-white/10 mr-4">
                   <Mail className="h-6 w-6 text-white" />
                 </div>
@@ -73,16 +73,16 @@ export function ContactSection({ glitchEnabled = false }: ContactSectionProps) {
           </div>
         </div>
 
-        <div className="text-center mt-10">
-          <p className="inline-block rounded-full border border-zinc-200 px-16 py-4 text-zinc-600 bg-zinc-50">
+        <div className="text-center mt-10 ">
+          <p className="inline-block rounded-full border border-zinc-300 px-16 py-4 text-zinc-600 bg-zinc-300/50 ">
             Thank you for viewing my portfolio!
           </p>
         </div>
       </section>
 
-      {/* ── Footer — blue wave → blue background ────────────────────────── */}
+      {/* ── Footer — blue wave → blue background <AnimatedWave fill="#0c2446" height={80} startPhase={10} /> ────────────────────────── */}
       <footer>
-        <AnimatedWave fill="#0c2446" height={80} />
+        
         <div className="bg-[#0c2446] -mt-px py-6 text-center">
           <p className="text-zinc-400 text-sm font-normal">
             © {new Date().getFullYear()} by Ana Neiva. All rights reserved.

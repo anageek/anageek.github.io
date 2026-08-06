@@ -5,12 +5,13 @@ import { useRef, useEffect } from 'react'
 interface AnimatedWaveProps {
   fill?: string
   height?: number
+  startPhase?: number
 }
 
-export function AnimatedWave({ fill = 'white', height = 100 }: AnimatedWaveProps) {
+export function AnimatedWave({ fill = 'white', height = 100, startPhase = 0 }: AnimatedWaveProps) {
   const path1Ref = useRef<SVGPathElement>(null)
   const path2Ref = useRef<SVGPathElement>(null)
-  const phaseRef = useRef(0)
+  const phaseRef = useRef(startPhase)
   const rafRef = useRef<number | undefined>(undefined)
 
   function buildPath(phase: number, amp: number, yMid: number): string {
@@ -32,10 +33,10 @@ export function AnimatedWave({ fill = 'white', height = 100 }: AnimatedWaveProps
     let alive = true
     const tick = () => {
       if (!alive) return
-      phaseRef.current += 0.012
+      phaseRef.current += 0.002
       const phase = phaseRef.current
       if (path1Ref.current)
-        path1Ref.current.setAttribute('d', buildPath(phase, 22, height * 0.58))
+        path1Ref.current.setAttribute('d', buildPath(phase, 30, height * 0.58))
       if (path2Ref.current)
         path2Ref.current.setAttribute('d', buildPath(phase + 1.8, 12, height * 0.72))
       rafRef.current = requestAnimationFrame(tick)
