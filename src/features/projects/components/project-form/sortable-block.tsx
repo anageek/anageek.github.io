@@ -5,7 +5,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import {
   GripVertical, Trash2, Upload, Plus, X, Loader2, ImageIcon, Video, LayoutGrid, ArrowRightLeft,
-  Bold, Italic, AlignLeft, AlignCenter, AlignRight, AlignJustify,
+  Bold, Italic, Underline, Strikethrough, Quote, AlignLeft, AlignCenter, AlignRight, AlignJustify, Link,
 } from 'lucide-react'
 import Image from 'next/image'
 import { toYouTubeEmbedUrl } from '@/lib/utils'
@@ -103,22 +103,77 @@ const alignOpts = [
 // ─── ParagraphBlock ────────────────────────────────────────────────────────────
 function ParagraphBlock({ text, onUpdate }: { text: string; onUpdate: (v: string) => void }) {
   const ref = useSyncedHTMLEditable(text)
-  const [formats, setFormats] = useState({ bold: false, italic: false })
+  const [formats, setFormats] = useState({ bold: false, italic: false, underline: false, strike: false, inLink: false })
+  const [linkMode, setLinkMode] = useState(false)
+  const [linkUrl, setLinkUrl] = useState('')
+  const savedRangeRef = useRef<Range | null>(null)
+  const linkInputRef = useRef<HTMLInputElement>(null)
 
   const refreshFormats = () => {
     try {
+      const sel = window.getSelection()
+      const node = sel?.anchorNode
+      const inLink = node
+        ? !!(node.nodeType === Node.TEXT_NODE
+            ? node.parentElement?.closest('a')
+            : (node as Element).closest?.('a'))
+        : false
       setFormats({
         bold: document.queryCommandState('bold'),
         italic: document.queryCommandState('italic'),
+        underline: document.queryCommandState('underline'),
+        strike: document.queryCommandState('strikeThrough'),
+        inLink,
       })
     } catch { /* ignore */ }
   }
 
-  const execCmd = (cmd: string) => {
+  const execCmd = (cmd: string, value?: string) => {
     ref.current?.focus()
-    document.execCommand(cmd, false)
+    document.execCommand(cmd, false, value)
     if (ref.current) onUpdate(ref.current.innerHTML)
     refreshFormats()
+  }
+
+  const openLinkInput = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (formats.inLink) {
+      ref.current?.focus()
+      document.execCommand('unlink')
+      if (ref.current) onUpdate(ref.current.innerHTML)
+      refreshFormats()
+      return
+    }
+    const sel = window.getSelection()
+    if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+      savedRangeRef.current = sel.getRangeAt(0).cloneRange()
+      setLinkUrl('')
+      setLinkMode(true)
+      setTimeout(() => linkInputRef.current?.focus(), 0)
+    }
+  }
+
+  const applyLink = () => {
+    const url = linkUrl.trim()
+    if (!url || !savedRangeRef.current) { cancelLink(); return }
+    ref.current?.focus()
+    const sel = window.getSelection()
+    if (sel) {
+      sel.removeAllRanges()
+      sel.addRange(savedRangeRef.current)
+    }
+    document.execCommand('createLink', false, url)
+    if (ref.current) onUpdate(ref.current.innerHTML)
+    setLinkMode(false)
+    setLinkUrl('')
+    savedRangeRef.current = null
+    refreshFormats()
+  }
+
+  const cancelLink = () => {
+    setLinkMode(false)
+    setLinkUrl('')
+    savedRangeRef.current = null
   }
 
   return (
@@ -140,6 +195,22 @@ function ParagraphBlock({ text, onUpdate }: { text: string; onUpdate: (v: string
         >
           <Italic className="w-3 h-3" />
         </button>
+        <button
+          type="button"
+          title="Sublinhado"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('underline') }}
+          className={`p-1 rounded transition-colors ${formats.underline ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Underline className="w-3 h-3" />
+        </button>
+        <button
+          type="button"
+          title="Tachado"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('strikeThrough') }}
+          className={`p-1 rounded transition-colors ${formats.strike ? 'bg-zinc-700 text-white' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Strikethrough className="w-3 h-3" />
+        </button>
         <div className="w-px h-3.5 bg-zinc-800 mx-0.5" />
         {alignOpts.map(({ cmd, Icon, title }) => (
           <button
@@ -152,7 +223,59 @@ function ParagraphBlock({ text, onUpdate }: { text: string; onUpdate: (v: string
             <Icon className="w-3 h-3" />
           </button>
         ))}
+        <div className="w-px h-3.5 bg-zinc-800 mx-0.5" />
+        <button
+          type="button"
+          title="Citação (blockquote)"
+          onMouseDown={(e) => { e.preventDefault(); execCmd('formatBlock', 'blockquote') }}
+          className="p-1 rounded transition-colors text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800"
+        >
+          <Quote className="w-3 h-3" />
+        </button>
+        <div className="w-px h-3.5 bg-zinc-800 mx-0.5" />
+        <button
+          type="button"
+          title={formats.inLink ? 'Remover link' : 'Inserir link (selecione texto primeiro)'}
+          onMouseDown={openLinkInput}
+          className={`p-1 rounded transition-colors ${formats.inLink ? 'bg-zinc-700 text-primary' : 'text-zinc-600 hover:text-zinc-400 hover:bg-zinc-800'}`}
+        >
+          <Link className="w-3 h-3" />
+        </button>
       </div>
+
+      {linkMode && (
+        <div className="flex items-center gap-1.5">
+          <input
+            ref={linkInputRef}
+            type="text"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') { e.preventDefault(); applyLink() }
+              if (e.key === 'Escape') cancelLink()
+            }}
+            placeholder="https://…"
+            className="flex-1 bg-zinc-900 border border-zinc-700 rounded px-2 py-1 text-xs font-mono text-zinc-300 outline-none focus:border-zinc-500"
+          />
+          <button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={applyLink}
+            className="px-2 py-1 text-xs bg-primary hover:bg-primary/90 text-white rounded transition-colors"
+          >
+            Apply
+          </button>
+          <button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={cancelLink}
+            className="p-1 text-zinc-500 hover:text-zinc-300 transition-colors"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        </div>
+      )}
+
       <div
         ref={ref as React.Ref<HTMLDivElement>}
         contentEditable
@@ -164,8 +287,47 @@ function ParagraphBlock({ text, onUpdate }: { text: string; onUpdate: (v: string
         }}
         onKeyUp={refreshFormats}
         onMouseUp={refreshFormats}
-        className="text-zinc-400 font-light leading-relaxed outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem] [&_strong]:font-bold [&_strong]:text-zinc-300 [&_b]:font-bold [&_b]:text-zinc-300 [&_em]:italic [&_i]:italic"
+        className="text-zinc-400 font-light leading-relaxed outline-none focus:ring-1 focus:ring-primary/30 rounded px-1 -mx-1 min-h-[1.5rem] [&_strong]:font-bold [&_strong]:text-zinc-300 [&_b]:font-bold [&_b]:text-zinc-300 [&_em]:italic [&_i]:italic [&_u]:underline [&_u]:underline-offset-2 [&_s]:line-through [&_strike]:line-through [&_blockquote]:border-l-2 [&_blockquote]:border-zinc-600 [&_blockquote]:pl-3 [&_blockquote]:italic [&_blockquote]:text-zinc-500 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:cursor-pointer"
       />
+    </div>
+  )
+}
+
+// ─── ButtonBlock ───────────────────────────────────────────────────────────────
+function ButtonBlock({
+  text,
+  href,
+  onUpdateText,
+  onUpdateHref,
+}: {
+  text: string
+  href: string
+  onUpdateText: (v: string) => void
+  onUpdateHref: (v: string) => void
+}) {
+  return (
+    <div className="space-y-2">
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => onUpdateText(e.target.value)}
+        placeholder="Label do botão…"
+        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-zinc-600"
+      />
+      <input
+        type="text"
+        value={href}
+        onChange={(e) => onUpdateHref(e.target.value)}
+        placeholder="https://… ou /pagina"
+        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs font-mono text-zinc-400 outline-none focus:border-zinc-600"
+      />
+      {text && (
+        <div className="flex">
+          <div className="px-5 py-2 bg-primary rounded-xl text-white text-sm font-medium pointer-events-none select-none">
+            {text}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -521,6 +683,7 @@ const BASE_TYPE_LABELS: Record<string, string> = {
   video: '▶',
   gallery: '▦',
   layout: '▤',
+  button: '⊕',
 }
 
 function getTypeLabel(type: string): string {
@@ -630,7 +793,15 @@ export function SortableBlock({
             onUploadItem={onUploadGalleryItem ?? (() => {})}
           />
         )}
-        {(!block.type || (!['paragraph', 'list', 'image', 'video', 'gallery'].includes(block.type) && !block.type.startsWith('heading'))) && block.type !== 'layout' && (
+        {block.type === 'button' && (
+          <ButtonBlock
+            text={block.text ?? ''}
+            href={block.video ?? ''}
+            onUpdateText={onUpdateText}
+            onUpdateHref={onUpdateVideo}
+          />
+        )}
+        {(!block.type || (!['paragraph', 'list', 'image', 'video', 'gallery', 'button'].includes(block.type) && !block.type.startsWith('heading'))) && block.type !== 'layout' && (
           <p className="text-zinc-700 text-sm italic">Unknown block type</p>
         )}
       </div>

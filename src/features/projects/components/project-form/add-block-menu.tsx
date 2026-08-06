@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Plus, Heading2, AlignLeft, List, ImageIcon, Video, LayoutGrid, Columns2 } from 'lucide-react'
+import { Plus, Heading2, AlignLeft, List, ImageIcon, Video, LayoutGrid, Columns2, MousePointerClick } from 'lucide-react'
 
 const BLOCK_TYPES = [
   { type: 'heading', label: 'Heading', Icon: Heading2 },
@@ -11,6 +11,7 @@ const BLOCK_TYPES = [
   { type: 'video', label: 'Video', Icon: Video },
   { type: 'gallery', label: 'Gallery', Icon: LayoutGrid },
   { type: 'layout', label: 'Layout', Icon: Columns2 },
+  { type: 'button', label: 'Button', Icon: MousePointerClick },
 ] as const
 
 interface AddBlockMenuProps {
